@@ -30,7 +30,7 @@ public class GamePanel extends JPanel implements Runnable {
     Image background1;
 
     public GamePanel() {
-        setPreferredSize(new Dimension(screenX + 200, screenY));
+        setPreferredSize(new Dimension(1080, 1080));
         setVisible(true);
         background1 = new ImageIcon("background1.png").getImage();
         this.addKeyListener(keyH);
@@ -44,7 +44,7 @@ public class GamePanel extends JPanel implements Runnable {
     public void run() {
         initialize();
         while (true) {
-
+        	
             update();
 
             this.repaint();
@@ -72,7 +72,7 @@ public class GamePanel extends JPanel implements Runnable {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
-        g2.drawImage(background1, 0, 0, screenX + 200, screenY, null);
+        //g2.drawImage(background1, 0, 0, screenX + 200, screenY, null);
         max.draw(g2);
         // for (int i = 0; i < walls.length; i++)
         // g2.fill(walls[i]);

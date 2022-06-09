@@ -75,6 +75,17 @@ public class Max extends Character {
 
 		x += xVel;
 		y -= yVel;
+		
+		spriteCounter ++;
+		if (spriteCounter > 20) {
+			if (spriteNum == 1) {
+				spriteNum = 2;
+			}
+			else if (spriteNum == 2) {
+				spriteNum = 1;
+			}
+			spriteCounter =0;
+		}
 	}
 
 	public void draw(Graphics2D g2) {
@@ -107,7 +118,7 @@ public class Max extends Character {
 		if (image == null) {
 			System.out.println("null");
 		}
-		g2.drawImage(image, x, y, gp.tileSize, gp.tileSize, null);
+		g2.drawImage(image, x, 0, gp.tileSize, gp.tileSize, null);
 
 	}
 
