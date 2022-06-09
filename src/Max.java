@@ -9,7 +9,7 @@ public class Max extends Character {
 	KeyHandler keyH;
 	double jumpSpeed;
 	double gravity;
-	boolean aFloat;
+	boolean airborne;
 
 	public Max(GamePanel gp, KeyHandler keyH) {
 		this.gp = gp;
@@ -20,6 +20,8 @@ public class Max extends Character {
 	public void setDefaultValues() {
 		x = 0;
 		y = gp.screenY + gp.ogTileSize;
+		xVel = 0;
+		yVel = 0;
 		speed = 5;
 		jumpSpeed = 10;
 		gravity = 0.8;
@@ -27,43 +29,47 @@ public class Max extends Character {
 		dmg = 1;
 	}
 
-	public void update() {
-		if (keyH.left == true) {
-			if (x == 0) {
-				speed = 0;
-			} else {
-				speed = 5;
-				x -= speed;
-			}
-		} else if (keyH.right == true) {
-			if (x > gp.screenX - gp.tileSize) {
-				speed = 0;
-			} else {
-				speed = 5;
-				x += speed;
-			}
-		}
-		if (aFloat) {
-			y += gravity;
-		} else {
-			if (keyH.jump == true) {
-				aFloat = true;
-				if (y < 0) {
-					y = 0;
-				} else {
-					y -= jumpSpeed;
-				}
-			}
+	public void move() {
+		if (keyH.left)
+			xVel = -speed;
+		else if (keyH.right)
+			xVel = speed;
+		else
+			xVel = 0;
 
+		if (airborne) {
+			yVel -= gravity;
+		} else {
+			if (keyH.jump) {
+				airborne = true;
+				yVel = jumpSpeed;
+			}
 		}
-		if (y > gp.screenY - gp.tileSize) {
-			y = gp.screenY - gp.tileSize;
-		}
+
+		x += xVel;
+		y -= yVel;
 	}
 
 	public void draw(Graphics2D g2) {
 		g2.setColor(Color.RED);
 		g2.fillRect(x, y, gp.tileSize, gp.tileSize);
+	}
+
+	public void keepInBound() {
+		if (x < 0) {
+			x = 0;
+		} else if (x > gp.screenX - gp.tileSize) {
+			x = gp.screenX - gp.tileSize;
+		}
+
+		if (y < 0) {
+			y = 0;
+			yVel = 0;
+		} else if (y > gp.screenX - gp.tileSize) {
+			y = gp.screenX - gp.tileSize;
+			airborne = false;
+			yVel = 0;
+		}
 	}
 
 }

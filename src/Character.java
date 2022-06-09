@@ -3,7 +3,7 @@ import java.util.*;
 
 public class Character {
 
-	protected int x,y, hp, dmg;
-	protected double speed;
-	
+	protected int x, y, hp, dmg;
+	protected double speed, xVel, yVel;
+
 }
