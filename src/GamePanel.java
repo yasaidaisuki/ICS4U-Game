@@ -30,7 +30,7 @@ public class GamePanel extends JPanel implements Runnable {
     Image background1;
 
     public GamePanel() {
-        setPreferredSize(new Dimension(1080, 1080));
+        setPreferredSize(new Dimension(screenX, screenY));
         setVisible(true);
         background1 = new ImageIcon("background1.png").getImage();
         this.addKeyListener(keyH);
@@ -44,7 +44,7 @@ public class GamePanel extends JPanel implements Runnable {
     public void run() {
         initialize();
         while (true) {
-        	
+
             update();
 
             this.repaint();
@@ -72,7 +72,7 @@ public class GamePanel extends JPanel implements Runnable {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
-        //g2.drawImage(background1, 0, 0, screenX + 200, screenY, null);
+        g2.drawImage(background1, 0, 0, screenX + 200, screenY, null);
         max.draw(g2);
         // for (int i = 0; i < walls.length; i++)
         // g2.fill(walls[i]);
@@ -89,7 +89,10 @@ public class GamePanel extends JPanel implements Runnable {
         GamePanel myPanel = new GamePanel();
         Toolkit toolKit = frame.getToolkit();
         Dimension size = toolKit.getScreenSize();
-        frame.setLocation(size.width / 2 - frame.getWidth() / 2, size.height / 2 - frame.getHeight() / 2);
+        frame.setSize(new Dimension(960, 960));
+        frame.setLocation(size.width / 2 - frame.getWidth() / 2, size.height / 2 -
+                (frame.getHeight() / 2) + 50);
+        System.out.println(size.getWidth() + " " + size.getHeight());
         frame.add(myPanel);
         frame.setVisible(true);
         frame.pack();
