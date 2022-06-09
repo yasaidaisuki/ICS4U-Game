@@ -1,6 +1,11 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import javax.imageio.ImageIO;
+
+import java.awt.Graphics2D;
+import java.io.*;
+import java.awt.image.BufferedImage;
 
 @SuppressWarnings("serial")
 public class GamePanel extends JPanel implements Runnable {
@@ -8,11 +13,10 @@ public class GamePanel extends JPanel implements Runnable {
     // Screen settings
 
     int ogTileSize = 16;
-    int scale = 3;
-
+    int scale = 6;
     int tileSize = ogTileSize * scale;
-    int maxScrnX = 50;
-    int maxScrnY = 50;
+    int maxScrnX = 60;
+    int maxScrnY = 60;
     int screenX = ogTileSize * maxScrnX;
     int screenY = ogTileSize * maxScrnX;
 
@@ -23,10 +27,12 @@ public class GamePanel extends JPanel implements Runnable {
     Thread thread;
     // player
     Max max = new Max(this, keyH);
+    Image background1;
 
     public GamePanel() {
-        setPreferredSize(new Dimension(screenX, screenY));
+        setPreferredSize(new Dimension(screenX + 200, screenY));
         setVisible(true);
+        background1 = new ImageIcon("background1.png").getImage();
         this.addKeyListener(keyH);
         this.setFocusable(true);
 
@@ -66,6 +72,7 @@ public class GamePanel extends JPanel implements Runnable {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
+        g2.drawImage(background1, 0, 0, screenX + 200, screenY, null);
         max.draw(g2);
         // for (int i = 0; i < walls.length; i++)
         // g2.fill(walls[i]);
