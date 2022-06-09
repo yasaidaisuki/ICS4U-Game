@@ -21,7 +21,7 @@ public class Max extends Character {
 		x = 0;
 		y = gp.screenY + gp.ogTileSize;
 		speed = 5;
-		jumpSpeed = 10;
+		jumpSpeed = 20;
 		gravity = 0.8;
 		hp = 4;
 		dmg = 1;
@@ -47,12 +47,12 @@ public class Max extends Character {
 			y += gravity;
 		} else {
 			if (keyH.jump == true) {
-				aFloat = true;
 				if (y < 0) {
 					y = 0;
 				} else {
 					y -= jumpSpeed;
 				}
+				aFloat = true;
 			}
 
 		}
