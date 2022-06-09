@@ -7,7 +7,9 @@ public class Max extends Character {
 
 	GamePanel gp;
 	KeyHandler keyH;
-	int jumpSpeed;
+	double jumpSpeed;
+	double gravity;
+	boolean aFloat;
 
 	public Max(GamePanel gp, KeyHandler keyH) {
 		this.gp = gp;
@@ -16,22 +18,17 @@ public class Max extends Character {
 	}
 
 	public void setDefaultValues() {
-		x = 100;
-		y = 100;
+		x = 0;
+		y = gp.screenY + gp.ogTileSize;
 		speed = 5;
-		jumpSpeed = 20;
+		jumpSpeed = 10;
+		gravity = 0.8;
 		hp = 4;
 		dmg = 1;
 	}
 
 	public void update() {
-		if (keyH.jump == true) {
-			if (y < 0) {
-				y = 0;
-			} else {
-				y -= jumpSpeed;
-			}
-		} else if (keyH.left == true) {
+		if (keyH.left == true) {
 			if (x == 0) {
 				speed = 0;
 			} else {
@@ -46,6 +43,19 @@ public class Max extends Character {
 				x += speed;
 			}
 		}
+		if (aFloat) {
+			y += gravity;
+		} else {
+			if (keyH.jump == true) {
+				aFloat = true;
+				if (y < 0) {
+					y = 0;
+				} else {
+					y -= jumpSpeed;
+				}
+			}
+
+		}
 		if (y > gp.screenY - gp.tileSize) {
 			y = gp.screenY - gp.tileSize;
 		}
@@ -58,4 +68,4 @@ public class Max extends Character {
 
 }
 
-//spsss this is a hidden easter egg. i love you ding kai peng
+// spsss this is a hidden easter egg. i love you ding kai peng
