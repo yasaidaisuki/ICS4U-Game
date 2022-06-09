@@ -87,6 +87,9 @@ public class GamePanel extends JPanel implements Runnable {
     public static void main(String[] args) {
         JFrame frame = new JFrame("Not Example");
         GamePanel myPanel = new GamePanel();
+        Toolkit toolKit = frame.getToolkit();
+        Dimension size = toolKit.getScreenSize();
+        frame.setLocation(size.width / 2 - frame.getWidth() / 2, size.height / 2 - frame.getHeight() / 2);
         frame.add(myPanel);
         frame.setVisible(true);
         frame.pack();

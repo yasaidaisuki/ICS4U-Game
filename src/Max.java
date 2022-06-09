@@ -121,8 +121,8 @@ public class Max extends Character {
 		if (y < 0) {
 			y = 0;
 			yVel = 0;
-		} else if (y > gp.screenY) {
-			y = gp.screenY;
+		} else if (y > gp.screenY - gp.tileSize * gp.scale) {
+			y = gp.screenY - gp.tileSize * gp.scale;
 			airborne = false;
 			yVel = 0;
 		}
