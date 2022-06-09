@@ -26,7 +26,7 @@ public class Max extends Character {
 		xVel = 0;
 		yVel = 0;
 		speed = 5;
-		jumpSpeed = 20;
+		jumpSpeed = 30;
 		gravity = 0.8;
 		hp = 4;
 		dmg = 1;
@@ -55,11 +55,13 @@ public class Max extends Character {
 	}
 
 	public void move() {
-		if (keyH.left)
+		if (keyH.left) {
 			xVel = -speed;
-		else if (keyH.right)
+			direction = "left";
+		} else if (keyH.right) {
 			xVel = speed;
-		else
+			direction = "right";
+		} else
 			xVel = 0;
 
 		if (airborne) {
@@ -112,15 +114,15 @@ public class Max extends Character {
 	public void keepInBound() {
 		if (x < 0) {
 			x = 0;
-		} else if (x > gp.screenX - gp.tileSize) {
-			x = gp.screenX - gp.tileSize;
+		} else if (x > gp.screenX + gp.tileSize) {
+			x = gp.screenX + gp.tileSize;
 		}
 
 		if (y < 0) {
 			y = 0;
 			yVel = 0;
-		} else if (y > gp.screenX - gp.tileSize) {
-			y = gp.screenX - gp.tileSize;
+		} else if (y > gp.screenY) {
+			y = gp.screenY;
 			airborne = false;
 			yVel = 0;
 		}
