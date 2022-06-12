@@ -33,7 +33,7 @@ public class GamePanel extends JPanel implements Runnable {
     public GamePanel() {
         setPreferredSize(new Dimension(screenX, screenY));
         setVisible(true);
-        background1 = new ImageIcon("background1.png").getImage();
+        //background1 = new ImageIcon("background1.png").getImage();
         this.addKeyListener(keyH);
         this.setFocusable(true);
 
@@ -67,7 +67,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     public void initialize() {
         // setups before the game starts running
-
+    	
     }
 
     public void paintComponent(Graphics g) {
