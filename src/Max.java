@@ -21,8 +21,8 @@ public class Max extends Character {
 	}
 
 	public void setDefaultValues() {
-		x = 0;
-		y = gp.screenY + gp.ogTileSize;
+		worldX = 0;
+		worldY = gp.screenY + gp.ogTileSize;
 		xVel = 0;
 		yVel = 0;
 		speed = 5;
@@ -73,8 +73,8 @@ public class Max extends Character {
 			}
 		}
 
-		x += xVel;
-		y -= yVel;
+		worldX += xVel;
+		worldY -= yVel;
 
 		spriteCounter++;
 		if (spriteCounter > 20) {
@@ -117,24 +117,22 @@ public class Max extends Character {
 		if (image == null) {
 			System.out.println("null");
 		}
-		g2.drawImage(image, x, y, gp.tileSize, gp.tileSize, null);
+		g2.drawImage(image, worldX, worldY, gp.tileSize, gp.tileSize, null);
 
 	}
 
 	public void keepInBound() {
-		if (x < 0) {
-			x = 0;
-		} else if (x > gp.screenX + gp.tileSize) {
-			x = gp.screenX + gp.tileSize;
+		if (worldX < 0) {
+			worldX = 0;
+		} else if (worldX > gp.screenX + gp.tileSize) {
+			worldX = gp.screenX + gp.tileSize;
 		}
 
-		if (y < 0) {
-			y = 0;
+		if (worldY < 0) {
+			worldY = 0;
 			yVel = 0;
-		} else if (y > (gp.screenY - gp.tileSize - 180)) {
-			y = gp.screenY - gp.tileSize - 180;
-			System.out.println(gp.screenY);
-			System.out.println(y);
+		} else if (worldY > (gp.screenY - gp.tileSize - 180)) {
+			worldY = gp.screenY - gp.tileSize - 180;
 			airborne = false;
 			yVel = 0;
 		}

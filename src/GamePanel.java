@@ -13,7 +13,7 @@ public class GamePanel extends JPanel implements Runnable {
     // Screen settings
 
     int ogTileSize = 16;
-    int scale = 6;
+    int scale = 4;
     int tileSize = ogTileSize * scale;
     int maxScrnX = 60;
     int maxScrnY = 60;
@@ -31,7 +31,7 @@ public class GamePanel extends JPanel implements Runnable {
     Image background1;
 
     public GamePanel() {
-        setPreferredSize(new Dimension(screenX, screenY));
+        setPreferredSize(new Dimension(screenX + 65, screenY));
         setVisible(true);
         background1 = new ImageIcon("background1.png").getImage();
         this.addKeyListener(keyH);
@@ -91,7 +91,7 @@ public class GamePanel extends JPanel implements Runnable {
         GamePanel myPanel = new GamePanel();
         Toolkit toolKit = frame.getToolkit();
         Dimension size = toolKit.getScreenSize();
-        frame.setSize(new Dimension(960, 960));
+        frame.setSize(new Dimension(1025, 960));
         frame.setLocation(size.width / 2 - frame.getWidth() / 2, size.height / 2 -
                 (frame.getHeight() / 2) + 50);
         System.out.println(size.getWidth() + " " + size.getHeight());
