@@ -23,6 +23,7 @@ public class GamePanel extends JPanel implements Runnable {
     int FPS = 60;
 
     // Controls class
+    TileManager tileM = new TileManager(this);
     KeyHandler keyH = new KeyHandler();
     Thread thread;
     // player
@@ -32,7 +33,7 @@ public class GamePanel extends JPanel implements Runnable {
     public GamePanel() {
         setPreferredSize(new Dimension(screenX, screenY));
         setVisible(true);
-        background1 = new ImageIcon("background1.png").getImage();
+        //background1 = new ImageIcon("background1.png").getImage();
         this.addKeyListener(keyH);
         this.setFocusable(true);
 
@@ -66,13 +67,14 @@ public class GamePanel extends JPanel implements Runnable {
 
     public void initialize() {
         // setups before the game starts running
-
+    	
     }
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
-        g2.drawImage(background1, 0, 0, screenX + 200, screenY, null);
+        // g2.drawImage(background1, 0, 0, screenX + 200, screenY, null);
+        tileM.draw(g2);
         max.draw(g2);
         // for (int i = 0; i < walls.length; i++)
         // g2.fill(walls[i]);
