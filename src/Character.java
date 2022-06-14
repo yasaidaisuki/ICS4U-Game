@@ -5,12 +5,12 @@ import java.awt.Rectangle;
 
 public class Character {
 
-	protected int worldX, worldY, hp, dmg;
+	protected int worldX, worldY, hp, maxHp, dmg;
 	protected double speed, xVel, yVel;
 	protected Rectangle player;
 
 	public BufferedImage left, right, left_w1, left_w2, left_w3, left_w4, right_w1, right_w2, right_w3, right_w4,
-			left_up, right_up, left_atk, right_atk;
+			left_atk, right_atk;
 	public String direction;
 
 	public int spriteCounter = 0;

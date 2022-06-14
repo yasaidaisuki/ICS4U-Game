@@ -13,11 +13,14 @@ public class Max extends Character {
 	double jumpSpeed;
 	double gravity;
 	boolean airborne;
+	boolean isHit;
 	boolean jump = false;
 	int screenX;
 	int screenY;
 	int buffer = 0;
 	int maxVel = 7;
+	
+	BufferedImage left_up, right_up, heart, empty_heart;
 
 	public Max(GamePanel gp, KeyHandler keyH) {
 		this.gp = gp;
@@ -33,6 +36,7 @@ public class Max extends Character {
 		jumpSpeed = 30;
 		gravity = 0.8;
 		player = new Rectangle((int) (gp.tileSize * 0), 0, 48, 48);
+		maxHp = 4;
 		hp = 4;
 		dmg = 1;
 		direction = "right";
@@ -42,7 +46,10 @@ public class Max extends Character {
 
 	public void getMaxImg() {
 		try {
-
+			// hp hearts
+			heart = ImageIO.read(getClass().getResourceAsStream("/Heart/heart.png"));
+			empty_heart = ImageIO.read(getClass().getResourceAsStream("/Heart/heart_empty.png"));
+			// sprites of character
 			left = ImageIO.read(getClass().getResourceAsStream("/max/max_left.png"));
 			right = ImageIO.read(getClass().getResourceAsStream("/max/max_right.png"));
 			left_w1 = ImageIO.read(getClass().getResourceAsStream("/max/max_leftwalk1.png"));
@@ -127,6 +134,32 @@ public class Max extends Character {
 		// g2.setColor(Color.RED);
 		// g2.fillRect(x, y, gp.tileSize, gp.tileSize);
 
+		int hp_X =  gp.tileSize/2;
+		int hp_Y =  gp.tileSize/2;
+		
+		int i = 0;
+		
+		// draw the current hp first, then fill in the missing
+		// current hp
+		while (i < gp.max.hp) {
+			g2.drawImage(heart, hp_X, hp_Y, gp.tileSize, gp.tileSize, null);
+			i++;
+			// change heart position for next draw.
+			hp_X +=gp.tileSize;
+		}
+		
+		// reset counter for next use
+		i =0;
+		
+		// missing hp
+		while (i < gp.max.maxHp - gp.max.hp) {
+			g2.drawImage(empty_heart, hp_X, hp_Y, gp.tileSize, gp.tileSize, null);
+			i++;
+			hp_X +=gp.tileSize;
+		}
+		
+		
+		
 		BufferedImage image = null;
 
 		switch (direction) {
