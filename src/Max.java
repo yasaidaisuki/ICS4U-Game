@@ -4,7 +4,6 @@ import javax.imageio.ImageIO;
 import java.awt.Graphics2D;
 import java.io.*;
 import java.awt.image.BufferedImage;
-import java.awt.Rectangle;
 
 public class Max extends Character {
 
@@ -13,11 +12,6 @@ public class Max extends Character {
 	double jumpSpeed;
 	double gravity;
 	boolean airborne;
-	boolean jump = false;
-	int screenX;
-	int screenY;
-	int buffer = 0;
-	int maxVel = 7;
 
 	public Max(GamePanel gp, KeyHandler keyH) {
 		this.gp = gp;
@@ -27,17 +21,16 @@ public class Max extends Character {
 	}
 
 	public void setDefaultValues() {
+		x = 0;
+		y = gp.screenY + gp.ogTileSize;
 		xVel = 0;
 		yVel = 0;
 		speed = 5;
-		jumpSpeed = 30;
-		gravity = 0.8;
-		player = new Rectangle((int) (gp.tileSize * 0), 0, 48, 48);
+		jumpSpeed = 20;
+		gravity = 0.9;
 		hp = 4;
 		dmg = 1;
 		direction = "right";
-		screenX = gp.screenX / 2 - (gp.tileSize / 2);
-		screenY = gp.screenY / 2 - (gp.tileSize / 2);
 	}
 
 	public void getMaxImg() {
@@ -67,45 +60,25 @@ public class Max extends Character {
 
 	public void move() {
 		if (keyH.left) {
-			if (buffer >= 15) {
-				if (xVel > -maxVel) {
-					xVel -= speed;
-				}
-				buffer = 0;
-			} else if (buffer < 7 && xVel > 0) {
-				buffer += 4;
-			} else {
-				buffer++;
-			}
+			xVel = -speed;
 			direction = "left";
 		} else if (keyH.right) {
-			if (buffer >= 15) {
-				if (xVel < maxVel) {
-					xVel += speed;
-				}
-				buffer = 0;
-			} else if (buffer < 7 && xVel < 0) {
-				buffer += 4;
-			} else {
-				buffer++;
-			}
+			xVel = speed;
 			direction = "right";
-		}
+		} else
+			xVel = 0;
 
 		if (airborne) {
 			yVel -= gravity;
 		} else {
-			yVel = 0;
 			if (keyH.jump) {
 				airborne = true;
 				yVel = jumpSpeed;
-			} else {
-				jump = false;
 			}
 		}
 
-		player.x += xVel;
-		player.y -= yVel;
+		x += xVel;
+		y -= yVel;
 
 		spriteCounter++;
 		if (spriteCounter > 10) {
@@ -116,7 +89,7 @@ public class Max extends Character {
 			} else if (spriteNum == 3) {
 				spriteNum = 4;
 			} else if (spriteNum == 4) {
-				spriteNum = 1;
+				spriteNum =1;
 			}
 			spriteCounter = 0;
 		}
@@ -139,7 +112,7 @@ public class Max extends Character {
 					image = left_w2;
 				if (spriteNum == 4)
 					image = left_w3;
-
+			
 				break;
 			case "right":
 				if (spriteNum == 1)
@@ -150,7 +123,7 @@ public class Max extends Character {
 					image = right_w2;
 				if (spriteNum == 4)
 					image = right_w3;
-
+				
 				break;
 			case "right_up":
 				image = right_up;
@@ -162,41 +135,24 @@ public class Max extends Character {
 		if (image == null) {
 			System.out.println("null");
 		}
-
-		int x = screenX;
-		int y = screenY;
-		if (screenX > player.x) {
-			x = player.x;
-		}
-		if (screenY > player.y) {
-			y = player.y;
-		}
-		int rightOffSet = gp.screenX - screenX;
-		if (rightOffSet > gp.screenX - player.x) {
-			x = gp.screenX - gp.worldWidth + player.x;
-		}
-
-		int bottomOffSet = gp.screenY - screenY;
-		if (bottomOffSet > gp.worldHeight - player.y) {
-			y = gp.screenY - gp.worldHeight + player.y;
-		}
-
 		g2.drawImage(image, x, y, gp.tileSize, gp.tileSize, null);
 
 	}
 
 	public void keepInBound() {
-		if (player.x < 0) {
-			player.x = 0;
-		} else if (player.x > gp.screenX - player.width) {
-			player.x = gp.screenX - player.width;
+		if (x < 0) {
+			x = 0;
+		} else if (x > gp.screenX + gp.tileSize) {
+			x = gp.screenX + gp.tileSize;
 		}
 
-		if (player.y < 0) {
-			player.y = 0;
+		if (y < 0) {
+			y = 0;
 			yVel = 0;
-		} else if (player.y > gp.screenY - player.height) {
-			player.y = gp.screenY - player.height;
+		} else if (y > (gp.screenY - gp.tileSize - 180)) {
+			y = gp.screenY - gp.tileSize - 180;
+			System.out.println(gp.screenY);
+			System.out.println(y);
 			airborne = false;
 			yVel = 0;
 		}
