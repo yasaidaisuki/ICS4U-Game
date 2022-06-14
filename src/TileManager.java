@@ -97,7 +97,18 @@ public class TileManager {
                     && worldX - gp.tileSize < gp.max.player.x + gp.max.screenX
                     && worldY + gp.tileSize > gp.max.player.y - gp.max.screenY
                     && worldY - gp.tileSize < gp.max.player.y + gp.max.screenY) {
-                g2.drawImage(tile[tileNum], screenX, screenY, gp.tileSize, gp.tileSize, null);
+                g2.drawImage(tile[tileNum].image, screenX, screenY, gp.tileSize, gp.tileSize, null);
+            } else if (gp.max.screenX > gp.max.player.x || gp.max.screenX > gp.max.player.y
+                    || rightOffSet > gp.worldWidth - gp.max.player.x
+                    || bottomOffSet > gp.worldHeight - gp.max.player.y) {
+                g2.drawImage(tile[tileNum].image, screenX, screenY, gp.tileSize, gp.tileSize, null);
+
+            }
+            x++;
+
+            if (x == gp.maxWorldCol) {
+                x = 0;
+                y++;
             }
 
         }
