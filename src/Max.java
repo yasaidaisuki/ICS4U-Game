@@ -166,6 +166,58 @@ public class Max extends Character {
 
 	}
 
+	void checkCollision(Tile block) {
+		Rectangle tile = block.blockHitBox;
+		if (player.intersects(tile)) {
+			// stop the rect from moving
+			double left1 = player.getX();
+			double right1 = player.getX() + player.getWidth();
+			double top1 = player.getY();
+			double bottom1 = player.getY() + player.getHeight();
+			double left2 = tile.getX();
+			double right2 = tile.getX() + tile.getWidth();
+			double top2 = tile.getY();
+			double bottom2 = tile.getY() + tile.getHeight();
+
+			if (right1 > left2 &&
+					left1 < left2 &&
+					right1 - left2 < bottom1 - top2 &&
+					right1 - left2 < bottom2 - top1) {
+				// rect collides from left side of the wall
+				if (block.collision) {
+					player.x = tile.x - player.width;
+				} else
+					airborne = true;
+			} else if (left1 < right2 &&
+					right1 > right2 &&
+					right2 - left1 < bottom1 - top2 &&
+					right2 - left1 < bottom2 - top1) {
+				// rect collides from right side of the wall
+				if (block.collision) {
+					player.x = tile.x + tile.width;
+				}
+				airborne = true;
+			} else if (bottom1 > top2 && top1 < top2) {
+				// rect collides from top side of the wall
+				if (block.collision) {
+					player.y = tile.y - player.height;
+					airborne = false;
+				}
+				airborne = true;
+
+			} else if (top1 < bottom2 && bottom1 > bottom2) {
+				// rect collides from bottom side of the wall
+
+				if (block.collision) {
+					player.y = tile.y + tile.height;
+					airborne = true;
+				}
+
+				airborne = true;
+			}
+		}
+	}
+
 	public void keepInBound() {
 		if (player.x < 0) {
 			player.x = 0;
