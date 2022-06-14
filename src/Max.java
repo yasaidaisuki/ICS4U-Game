@@ -26,8 +26,8 @@ public class Max extends Character {
 		xVel = 0;
 		yVel = 0;
 		speed = 5;
-		jumpSpeed = 30;
-		gravity = 0.8;
+		jumpSpeed = 20;
+		gravity = 0.9;
 		hp = 4;
 		dmg = 1;
 		direction = "right";
