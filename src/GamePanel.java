@@ -13,12 +13,17 @@ public class GamePanel extends JPanel implements Runnable {
     // Screen settings
 
     int ogTileSize = 16;
-    int scale = 4;
+    int scale = 3;
     int tileSize = ogTileSize * scale;
-    int maxScrnX = 60;
-    int maxScrnY = 60;
-    int screenX = ogTileSize * maxScrnX;
-    int screenY = ogTileSize * maxScrnX;
+    int maxScrnX = 24;
+    int maxScrnY = 18;
+    int screenX = tileSize * maxScrnX;
+    int screenY = tileSize * maxScrnX;
+
+    int maxWorldCol = 168;
+    int maxWorldRow = 22;
+    int worldWidth = tileSize * maxWorldCol;
+    int worldHeight = tileSize * maxWorldRow;
 
     int FPS = 60;
 
@@ -31,11 +36,12 @@ public class GamePanel extends JPanel implements Runnable {
     Image background1;
 
     public GamePanel() {
-        setPreferredSize(new Dimension(screenX + 65, screenY));
+        setPreferredSize(new Dimension(screenX, screenY));
         setVisible(true);
-        //background1 = new ImageIcon("background1.png").getImage();
+        // background1 = new ImageIcon("background1.png").getImage();
         this.addKeyListener(keyH);
         this.setFocusable(true);
+        this.setDoubleBuffered(true);
 
         thread = new Thread(this);
         thread.start();
@@ -67,7 +73,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     public void initialize() {
         // setups before the game starts running
-    	
+
     }
 
     public void paintComponent(Graphics g) {
@@ -89,12 +95,6 @@ public class GamePanel extends JPanel implements Runnable {
     public static void main(String[] args) {
         JFrame frame = new JFrame("Not Example");
         GamePanel myPanel = new GamePanel();
-        Toolkit toolKit = frame.getToolkit();
-        Dimension size = toolKit.getScreenSize();
-        frame.setSize(new Dimension(1025, 960));
-        frame.setLocation(size.width / 2 - frame.getWidth() / 2, size.height / 2 -
-                (frame.getHeight() / 2) + 50);
-        System.out.println(size.getWidth() + " " + size.getHeight());
         frame.add(myPanel);
         frame.setVisible(true);
         frame.pack();
