@@ -5,17 +5,24 @@ import javax.imageio.ImageIO;
 
 public class Heart {
 	
+	GamePanel gp;
 	public BufferedImage image;
 	public String name = "heart";
 	public boolean collision = false;
 	public int worldX, worldY;
 
-	public Heart() {
+	public Heart(GamePanel gp) {
+		this.gp = gp;
 		try {
 			image = ImageIO.read(getClass().getResourceAsStream("/objects/heart.png"));
+			//uTool.scaleImage(image, gp.ogTileSize, gp.TileSize);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public void draw(Graphics2D g2, Gamepanel gp) {
+		
 	}
 	
 }
