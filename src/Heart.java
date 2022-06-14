@@ -1,10 +1,11 @@
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.awt.Graphics2D;
 
 import javax.imageio.ImageIO;
 
 public class Heart {
-	
+
 	GamePanel gp;
 	public BufferedImage image;
 	public String name = "heart";
@@ -15,14 +16,14 @@ public class Heart {
 		this.gp = gp;
 		try {
 			image = ImageIO.read(getClass().getResourceAsStream("/objects/heart.png"));
-			//uTool.scaleImage(image, gp.ogTileSize, gp.TileSize);
+			// uTool.scaleImage(image, gp.ogTileSize, gp.TileSize);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-	
-	public void draw(Graphics2D g2, Gamepanel gp) {
-		
+
+	public void draw(Graphics2D g2) {
+
 	}
-	
+
 }
