@@ -80,7 +80,6 @@ public class GamePanel extends JPanel implements Runnable {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
         // g2.drawImage(background1, 0, 0, screenX + 200, screenY, null);
-        tileM.draw(g2);
         max.draw(g2);
         // for (int i = 0; i < walls.length; i++)
         // g2.fill(walls[i]);

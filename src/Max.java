@@ -17,7 +17,6 @@ public class Max extends Character {
 	boolean jump = false;
 	int screenX;
 	int screenY;
-	int buffer = 0;
 	int maxVel = 7;
 	
 	BufferedImage left_up, right_up, heart, empty_heart;
@@ -32,7 +31,7 @@ public class Max extends Character {
 	public void setDefaultValues() {
 		xVel = 0;
 		yVel = 0;
-		speed = 5;
+		speed = 1;
 		jumpSpeed = 30;
 		gravity = 0.8;
 		player = new Rectangle((int) (gp.tileSize * 0), 0, 48, 48);
@@ -74,28 +73,10 @@ public class Max extends Character {
 
 	public void move() {
 		if (keyH.left) {
-			if (buffer >= 15) {
-				if (xVel > -maxVel) {
-					xVel -= speed;
-				}
-				buffer = 0;
-			} else if (buffer < 7 && xVel > 0) {
-				buffer += 4;
-			} else {
-				buffer++;
-			}
+			xVel -= speed;
 			direction = "left";
 		} else if (keyH.right) {
-			if (buffer >= 15) {
-				if (xVel < maxVel) {
-					xVel += speed;
-				}
-				buffer = 0;
-			} else if (buffer < 7 && xVel < 0) {
-				buffer += 4;
-			} else {
-				buffer++;
-			}
+			xVel += speed;
 			direction = "right";
 		}
 
