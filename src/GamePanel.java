@@ -36,7 +36,11 @@ public class GamePanel extends JPanel implements Runnable {
     Image background1;
 
     public GamePanel() {
+<<<<<<< Updated upstream
         setPreferredSize(new Dimension(screenX, screenY));
+=======
+        setPreferredSize(new Dimension(1080, 1080));
+>>>>>>> Stashed changes
         setVisible(true);
         // background1 = new ImageIcon("background1.png").getImage();
         this.addKeyListener(keyH);
@@ -51,7 +55,7 @@ public class GamePanel extends JPanel implements Runnable {
     public void run() {
         initialize();
         while (true) {
-
+        	
             update();
 
             this.repaint();
@@ -79,8 +83,12 @@ public class GamePanel extends JPanel implements Runnable {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
+<<<<<<< Updated upstream
         // g2.drawImage(background1, 0, 0, screenX + 200, screenY, null);
         tileM.draw(g2);
+=======
+        //g2.drawImage(background1, 0, 0, screenX + 200, screenY, null);
+>>>>>>> Stashed changes
         max.draw(g2);
         // for (int i = 0; i < walls.length; i++)
         // g2.fill(walls[i]);
