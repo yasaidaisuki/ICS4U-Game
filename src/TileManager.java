@@ -2,25 +2,21 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.StringTokenizer;
 
 import javax.imageio.ImageIO;
 import java.awt.Graphics2D;
-import java.awt.Rectangle;
-import java.awt.Image;
 
 public class TileManager {
 
     GamePanel gp;
-    Image[] tile;
+    Tile[] tile;
     int mapTileNum[][];
-    public ArrayList<Tile> tiles = new ArrayList<>();
 
     public TileManager(GamePanel gp) {
         this.gp = gp;
 
-        tile = new Image[10];
+        tile = new Tile[10];
         mapTileNum = new int[gp.maxWorldCol][gp.maxWorldRow];
 
         getTileImage();
@@ -29,10 +25,18 @@ public class TileManager {
 
     public void getTileImage() {
         try {
-            tile[0] = ImageIO.read(getClass().getResourceAsStream("/background/earth.png"));
-            tile[1] = ImageIO.read(getClass().getResourceAsStream("/background/grass00.png"));
-            tile[2] = ImageIO.read(getClass().getResourceAsStream("/background/grass01.png"));
-            tile[3] = ImageIO.read(getClass().getResourceAsStream("/background/cloud.png"));
+            tile[0] = new Tile();
+            tile[0].image = ImageIO.read(getClass().getResourceAsStream("/background/earth.png"));
+
+            tile[1] = new Tile();
+            tile[1].image = ImageIO.read(getClass().getResourceAsStream("/background/grass00.png"));
+
+            tile[2] = new Tile();
+            tile[2].image = ImageIO.read(getClass().getResourceAsStream("/background/grass01.png"));
+
+            tile[3] = new Tile();
+            tile[3].image = ImageIO.read(getClass().getResourceAsStream("/background/cloud.png"));
+
         } catch (IOException e) {
             System.out.println("IOExceptio " + e);
         }
@@ -52,8 +56,6 @@ public class TileManager {
                 while (col < gp.maxWorldCol) {
                     int num = Integer.parseInt(nums.nextToken());
                     mapTileNum[col][row] = num;
-                    tiles.add(new Tile(tile[num],
-                            new Rectangle(col * gp.tileSize, row * gp.tileSize, gp.tileSize, gp.tileSize), false, num));
                     col++;
                 }
                 if (col == gp.maxWorldCol) {
@@ -89,23 +91,23 @@ public class TileManager {
             }
             int rightOffSet = gp.screenX - screenX;
             if (rightOffSet > gp.screenX - gp.max.player.x) {
-                screenX = gp.screenX - (gp.worldWidth - gp.max.player.x);
+                x = gp.screenX - gp.worldWidth + gp.max.player.x;
             }
 
             int bottomOffSet = gp.screenY - screenY;
             if (bottomOffSet > gp.worldHeight - gp.max.player.y) {
-                screenY = gp.screenY - (gp.worldHeight - gp.max.player.y);
+                y = gp.screenY - gp.worldHeight + gp.max.player.y;
             }
 
             if (worldX + gp.tileSize > gp.max.player.x - gp.max.screenX
                     && worldX - gp.tileSize < gp.max.player.x + gp.max.screenX
                     && worldY + gp.tileSize > gp.max.player.y - gp.max.screenY
                     && worldY - gp.tileSize < gp.max.player.y + gp.max.screenY) {
-                g2.drawImage(tile[tileNum], screenX, screenY, gp.tileSize, gp.tileSize, null);
+                g2.drawImage(tile[tileNum].image, screenX, screenY, gp.tileSize, gp.tileSize, null);
             } else if (gp.max.screenX > gp.max.player.x || gp.max.screenX > gp.max.player.y
                     || rightOffSet > gp.worldWidth - gp.max.player.x
                     || bottomOffSet > gp.worldHeight - gp.max.player.y) {
-                g2.drawImage(tile[tileNum], screenX, screenY, gp.tileSize, gp.tileSize, null);
+                g2.drawImage(tile[tileNum].image, screenX, screenY, gp.tileSize, gp.tileSize, null);
 
             }
             x++;

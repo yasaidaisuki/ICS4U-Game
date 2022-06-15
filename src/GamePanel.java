@@ -53,10 +53,8 @@ public class GamePanel extends JPanel implements Runnable {
         while (true) {
 
             update();
-            for (int i = 0; i < tileM.tiles.size(); i++) {
-                max.checkCollision(tileM.tiles.get(i));
-            }
-            max.keepInBound();
+
+            this.repaint();
 
             try {
                 Thread.sleep(1000 / FPS);
@@ -69,6 +67,7 @@ public class GamePanel extends JPanel implements Runnable {
     public void update() {
 
         max.move();
+        max.keepInBound();
 
     }
 
@@ -80,14 +79,15 @@ public class GamePanel extends JPanel implements Runnable {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
-        tileM.draw(g2);
+        // g2.drawImage(background1, 0, 0, screenX + 200, screenY, null);
         max.draw(g2);
         // for (int i = 0; i < walls.length; i++)
         // g2.fill(walls[i]);
         // g2.fill(rect);
     }
 
-    public void checkCollision() {
+    void checkCollision(Rectangle wall) {
+        // check if rect touches wall
 
     }
 

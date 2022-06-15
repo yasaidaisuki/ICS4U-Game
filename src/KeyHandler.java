@@ -4,7 +4,7 @@ import java.awt.event.KeyListener;
 
 public class KeyHandler implements KeyListener {
 
-	boolean jump, left, right, attack;
+	boolean jump, left, right;
 	
     @Override
     public void keyTyped(KeyEvent e) {
@@ -23,11 +23,6 @@ public class KeyHandler implements KeyListener {
             left = false;
         } else if (key == KeyEvent.VK_W) {
             jump = true;
-        } else if (key == KeyEvent.VK_J) {
-        	attack = true;
-        	jump = false;
-        	right = false;
-            left = false;
         }
     }
 
