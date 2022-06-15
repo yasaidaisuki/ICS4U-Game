@@ -42,7 +42,7 @@ public class Max extends Character {
 	public void setDefaultValues() {
 		xVel = 0;
 		yVel = 0;
-		speed = 0.2;
+		speed = 3;
 		jumpSpeed = 30;
 		gravity = 0.2;
 		player = new Rectangle((int) (gp.tileSize * 0), 0, 48, 48);
@@ -232,26 +232,11 @@ public class Max extends Character {
 			System.out.println("null");
 		}
 
-		// true
+
 		int x = screenX;
 		int y = screenY;
-		if (screenX > player.x) {
-			x = player.x;
-		}
-		if (screenY > player.y) {
-			y = player.y;
-		}
-		int rightOffSet = gp.screenX - screenX;
-		if (rightOffSet > gp.screenX - player.x) {
-			x = gp.screenX - gp.worldWidth + player.x;
-		}
 
-		int bottomOffSet = gp.screenY - screenY;
-		if (bottomOffSet > gp.worldHeight - player.y) {
-			y = gp.screenY - gp.worldHeight + player.y;
-		}
-
-		g2.drawImage(image, x, y, gp.tileSize, gp.tileSize, null);
+		g2.drawImage(image, x, y, gp.tileSize*2, gp.tileSize*2, null);
 
 	}
 

@@ -14,15 +14,10 @@ public class GamePanel extends JPanel implements Runnable {
     int ogTileSize = 16;	// 16 pxl tile size
     int scale = 3;	// scale multiplier
     int tileSize = ogTileSize * scale;	// tile size
-    int maxScrnX = 24;	// max screen x
-    int maxScrnY = 18;	// max screen y
-    int screenX = tileSize * maxScrnX;	// actual screen dimensions
-    int screenY = tileSize * maxScrnX;	// actual screen dimensions
-
-    int maxWorldCol = 168;	//	dimensions for drawing map
-    int maxWorldRow = 22;	// dimensions for drawing map
-    int worldWidth = tileSize * maxWorldCol;	// true
-    int worldHeight = tileSize * maxWorldRow;	// true
+    int maxScreenCol = 24;	// max screen x
+    int maxScreenRow = 18;	// max screen y
+    int screenX = tileSize * maxScreenCol;	// actual screen dimensions
+    int screenY = tileSize * maxScreenRow;	// actual screen dimensions
     
     int FPS = 60;	// fps
 
@@ -33,7 +28,7 @@ public class GamePanel extends JPanel implements Runnable {
     // player
     Max max = new Max(this, keyH);
     // image background
-    Image background1;
+    Image background;
 
     // Name: GamePanel	
  	// Purpose: game constructor
@@ -43,7 +38,6 @@ public class GamePanel extends JPanel implements Runnable {
     	// set dimensions
         setPreferredSize(new Dimension(screenX, screenY));
         setVisible(true);
-        // background1 = new ImageIcon("background1.png").getImage();
         this.addKeyListener(keyH);
         this.setFocusable(true);
         this.setDoubleBuffered(true);
@@ -98,13 +92,17 @@ public class GamePanel extends JPanel implements Runnable {
 	// Param: Graphics
 	// Return: void
     public void paintComponent(Graphics g) {
+    	try {
+    		background = ImageIO.read(getClass().getResourceAsStream("/background/background1.png"));
+    	} catch (IOException e) {
+    		e.printStackTrace();
+    	}
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
-        // g2.drawImage(background1, 0, 0, screenX + 200, screenY, null);
-        max.draw(g2);
-        // for (int i = 0; i < walls.length; i++)
-        // g2.fill(walls[i]);
-        // g2.fill(rect);
+         g2.drawImage(background, 0, 0, screenX + 200, screenY, null);
+         tileM.draw(g2);
+         max.draw(g2);
+       
     }
 
     // Name: prob useless ngl
