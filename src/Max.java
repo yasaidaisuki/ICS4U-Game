@@ -13,13 +13,10 @@ public class Max extends Character {
 	double jumpSpeed;
 	double gravity;
 	boolean airborne;
-	boolean isHit;
 	boolean jump = false;
 	int screenX;
 	int screenY;
 	int maxVel = 7;
-	
-	BufferedImage left_up, right_up, heart, empty_heart;
 
 	public Max(GamePanel gp, KeyHandler keyH) {
 		this.gp = gp;
@@ -35,7 +32,6 @@ public class Max extends Character {
 		jumpSpeed = 30;
 		gravity = 0.8;
 		player = new Rectangle((int) (gp.tileSize * 0), 0, 48, 48);
-		maxHp = 4;
 		hp = 4;
 		dmg = 1;
 		direction = "right";
@@ -45,10 +41,7 @@ public class Max extends Character {
 
 	public void getMaxImg() {
 		try {
-			// hp hearts
-			heart = ImageIO.read(getClass().getResourceAsStream("/Heart/heart.png"));
-			empty_heart = ImageIO.read(getClass().getResourceAsStream("/Heart/heart_empty.png"));
-			// sprites of character
+
 			left = ImageIO.read(getClass().getResourceAsStream("/max/max_left.png"));
 			right = ImageIO.read(getClass().getResourceAsStream("/max/max_right.png"));
 			left_w1 = ImageIO.read(getClass().getResourceAsStream("/max/max_leftwalk1.png"));
@@ -115,32 +108,6 @@ public class Max extends Character {
 		// g2.setColor(Color.RED);
 		// g2.fillRect(x, y, gp.tileSize, gp.tileSize);
 
-		int hp_X =  gp.tileSize/2;
-		int hp_Y =  gp.tileSize/2;
-		
-		int i = 0;
-		
-		// draw the current hp first, then fill in the missing
-		// current hp
-		while (i < gp.max.hp) {
-			g2.drawImage(heart, hp_X, hp_Y, gp.tileSize, gp.tileSize, null);
-			i++;
-			// change heart position for next draw.
-			hp_X +=gp.tileSize;
-		}
-		
-		// reset counter for next use
-		i =0;
-		
-		// missing hp
-		while (i < gp.max.maxHp - gp.max.hp) {
-			g2.drawImage(empty_heart, hp_X, hp_Y, gp.tileSize, gp.tileSize, null);
-			i++;
-			hp_X +=gp.tileSize;
-		}
-		
-		
-		
 		BufferedImage image = null;
 
 		switch (direction) {
@@ -197,6 +164,58 @@ public class Max extends Character {
 
 		g2.drawImage(image, x, y, gp.tileSize, gp.tileSize, null);
 
+	}
+
+	void checkCollision(Tile block) {
+		Rectangle tile = block.blockHitBox;
+		if (player.intersects(tile)) {
+			// stop the rect from moving
+			double left1 = player.getX();
+			double right1 = player.getX() + player.getWidth();
+			double top1 = player.getY();
+			double bottom1 = player.getY() + player.getHeight();
+			double left2 = tile.getX();
+			double right2 = tile.getX() + tile.getWidth();
+			double top2 = tile.getY();
+			double bottom2 = tile.getY() + tile.getHeight();
+
+			if (right1 > left2 &&
+					left1 < left2 &&
+					right1 - left2 < bottom1 - top2 &&
+					right1 - left2 < bottom2 - top1) {
+				// rect collides from left side of the wall
+				if (block.collision) {
+					player.x = tile.x - player.width;
+				} else
+					airborne = true;
+			} else if (left1 < right2 &&
+					right1 > right2 &&
+					right2 - left1 < bottom1 - top2 &&
+					right2 - left1 < bottom2 - top1) {
+				// rect collides from right side of the wall
+				if (block.collision) {
+					player.x = tile.x + tile.width;
+				}
+				airborne = true;
+			} else if (bottom1 > top2 && top1 < top2) {
+				// rect collides from top side of the wall
+				if (block.collision) {
+					player.y = tile.y - player.height;
+					airborne = false;
+				}
+				airborne = true;
+
+			} else if (top1 < bottom2 && bottom1 > bottom2) {
+				// rect collides from bottom side of the wall
+
+				if (block.collision) {
+					player.y = tile.y + tile.height;
+					airborne = true;
+				}
+
+				airborne = true;
+			}
+		}
 	}
 
 	public void keepInBound() {
