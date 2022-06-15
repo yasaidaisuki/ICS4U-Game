@@ -23,28 +23,28 @@ public class Max extends Character {
 	// player exclusive frames || enemies dont need hp or jump sprites
 	BufferedImage left_up, right_up, heart, empty_heart;
 
-    // Name: Max
- 	// Purpose: to make a max
- 	// Param: GamePanel, KeyHandler
- 	// Return: n/a
+	// Name: Max
+	// Purpose: to make a max
+	// Param: GamePanel, KeyHandler
+	// Return: n/a
 	public Max(GamePanel gp, KeyHandler keyH) {
-		this.gp = gp;	// import game panel to draw and update
-		this.keyH = keyH;	// import keyH to control 
+		this.gp = gp; // import game panel to draw and update
+		this.keyH = keyH; // import keyH to control
 		// mmmmmm
-		setDefaultValues();	
+		setDefaultValues();
 		getMaxImg();
 	}
 
-    // Name: setDefaultValues
- 	// Purpose: easy access to player attributes
- 	// Param: n/a
- 	// Return: void
+	// Name: setDefaultValues
+	// Purpose: easy access to player attributes
+	// Param: n/a
+	// Return: void
 	public void setDefaultValues() {
 		xVel = 0;
 		yVel = 0;
-		speed = 1;
+		speed = 0.2;
 		jumpSpeed = 30;
-		gravity = 0.8;
+		gravity = 0.2;
 		player = new Rectangle((int) (gp.tileSize * 0), 0, 48, 48);
 		maxHp = 4;
 		hp = 4;
@@ -55,10 +55,10 @@ public class Max extends Character {
 		screenY = gp.screenY / 2 - (gp.tileSize / 2);
 	}
 
-    // Name: getMaxImg
- 	// Purpose: initialize the sprites using buffered images
- 	// Param: n/a
- 	// Return: void
+	// Name: getMaxImg
+	// Purpose: initialize the sprites using buffered images
+	// Param: n/a
+	// Return: void
 	public void getMaxImg() {
 		try {
 			// hp hearts
@@ -89,10 +89,10 @@ public class Max extends Character {
 		}
 	}
 
-    // Name: move
- 	// Purpose: check for player movement
- 	// Param: n/a
- 	// Return: void
+	// Name: move
+	// Purpose: check for player movement
+	// Param: n/a
+	// Return: void
 	public void move() {
 		if (keyH.left) {
 			xVel -= speed;
@@ -112,9 +112,9 @@ public class Max extends Character {
 			yVel = 0;
 			if (keyH.jump) {
 				// sides of jump
-				if (direction.equals("left")) {
+				if (direction.equals("left") || direction.equals("idle_l")) {
 					direction = "left_up";
-				} else if (direction.equals("right")) {
+				} else if (direction.equals("left") || direction.equals("idle_r")) {
 					direction = "right_up";
 				}
 				airborne = true;
@@ -123,21 +123,18 @@ public class Max extends Character {
 				jump = false;
 			}
 		}
-
+		// idle frame || left & right
+		if (xVel == 0) {
+			if (direction.equals("left")) {
+				direction = "idle_l";
+			} else if (direction.equals("right")) {
+				direction = "idle_r";
+			}
+		}
 		// update player location
 		player.x += xVel;
 		player.y -= yVel;
 
-		
-
-		// idle frame || left & right
-		if (xVel == 0) {
-			if (direction.equals("left") || direction.equals("left_up")) {
-				direction = "idle_l";
-			} else if (direction.equals("right") || direction.equals("right_up")) {
-				direction = "idle_r";
-			}
-		}
 		// animation
 		spriteCounter++;
 		if (spriteCounter > 10) {
@@ -154,12 +151,11 @@ public class Max extends Character {
 		}
 	}
 
-    // Name: draw
- 	// Purpose: draw the character sprites
- 	// Param: Graphics2D
- 	// Return: void
+	// Name: draw
+	// Purpose: draw the character sprites
+	// Param: Graphics2D
+	// Return: void
 	public void draw(Graphics2D g2) {
-		
 
 		int hp_X = gp.tileSize / 2;
 		int hp_Y = gp.tileSize / 2;
@@ -185,9 +181,9 @@ public class Max extends Character {
 			hp_X += gp.tileSize;
 		}
 		// initialize image
-		
+
 		BufferedImage image = null;
-		// checks for left 
+		// checks for left
 		if (direction.equals("left")) {
 			if (spriteNum == 1)
 				image = left_w1;
@@ -211,29 +207,20 @@ public class Max extends Character {
 				image = right_w3;
 		}
 		// checks for right jump
-		if (direction.equals("right_up")) {
-			if (spriteNum < 3) {
-				image = right_up;
-			} else {
-				image = right;
-			}
+		else if (direction.equals("right_up")) {
+			image = right_up;
 		}
 		// checks for left jump
-		if (direction.equals("left_up")) {
-			if (spriteNum < 3) {
-				image = left_up;
-			} else {
-				image = left;
-			}
+		else if (direction.equals("left_up")) {
+			image = left_up;
 		}
 		// checks for idle
-		if (direction.equals("idle_l")) {
+		else if (direction.equals("idle_l")) {
 			image = left;
-		}
-		if (direction.equals("idle_r")) {
+		} else if (direction.equals("idle_r")) {
 			image = right;
 		}
-		
+
 		// debug
 		if (image == null) {
 			System.out.println("null");
@@ -263,7 +250,7 @@ public class Max extends Character {
 	}
 
 	// Name: keepInBound
-	// Purpose: keep player in bound 
+	// Purpose: keep player in bound
 	// Param: n/a
 	// Return: void
 	public void keepInBound() {
