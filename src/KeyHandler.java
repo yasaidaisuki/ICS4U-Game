@@ -4,7 +4,7 @@ import java.awt.event.KeyListener;
 
 public class KeyHandler implements KeyListener {
 
-	boolean jump, left, right, attack;
+	boolean jump, left, right, attack;	// check for player input
 	
     @Override
     public void keyTyped(KeyEvent e) {
@@ -12,7 +12,10 @@ public class KeyHandler implements KeyListener {
 
     }
 
-    @Override
+    // Name: keyPressed
+ 	// Purpose: check for keypress
+ 	// Param: KeyEvent
+ 	// Return: void
     public void keyPressed(KeyEvent e) {
         int key = e.getKeyCode();
         if (key == KeyEvent.VK_A) {
@@ -31,7 +34,10 @@ public class KeyHandler implements KeyListener {
         }
     }
 
-    @Override
+    // Name: keyReleased
+ 	// Purpose: check for key released
+ 	// Param: KeyEvent
+ 	// Return: void
     public void keyReleased(KeyEvent e) {
         int key = e.getKeyCode();
         if (key == KeyEvent.VK_A) {

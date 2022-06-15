@@ -11,31 +11,36 @@ import java.awt.image.BufferedImage;
 public class GamePanel extends JPanel implements Runnable {
 
     // Screen settings
+    int ogTileSize = 16;	// 16 pxl tile size
+    int scale = 3;	// scale multiplier
+    int tileSize = ogTileSize * scale;	// tile size
+    int maxScrnX = 24;	// max screen x
+    int maxScrnY = 18;	// max screen y
+    int screenX = tileSize * maxScrnX;	// actual screen dimensions
+    int screenY = tileSize * maxScrnX;	// actual screen dimensions
 
-    int ogTileSize = 16;
-    int scale = 3;
-    int tileSize = ogTileSize * scale;
-    int maxScrnX = 24;
-    int maxScrnY = 18;
-    int screenX = tileSize * maxScrnX;
-    int screenY = tileSize * maxScrnX;
-
-    int maxWorldCol = 168;
-    int maxWorldRow = 22;
-    int worldWidth = tileSize * maxWorldCol;
-    int worldHeight = tileSize * maxWorldRow;
-
-    int FPS = 60;
+    int maxWorldCol = 168;	//	dimensions for drawing map
+    int maxWorldRow = 22;	// dimensions for drawing map
+    int worldWidth = tileSize * maxWorldCol;	// true
+    int worldHeight = tileSize * maxWorldRow;	// true
+    
+    int FPS = 60;	// fps
 
     // Controls class
-    TileManager tileM = new TileManager(this);
-    KeyHandler keyH = new KeyHandler();
-    Thread thread;
+    TileManager tileM = new TileManager(this);	// tile manager object
+    KeyHandler keyH = new KeyHandler();	// control handler object
+    Thread thread;	// thread
     // player
     Max max = new Max(this, keyH);
+    // image background
     Image background1;
 
+    // Name: GamePanel	
+ 	// Purpose: game constructor
+ 	// Param: n/a
+ 	// Return: n/a
     public GamePanel() {
+    	// set dimensions
         setPreferredSize(new Dimension(screenX, screenY));
         setVisible(true);
         // background1 = new ImageIcon("background1.png").getImage();
@@ -43,11 +48,15 @@ public class GamePanel extends JPanel implements Runnable {
         this.setFocusable(true);
         this.setDoubleBuffered(true);
 
+        // start threading game
         thread = new Thread(this);
         thread.start();
     }
 
-    @Override
+    // Name: run
+ 	// Purpose: constantly loop the game || makes it run
+ 	// Param: n/a
+ 	// Return: n/a
     public void run() {
         initialize();
         while (true) {
@@ -64,18 +73,30 @@ public class GamePanel extends JPanel implements Runnable {
         }
     }
 
+    // Name: update
+ 	// Purpose: updates values inside the run
+ 	// Param: n/a
+ 	// Return: void
     public void update() {
 
         max.move();
         max.keepInBound();
 
     }
-
+    
+    // Name: 
+ 	// Purpose: 
+ 	// Param: 
+ 	// Return: 
     public void initialize() {
         // setups before the game starts running
 
     }
-
+    
+    // Name: paintComponent
+	// Purpose: draw the game || characters, background, ect.
+	// Param: Graphics
+	// Return: void
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
@@ -86,6 +107,10 @@ public class GamePanel extends JPanel implements Runnable {
         // g2.fill(rect);
     }
 
+    // Name: prob useless ngl
+ 	// Purpose: 
+ 	// Param: 
+ 	// Return: 
     void checkCollision(Rectangle wall) {
         // check if rect touches wall
 

@@ -8,26 +8,37 @@ import java.awt.Rectangle;
 
 public class Max extends Character {
 
+	// imports gamepanel and control handler
 	GamePanel gp;
 	KeyHandler keyH;
 	double jumpSpeed;
+	// character attributes
 	double gravity;
 	boolean airborne;
 	boolean isHit;
 	boolean jump = false;
 	int screenX;
 	int screenY;
-	int maxVel = 7;
 
+	// player exclusive frames || enemies dont need hp or jump sprites
 	BufferedImage left_up, right_up, heart, empty_heart;
 
+    // Name: Max
+ 	// Purpose: to make a max
+ 	// Param: GamePanel, KeyHandler
+ 	// Return: n/a
 	public Max(GamePanel gp, KeyHandler keyH) {
-		this.gp = gp;
-		this.keyH = keyH;
-		setDefaultValues();
+		this.gp = gp;	// import game panel to draw and update
+		this.keyH = keyH;	// import keyH to control 
+		// mmmmmm
+		setDefaultValues();	
 		getMaxImg();
 	}
 
+    // Name: setDefaultValues
+ 	// Purpose: easy access to player attributes
+ 	// Param: n/a
+ 	// Return: void
 	public void setDefaultValues() {
 		xVel = 0;
 		yVel = 0;
@@ -38,11 +49,16 @@ public class Max extends Character {
 		maxHp = 4;
 		hp = 4;
 		dmg = 1;
+		// default sprite
 		direction = "right";
 		screenX = gp.screenX / 2 - (gp.tileSize / 2);
 		screenY = gp.screenY / 2 - (gp.tileSize / 2);
 	}
 
+    // Name: getMaxImg
+ 	// Purpose: initialize the sprites using buffered images
+ 	// Param: n/a
+ 	// Return: void
 	public void getMaxImg() {
 		try {
 			// hp hearts
@@ -73,6 +89,10 @@ public class Max extends Character {
 		}
 	}
 
+    // Name: move
+ 	// Purpose: check for player movement
+ 	// Param: n/a
+ 	// Return: void
 	public void move() {
 		if (keyH.left) {
 			xVel -= speed;
@@ -81,7 +101,7 @@ public class Max extends Character {
 			xVel += speed;
 			direction = "right";
 		}
-		// if not moving left or right
+		// if not moving left or right set horizontal vel to 0
 		else {
 			xVel = 0;
 		}
@@ -104,10 +124,11 @@ public class Max extends Character {
 			}
 		}
 
+		// update player location
 		player.x += xVel;
 		player.y -= yVel;
 
-		spriteCounter++;
+		
 
 		// idle frame || left & right
 		if (xVel == 0) {
@@ -117,7 +138,8 @@ public class Max extends Character {
 				direction = "idle_r";
 			}
 		}
-
+		// animation
+		spriteCounter++;
 		if (spriteCounter > 10) {
 			if (spriteNum == 1) {
 				spriteNum = 2;
@@ -132,10 +154,12 @@ public class Max extends Character {
 		}
 	}
 
+    // Name: draw
+ 	// Purpose: draw the character sprites
+ 	// Param: Graphics2D
+ 	// Return: void
 	public void draw(Graphics2D g2) {
-		// this is the test case
-		// g2.setColor(Color.RED);
-		// g2.fillRect(x, y, gp.tileSize, gp.tileSize);
+		
 
 		int hp_X = gp.tileSize / 2;
 		int hp_Y = gp.tileSize / 2;
@@ -160,9 +184,10 @@ public class Max extends Character {
 			i++;
 			hp_X += gp.tileSize;
 		}
-
+		// initialize image
+		
 		BufferedImage image = null;
-
+		// checks for left 
 		if (direction.equals("left")) {
 			if (spriteNum == 1)
 				image = left_w1;
@@ -174,7 +199,7 @@ public class Max extends Character {
 				image = left_w3;
 
 		}
-
+		// checks for right
 		else if (direction.equals("right")) {
 			if (spriteNum == 1)
 				image = right_w1;
@@ -185,6 +210,7 @@ public class Max extends Character {
 			if (spriteNum == 4)
 				image = right_w3;
 		}
+		// checks for right jump
 		if (direction.equals("right_up")) {
 			if (spriteNum < 3) {
 				image = right_up;
@@ -192,6 +218,7 @@ public class Max extends Character {
 				image = right;
 			}
 		}
+		// checks for left jump
 		if (direction.equals("left_up")) {
 			if (spriteNum < 3) {
 				image = left_up;
@@ -199,17 +226,20 @@ public class Max extends Character {
 				image = left;
 			}
 		}
-
+		// checks for idle
 		if (direction.equals("idle_l")) {
 			image = left;
 		}
 		if (direction.equals("idle_r")) {
 			image = right;
 		}
+		
+		// debug
 		if (image == null) {
 			System.out.println("null");
 		}
 
+		// true
 		int x = screenX;
 		int y = screenY;
 		if (screenX > player.x) {
@@ -232,6 +262,10 @@ public class Max extends Character {
 
 	}
 
+	// Name: keepInBound
+	// Purpose: keep player in bound 
+	// Param: n/a
+	// Return: void
 	public void keepInBound() {
 		if (player.x < 0) {
 			player.x = 0;
