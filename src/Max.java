@@ -107,6 +107,12 @@ public class Max extends Character {
 		}
 
 		if (airborne) {
+			if (keyH.right) {
+				direction ="right_up";
+			}
+			else if (keyH.left) {
+				direction = "left_up";
+			}
 			yVel -= gravity;
 		} else {
 			yVel = 0;
