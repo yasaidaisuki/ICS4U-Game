@@ -40,12 +40,13 @@ public class Max extends Character {
 	// Param: n/a
 	// Return: void
 	public void setDefaultValues() {
+		airborne = true;
 		xVel = 0;
 		yVel = 0;
-		speed = 3;
-		jumpSpeed = 30;
-		gravity = 0.2;
-		player = new Rectangle((int) (gp.tileSize * 0), 0, 48, 48);
+		speed = 0.3;
+		jumpSpeed = 25;
+		gravity = 0.8;
+		player = new Rectangle((int) (gp.tileSize * 0), 0, gp.tileSize, gp.tileSize*2);
 		maxHp = 4;
 		hp = 4;
 		dmg = 1;
@@ -95,10 +96,14 @@ public class Max extends Character {
 	// Return: void
 	public void move() {
 		if (keyH.left) {
-			xVel -= speed;
+			if(xVel >-10) {
+				xVel -= speed;
+			}
 			direction = "left";
 		} else if (keyH.right) {
-			xVel += speed;
+			if(xVel < 10) {
+				xVel += speed;
+			}
 			direction = "right";
 		}
 		// if not moving left or right set horizontal vel to 0
@@ -235,8 +240,7 @@ public class Max extends Character {
 
 		int x = screenX;
 		int y = screenY;
-
-		g2.drawImage(image, x, y, gp.tileSize*2, gp.tileSize*2, null);
+		g2.drawImage(image, player.x, player.y, gp.tileSize*2, gp.tileSize*2, null);
 
 	}
 

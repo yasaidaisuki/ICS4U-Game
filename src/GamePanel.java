@@ -15,7 +15,7 @@ public class GamePanel extends JPanel implements Runnable {
     int scale = 3;	// scale multiplier
     int tileSize = ogTileSize * scale;	// tile size
     int maxScreenCol = 24;	// max screen x
-    int maxScreenRow = 18;	// max screen y
+    int maxScreenRow = 16;	// max screen y
     int screenX = tileSize * maxScreenCol;	// actual screen dimensions
     int screenY = tileSize * maxScreenRow;	// actual screen dimensions
     
@@ -40,7 +40,7 @@ public class GamePanel extends JPanel implements Runnable {
         setVisible(true);
         this.addKeyListener(keyH);
         this.setFocusable(true);
-        this.setDoubleBuffered(true);
+        //this.setDoubleBuffered(true);
 
         // start threading game
         thread = new Thread(this);
@@ -105,15 +105,7 @@ public class GamePanel extends JPanel implements Runnable {
        
     }
 
-    // Name: prob useless ngl
- 	// Purpose: 
- 	// Param: 
- 	// Return: 
-    void checkCollision(Rectangle wall) {
-        // check if rect touches wall
-
-    }
-
+    
     public static void main(String[] args) {
         JFrame frame = new JFrame("Not Example");
         GamePanel myPanel = new GamePanel();
