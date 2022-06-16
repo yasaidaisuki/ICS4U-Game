@@ -11,37 +11,42 @@ import java.awt.image.BufferedImage;
 public class GamePanel extends JPanel implements Runnable {
 
     // Screen settings
-    int ogTileSize = 16;	// 16 pxl tile size
-    int scale = 3;	// scale multiplier
-    int tileSize = ogTileSize * scale;	// tile size
-    int maxScreenCol = 24;	// max screen x
-    int maxScreenRow = 16;	// max screen y
-    int screenX = tileSize * maxScreenCol;	// actual screen dimensions
-    int screenY = tileSize * maxScreenRow;	// actual screen dimensions
-    
-    int FPS = 60;	// fps
+    int ogTileSize = 16; // 16 pxl tile size
+    int scale = 3; // scale multiplier
+    int tileSize = ogTileSize * scale; // tile size
+    int maxScreenCol = 24; // max screen x
+    int maxScreenRow = 16; // max screen y
+    int screenX = tileSize * maxScreenCol; // actual screen dimensions
+    int screenY = tileSize * maxScreenRow; // actual screen dimensions
+
+    int maxWorldCol = 160;
+    int maxWorldRow = 22;
+    int worldHeight = maxWorldCol * tileSize;
+    int worldWidth = maxWorldRow * tileSize;
+
+    int FPS = 60; // fps
 
     // Controls class
-    TileManager tileM = new TileManager(this);	// tile manager object
-    KeyHandler keyH = new KeyHandler();	// control handler object
-    Thread thread;	// thread
+    TileManager tileM = new TileManager(this); // tile manager object
+    KeyHandler keyH = new KeyHandler(); // control handler object
+    Thread thread; // thread
     // player
     Max max = new Max(this, keyH);
     Tyler tyler[] = new Tyler[4];
     // image background
     Image background;
 
-    // Name: GamePanel	
- 	// Purpose: game constructor
- 	// Param: n/a
- 	// Return: n/a
+    // Name: GamePanel
+    // Purpose: game constructor
+    // Param: n/a
+    // Return: n/a
     public GamePanel() {
-    	// set dimensions
+        // set dimensions
         setPreferredSize(new Dimension(screenX, screenY));
         setVisible(true);
         this.addKeyListener(keyH);
         this.setFocusable(true);
-        //this.setDoubleBuffered(true);
+        // this.setDoubleBuffered(true);
 
         // start threading game
         thread = new Thread(this);
@@ -49,9 +54,9 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     // Name: run
- 	// Purpose: constantly loop the game || makes it run
- 	// Param: n/a
- 	// Return: n/a
+    // Purpose: constantly loop the game || makes it run
+    // Param: n/a
+    // Return: n/a
     public void run() {
         initialize();
         while (true) {
@@ -69,44 +74,43 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     // Name: update
- 	// Purpose: updates values inside the run
- 	// Param: n/a
- 	// Return: void
+    // Purpose: updates values inside the run
+    // Param: n/a
+    // Return: void
     public void update() {
 
         max.move();
         max.keepInBound();
 
     }
-    
-    // Name: 
- 	// Purpose: 
- 	// Param: 
- 	// Return: 
+
+    // Name:
+    // Purpose:
+    // Param:
+    // Return:
     public void initialize() {
         // setups before the game starts running
 
     }
-    
+
     // Name: paintComponent
-	// Purpose: draw the game || characters, background, ect.
-	// Param: Graphics
-	// Return: void
+    // Purpose: draw the game || characters, background, ect.
+    // Param: Graphics
+    // Return: void
     public void paintComponent(Graphics g) {
-    	try {
-    		background = ImageIO.read(getClass().getResourceAsStream("/background/background1.png"));
-    	} catch (IOException e) {
-    		e.printStackTrace();
-    	}
+        try {
+            background = ImageIO.read(getClass().getResourceAsStream("/background/background1.png"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
-         g2.drawImage(background, 0, 0, screenX + 200, screenY, null);
-         tileM.draw(g2);
-         max.draw(g2);
-       
+        g2.drawImage(background, 0, 0, screenX + 200, screenY, null);
+        tileM.draw(g2);
+        max.draw(g2);
+
     }
 
-    
     public static void main(String[] args) {
         JFrame frame = new JFrame("Not Example");
         GamePanel myPanel = new GamePanel();

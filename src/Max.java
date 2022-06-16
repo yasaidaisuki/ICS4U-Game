@@ -11,13 +11,22 @@ public class Max extends Character {
 	// imports gamepanel and control handler
 	GamePanel gp;
 	KeyHandler keyH;
-	double jumpSpeed;
+	private double jumpSpeed;
 	// character attributes
+<<<<<<< Updated upstream
 	double gravity;
 	boolean airborne;
 	boolean jump = false;
 	int screenX;
 	int screenY;
+=======
+	private double gravity;
+	private boolean airborne;
+	private boolean isHit;
+	private boolean jump = false;
+	private int screenX;
+	private int screenY;
+>>>>>>> Stashed changes
 
 	// player exclusive frames || enemies dont need hp or jump sprites
 	BufferedImage left_up, right_up, heart, empty_heart;
@@ -280,8 +289,6 @@ public class Max extends Character {
 			System.out.println("null");
 		}
 
-		int x = screenX;
-		int y = screenY;
 		g2.drawImage(image, player.x, player.y, gp.tileSize * 2, gp.tileSize * 2, null);
 
 	}
@@ -291,12 +298,6 @@ public class Max extends Character {
 	// Param: n/a
 	// Return: void
 	public void keepInBound() {
-		if (player.x < 0) {
-			player.x = 0;
-		} else if (player.x > gp.screenX - player.width) {
-			player.x = gp.screenX - player.width;
-		}
-
 		if (player.y < 0) {
 			player.y = 0;
 			yVel = 0;
@@ -305,6 +306,22 @@ public class Max extends Character {
 			airborne = false;
 			yVel = 0;
 		}
+	}
+
+	public int getScreenX() {
+		return screenX;
+	}
+
+	public void setScreenX(int screenX) {
+		this.screenX = screenX;
+	}
+
+	public int getScreenY() {
+		return screenY;
+	}
+
+	public void setScreenY(int screenY) {
+		this.screenY = screenY;
 	}
 
 }
