@@ -46,7 +46,7 @@ public class Max extends Character {
 		speed = 0.3;
 		jumpSpeed = 25;
 		gravity = 0.8;
-		player = new Rectangle((int) (gp.tileSize * 0), 0, gp.tileSize, gp.tileSize*2);
+		player = new Rectangle((int) (gp.tileSize * 0), 0, gp.tileSize, gp.tileSize * 2);
 		maxHp = 4;
 		hp = 4;
 		dmg = 1;
@@ -96,12 +96,14 @@ public class Max extends Character {
 	// Return: void
 	public void move() {
 		if (keyH.left) {
-			if(xVel >-10) {
+
+			if (xVel > -5) {
 				xVel -= speed;
 			}
 			direction = "left";
 		} else if (keyH.right) {
-			if(xVel < 10) {
+
+			if (xVel < 5) {
 				xVel += speed;
 			}
 			direction = "right";
@@ -110,12 +112,19 @@ public class Max extends Character {
 		else {
 			xVel = 0;
 		}
-
-		if (airborne) {
-			if (keyH.right) {
-				direction ="right_up";
+		
+		if (!airborne) {
+			if (direction.equals("left_up") || direction.equals("idle_l")) {
+				direction = "left";
+			} else if (direction.equals("right_up") || direction.equals("idle_r")) {
+				direction = "right";
 			}
-			else if (keyH.left) {
+		}
+		
+		if (airborne) {
+			if (keyH.right || direction.equals("idle_r")) {
+				direction = "right_up";
+			} else if (keyH.left || direction.equals("idle_l")) {
 				direction = "left_up";
 			}
 			yVel -= gravity;
@@ -123,11 +132,6 @@ public class Max extends Character {
 			yVel = 0;
 			if (keyH.jump) {
 				// sides of jump
-				if (direction.equals("left") || direction.equals("idle_l")) {
-					direction = "left_up";
-				} else if (direction.equals("left") || direction.equals("idle_r")) {
-					direction = "right_up";
-				}
 				airborne = true;
 				yVel = jumpSpeed;
 			} else {
@@ -237,10 +241,9 @@ public class Max extends Character {
 			System.out.println("null");
 		}
 
-
 		int x = screenX;
 		int y = screenY;
-		g2.drawImage(image, player.x, player.y, gp.tileSize*2, gp.tileSize*2, null);
+		g2.drawImage(image, player.x, player.y, gp.tileSize * 2, gp.tileSize * 2, null);
 
 	}
 
