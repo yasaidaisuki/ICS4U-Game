@@ -18,6 +18,10 @@ public abstract class Character {
 			right_w3, right_w4, left_atk, right_atk;
 	public String direction;
 
+	// attacking && hit detection
+	boolean isAtk = false;
+	boolean isHit = false;
+	
 	// for animation
 	public int spriteCounter = 0;
 	public int spriteNum = 1;

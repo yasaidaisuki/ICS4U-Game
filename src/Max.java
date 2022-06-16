@@ -15,7 +15,6 @@ public class Max extends Character {
 	// character attributes
 	double gravity;
 	boolean airborne;
-	boolean isHit;
 	boolean jump = false;
 	int screenX;
 	int screenY;
@@ -48,7 +47,7 @@ public class Max extends Character {
 		gravity = 0.8;
 		player = new Rectangle((int) (gp.tileSize * 0), 0, gp.tileSize, gp.tileSize * 2);
 		maxHp = 4;
-		hp = 4;
+		hp = maxHp;
 		dmg = 1;
 		// default sprite
 		direction = "right";
@@ -112,7 +111,7 @@ public class Max extends Character {
 		else {
 			xVel = 0;
 		}
-		
+
 		if (!airborne) {
 			if (direction.equals("left_up") || direction.equals("idle_l")) {
 				direction = "left";
@@ -120,7 +119,7 @@ public class Max extends Character {
 				direction = "right";
 			}
 		}
-		
+
 		if (airborne) {
 			if (keyH.right || direction.equals("idle_r")) {
 				direction = "right_up";
@@ -138,11 +137,31 @@ public class Max extends Character {
 				jump = false;
 			}
 		}
+
 		// idle frame || left & right
 		if (xVel == 0) {
 			if (direction.equals("left")) {
 				direction = "idle_l";
 			} else if (direction.equals("right")) {
+				direction = "idle_r";
+			}
+		}
+
+		// attack frame
+		if (keyH.attack && xVel == 0) {
+			if (direction.equals("idle_l")) {
+				direction = "atk_l";
+				isAtk = true;
+			} else if (direction.equals("idle_r")) {
+				direction = "atk_r";
+				isAtk = true;
+			}
+		} else if (keyH.attack = false) {
+			if (direction.equals("atk_l")) {
+				isAtk = false;
+				direction = "idle_l";
+			} else if (direction.equals("atk_r")) {
+				isAtk = false;
 				direction = "idle_r";
 			}
 		}
@@ -234,6 +253,26 @@ public class Max extends Character {
 			image = left;
 		} else if (direction.equals("idle_r")) {
 			image = right;
+		} else if (direction.equals("atk_l")) {
+			if (spriteNum < 4) {
+				image = left_atk;
+			}
+			else {
+				direction = "idle_l";
+				image = left;
+				keyH.attack = false;
+				spriteNum = 1;
+			}
+		} else if (direction.equals("atk_r")) {
+			if (spriteNum < 4) {
+				image = right_atk;
+			}
+			else {
+				direction = "idle_r";
+				image = right;
+				keyH.attack = false;
+				spriteNum = 1;
+			}
 		}
 
 		// debug

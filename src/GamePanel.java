@@ -27,6 +27,7 @@ public class GamePanel extends JPanel implements Runnable {
     Thread thread;	// thread
     // player
     Max max = new Max(this, keyH);
+    Tyler tyler[] = new Tyler[4];
     // image background
     Image background;
 
