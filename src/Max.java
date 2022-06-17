@@ -257,8 +257,7 @@ public class Max extends Character {
 		} else if (direction.equals("atk_l")) {
 			if (spriteNum < 4) {
 				image = left_atk;
-			}
-			else {
+			} else {
 				direction = "idle_l";
 				image = left;
 				keyH.attack = false;
@@ -267,8 +266,7 @@ public class Max extends Character {
 		} else if (direction.equals("atk_r")) {
 			if (spriteNum < 4) {
 				image = right_atk;
-			}
-			else {
+			} else {
 				direction = "idle_r";
 				image = right;
 				keyH.attack = false;
@@ -281,7 +279,18 @@ public class Max extends Character {
 			System.out.println("null");
 		}
 
-		g2.drawImage(image, player.x, player.y, gp.tileSize * 2, gp.tileSize * 2, null);
+		int x = screenX;
+		int y = screenY;
+		if (screenX > player.x)
+			x = player.x;
+		int bottomOffSet = gp.screenY - screenY;
+		if (bottomOffSet > gp.worldHeight - player.y) {
+			y = gp.screenY - (gp.worldHeight - player.y);
+		}
+
+		System.out.println("x: " + player.x + "y: " + player.y);
+
+		g2.drawImage(image, x, y, gp.tileSize * 2, gp.tileSize * 2, null);
 
 	}
 
@@ -290,6 +299,10 @@ public class Max extends Character {
 	// Param: n/a
 	// Return: void
 	public void keepInBound() {
+		if (player.x < 0) {
+			player.x = 0;
+		}
+
 		if (player.y < 0) {
 			player.y = 0;
 			yVel = 0;

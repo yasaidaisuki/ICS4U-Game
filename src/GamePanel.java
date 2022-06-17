@@ -15,16 +15,16 @@ public class GamePanel extends JPanel implements Runnable {
     int scale = 3; // scale multiplier
     int tileSize = ogTileSize * scale; // tile size
     int maxScreenCol = 24; // max screen x
-    int maxScreenRow = 16; // max screen y
+    int maxScreenRow = 18; // max screen y
     int screenX = tileSize * maxScreenCol; // actual screen dimensions
     int screenY = tileSize * maxScreenRow; // actual screen dimensions
 
-    int maxWorldCol = 160;
+    int maxWorldCol = 168;
     int maxWorldRow = 22;
     int worldHeight = maxWorldCol * tileSize;
     int worldWidth = maxWorldRow * tileSize;
 
-    int FPS = 60; // fps
+    int FPS = 40; // fps
 
     // Controls class
     TileManager tileM = new TileManager(this); // tile manager object
