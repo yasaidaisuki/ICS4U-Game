@@ -13,14 +13,12 @@ public class Max extends Character {
 	KeyHandler keyH;
 	private double jumpSpeed;
 	// character attributes
-
 	private double gravity;
 	private boolean airborne;
 	private boolean isHit;
 	private boolean jump = false;
 	private int screenX;
 	private int screenY;
-
 
 	// player exclusive frames || enemies dont need hp or jump sprites
 	BufferedImage left_up, right_up, heart, empty_heart;
