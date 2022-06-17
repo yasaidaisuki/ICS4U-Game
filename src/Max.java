@@ -13,20 +13,14 @@ public class Max extends Character {
 	KeyHandler keyH;
 	private double jumpSpeed;
 	// character attributes
-<<<<<<< Updated upstream
-	double gravity;
-	boolean airborne;
-	boolean jump = false;
-	int screenX;
-	int screenY;
-=======
+
 	private double gravity;
 	private boolean airborne;
 	private boolean isHit;
 	private boolean jump = false;
 	private int screenX;
 	private int screenY;
->>>>>>> Stashed changes
+
 
 	// player exclusive frames || enemies dont need hp or jump sprites
 	BufferedImage left_up, right_up, heart, empty_heart;
