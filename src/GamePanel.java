@@ -80,6 +80,7 @@ public class GamePanel extends JPanel implements Runnable {
 
         max.move();
         max.keepInBound();
+        checkCollision();
 
         tyler.setAction();
 

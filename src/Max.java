@@ -273,8 +273,13 @@ public class Max extends Character {
 				// rect collides from left side of the wall
 				if (t.isCollision()) {
 					player.x = block.x - player.width;
-				} else
-					airborne = true;
+				}
+			} else if (bottom1 > top2 && top1 < top2) {
+				// rect collides from top side of the wall
+				if (t.isCollision()) {
+					player.y = block.y - player.height;
+					airborne = false;
+				}
 			} else if (left1 < right2 &&
 					right1 > right2 &&
 					right2 - left1 < bottom1 - top2 &&
@@ -282,12 +287,9 @@ public class Max extends Character {
 				// rect collides from right side of the wall
 				if (t.isCollision()) {
 					player.x = block.x + block.width;
-				} else
-					airborne = true;
-
+				}
 			} else if (top1 < bottom2 && bottom1 > bottom2) {
 				// rect collides from bottom side of the wall
-
 				if (t.isCollision()) {
 					player.y = block.y + block.height;
 					airborne = true;

@@ -91,8 +91,15 @@ public class TileManager {
 
 					mapTileNum[col][row] = num;
 
-					tiles.add(new Tile(tile[num].image,
-							new Rectangle(col * gp.tileSize, row * gp.tileSize, gp.tileSize, gp.tileSize), num, true));
+					if (num != 0) {
+						tiles.add(new Tile(tile[num].image,
+								new Rectangle(col * gp.tileSize, row * gp.tileSize, gp.tileSize, gp.tileSize), num,
+								true));
+					} else {
+						tiles.add(new Tile(tile[num].image,
+								new Rectangle(col * gp.tileSize, row * gp.tileSize, gp.tileSize, gp.tileSize), num,
+								false));
+					}
 
 					col++;
 				}
