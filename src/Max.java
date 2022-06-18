@@ -43,7 +43,7 @@ public class Max extends Character {
 		airborne = true;
 		xVel = 0;
 		yVel = 0;
-		speed = 0.3;
+		speed = 0.1;
 		jumpSpeed = 25;
 		gravity = 0.8;
 		player = new Rectangle((int) (gp.tileSize * 0), 0, gp.tileSize, gp.tileSize * 2);
@@ -96,14 +96,13 @@ public class Max extends Character {
 	// Return: void
 	public void move() {
 		if (keyH.left) {
-
-			if (xVel > -5) {
+			if (xVel >= -3) {
 				xVel -= speed;
 			}
 			direction = "left";
 		} else if (keyH.right) {
 
-			if (xVel < 5) {
+			if (xVel <= 3) {
 				xVel += speed;
 			}
 			direction = "right";
@@ -148,24 +147,6 @@ public class Max extends Character {
 			}
 		}
 
-		// attack frame
-		if (keyH.attack && xVel == 0) {
-			if (direction.equals("idle_l")) {
-				direction = "atk_l";
-				isAtk = true;
-			} else if (direction.equals("idle_r")) {
-				direction = "atk_r";
-				isAtk = true;
-			}
-		} else if (keyH.attack = false) {
-			if (direction.equals("atk_l")) {
-				isAtk = false;
-				direction = "idle_l";
-			} else if (direction.equals("atk_r")) {
-				isAtk = false;
-				direction = "idle_r";
-			}
-		}
 		// update player location
 		player.x += xVel;
 		player.y -= yVel;
@@ -254,26 +235,8 @@ public class Max extends Character {
 			image = left;
 		} else if (direction.equals("idle_r")) {
 			image = right;
-		} else if (direction.equals("atk_l")) {
-			if (spriteNum < 4) {
-				image = left_atk;
-			} else {
-				direction = "idle_l";
-				image = left;
-				keyH.attack = false;
-				spriteNum = 1;
-			}
-		} else if (direction.equals("atk_r")) {
-			if (spriteNum < 4) {
-				image = right_atk;
-			} else {
-				direction = "idle_r";
-				image = right;
-				keyH.attack = false;
-				spriteNum = 1;
-			}
-		}
-
+		} 
+		
 		// debug
 		if (image == null) {
 			System.out.println("null");
@@ -288,7 +251,7 @@ public class Max extends Character {
 			y = gp.screenY - (gp.worldHeight - player.y);
 		}
 
-		System.out.println("x: " + player.x + "y: " + player.y);
+		//System.out.println("x: " + player.x + "y: " + player.y);
 
 		g2.drawImage(image, x, y, gp.tileSize * 2, gp.tileSize * 2, null);
 

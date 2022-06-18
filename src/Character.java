@@ -10,7 +10,7 @@ public abstract class Character {
 	// each character also have speed xVel, yVel
 	protected int worldX, worldY, hp, maxHp, dmg;
 	protected double speed, xVel, yVel;
-	// draws a rectangle for player
+	// draws a rectangle
 	protected Rectangle player;
 
 	// images for each frame sprite

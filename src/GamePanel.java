@@ -24,7 +24,7 @@ public class GamePanel extends JPanel implements Runnable {
     int worldHeight = maxWorldCol * tileSize;
     int worldWidth = maxWorldRow * tileSize;
 
-    int FPS = 40; // fps
+    int FPS = 60; // fps
 
     // Controls class
     TileManager tileM = new TileManager(this); // tile manager object
@@ -32,7 +32,7 @@ public class GamePanel extends JPanel implements Runnable {
     Thread thread; // thread
     // player
     Max max = new Max(this, keyH);
-    Tyler tyler[] = new Tyler[4];
+    Wong tyler = new Wong(this);
     // image background
     Image background;
 
@@ -81,7 +81,10 @@ public class GamePanel extends JPanel implements Runnable {
 
         max.move();
         max.keepInBound();
+        
+        tyler.setAction();
 
+        
     }
 
     // Name:
@@ -108,7 +111,8 @@ public class GamePanel extends JPanel implements Runnable {
         g2.drawImage(background, 0, 0, screenX + 200, screenY, null);
         tileM.draw(g2);
         max.draw(g2);
-
+        tyler.draw(g2);
+        
     }
 
     public static void main(String[] args) {
