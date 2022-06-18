@@ -3,16 +3,19 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.StringTokenizer;
 
 import javax.imageio.ImageIO;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 
 public class TileManager {
 
-	GamePanel gp;
-	Tile[] tile;
-	int mapTileNum[][];
+	private GamePanel gp;
+	private Tile[] tile;
+	private int mapTileNum[][];
+	private ArrayList<Tile> tiles = new ArrayList<>();
 
 	public TileManager(GamePanel gp) {
 		this.gp = gp;
@@ -87,6 +90,10 @@ public class TileManager {
 					int num = Integer.parseInt(numbers[col]);
 
 					mapTileNum[col][row] = num;
+
+					tiles.add(new Tile(tile[num].image,
+							new Rectangle(col * gp.tileSize, row * gp.tileSize, gp.tileSize, gp.tileSize), num, true));
+
 					col++;
 				}
 				if (col == gp.maxWorldCol) {
@@ -123,10 +130,10 @@ public class TileManager {
 			// screenX = gp.screenX - (gp.screenX - worldX);
 			// }
 
-			// int bottomOffSet = gp.screenY - gp.max.getScreenY();
-			// if (bottomOffSet > gp.screenY - gp.max.player.y) {
-			// screenY = gp.screenY - (gp.screenY - worldY);
-			// }
+			int bottomOffSet = gp.screenY - gp.max.getScreenY();
+			if (bottomOffSet > gp.worldHeight - gp.max.player.y) {
+				screenY = gp.screenY - (gp.worldHeight - worldY);
+			}
 
 			g2.drawImage(tile[tileNum].image, screenX, screenY, gp.tileSize, gp.tileSize, null);
 			col++;
@@ -140,6 +147,10 @@ public class TileManager {
 			}
 		}
 
+	}
+
+	public ArrayList<Tile> getTiles() {
+		return tiles;
 	}
 
 }

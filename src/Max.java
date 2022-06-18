@@ -43,8 +43,8 @@ public class Max extends Character {
 		airborne = true;
 		xVel = 0;
 		yVel = 0;
-		speed = 0.1;
-		jumpSpeed = 25;
+		speed = 1;
+		jumpSpeed = 15;
 		gravity = 0.8;
 		player = new Rectangle((int) (gp.tileSize * 0), 0, gp.tileSize, gp.tileSize * 2);
 		maxHp = 4;
@@ -235,8 +235,8 @@ public class Max extends Character {
 			image = left;
 		} else if (direction.equals("idle_r")) {
 			image = right;
-		} 
-		
+		}
+
 		// debug
 		if (image == null) {
 			System.out.println("null");
@@ -251,10 +251,50 @@ public class Max extends Character {
 			y = gp.screenY - (gp.worldHeight - player.y);
 		}
 
-		//System.out.println("x: " + player.x + "y: " + player.y);
-
 		g2.drawImage(image, x, y, gp.tileSize * 2, gp.tileSize * 2, null);
 
+	}
+
+	public void checkCollision(Tile t) {
+		Rectangle block = t.getHitbox();
+		if (player.intersects(block)) {
+			double left1 = player.getX();
+			double right1 = player.getX() + player.getWidth();
+			double top1 = player.getY();
+			double bottom1 = player.getY() + player.getHeight();
+			double left2 = block.getX();
+			double right2 = block.getX() + block.getWidth();
+			double top2 = block.getY();
+			double bottom2 = block.getY() + block.getHeight();
+			if (right1 > left2 &&
+					left1 < left2 &&
+					right1 - left2 < bottom1 - top2 &&
+					right1 - left2 < bottom2 - top1) {
+				// rect collides from left side of the wall
+				if (t.isCollision()) {
+					player.x = block.x - player.width;
+				} else
+					airborne = true;
+			} else if (left1 < right2 &&
+					right1 > right2 &&
+					right2 - left1 < bottom1 - top2 &&
+					right2 - left1 < bottom2 - top1) {
+				// rect collides from right side of the wall
+				if (t.isCollision()) {
+					player.x = block.x + block.width;
+				} else
+					airborne = true;
+
+			} else if (top1 < bottom2 && bottom1 > bottom2) {
+				// rect collides from bottom side of the wall
+
+				if (t.isCollision()) {
+					player.y = block.y + block.height;
+					airborne = true;
+				} else
+					airborne = true;
+			}
+		}
 	}
 
 	// Name: keepInBound

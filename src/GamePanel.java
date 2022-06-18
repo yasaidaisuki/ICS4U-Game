@@ -15,7 +15,7 @@ public class GamePanel extends JPanel implements Runnable {
     int scale = 3; // scale multiplier
     int tileSize = ogTileSize * scale; // tile size
     int maxScreenCol = 24; // max screen x
-    int maxScreenRow = 18; // max screen y
+    int maxScreenRow = 17; // max screen y
     int screenX = tileSize * maxScreenCol; // actual screen dimensions
     int screenY = tileSize * maxScreenRow; // actual screen dimensions
 
@@ -42,7 +42,7 @@ public class GamePanel extends JPanel implements Runnable {
     // Return: n/a
     public GamePanel() {
         // set dimensions
-        setPreferredSize(new Dimension(screenX, screenY));
+        setPreferredSize(new Dimension(screenX, screenY - 2 * tileSize));
         setVisible(true);
         this.addKeyListener(keyH);
         this.setFocusable(true);
@@ -62,7 +62,6 @@ public class GamePanel extends JPanel implements Runnable {
         while (true) {
 
             update();
-
             this.repaint();
 
             try {
@@ -81,10 +80,15 @@ public class GamePanel extends JPanel implements Runnable {
 
         max.move();
         max.keepInBound();
-        
+
         tyler.setAction();
 
-        
+    }
+
+    public void checkCollision() {
+        for (int i = 0; i < tileM.getTiles().size(); i++) {
+            max.checkCollision(tileM.getTiles().get(i));
+        }
     }
 
     // Name:
@@ -112,7 +116,7 @@ public class GamePanel extends JPanel implements Runnable {
         tileM.draw(g2);
         max.draw(g2);
         tyler.draw(g2);
-        
+
     }
 
     public static void main(String[] args) {

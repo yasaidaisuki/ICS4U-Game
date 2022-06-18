@@ -13,7 +13,7 @@ public class Wong extends Character {
 	private int screenX;
 	private int screenY;
 	int actionLockCounter = 0;
-	
+
 	public Wong(GamePanel gp) {
 		this.gp = gp;
 
@@ -146,7 +146,7 @@ public class Wong extends Character {
 			y = gp.screenY - (gp.worldHeight - player.y);
 		}
 
-		System.out.println("x: " + player.x + "y: " + player.y);
+		// System.out.println("x: " + player.x + "y: " + player.y);
 
 		g2.drawImage(image, x, y, gp.tileSize * 2, gp.tileSize * 2, null);
 
