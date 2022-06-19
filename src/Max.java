@@ -16,7 +16,6 @@ public class Max extends Character {
 	private double gravity;
 	private boolean airborne;
 	private boolean isHit;
-	private boolean jump = false;
 	private int screenX;
 	private int screenY;
 
@@ -133,8 +132,6 @@ public class Max extends Character {
 				// sides of jump
 				airborne = true;
 				yVel = jumpSpeed;
-			} else {
-				jump = false;
 			}
 		}
 
@@ -269,19 +266,14 @@ public class Max extends Character {
 			double right2 = block.getX() + block.getWidth();
 			double top2 = block.getY();
 			double bottom2 = block.getY() + block.getHeight();
-			if (right1 > left2 &&
-					left1 < left2 &&
-					right1 - left2 < bottom1 - top2 &&
-					right1 - left2 < bottom2 - top1) {
+			if (right1 > left2 && left1 < left2 && right1 - left2 < bottom1 - top2 && right1 - left2 < bottom2 - top1) {
 				// rect collides from left side of the wall
 				if (t.isCollision()) {
 					player.x = block.x - player.width;
 					return true;
 				}
-			} else if (left1 < right2 &&
-					right1 > right2 &&
-					right2 - left1 < bottom1 - top2 &&
-					right2 - left1 < bottom2 - top1) {
+			} else if (left1 < right2 && right1 > right2 && right2 - left1 < bottom1 - top2
+					&& right2 - left1 < bottom2 - top1) {
 				// rect collides from right side of the wall
 				if (t.isCollision()) {
 					player.x = block.x + block.width;

@@ -46,6 +46,8 @@ public class KeyHandler implements KeyListener {
             right = false;
         } else if (key == KeyEvent.VK_W) {
             jump = false;
+        } else if (key == KeyEvent.VK_J) {
+        	attack = false;
         }
     }
 
