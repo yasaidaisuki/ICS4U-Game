@@ -256,7 +256,6 @@ public class Max extends Character {
 
 		// System.out.println(player.x);
 		g2.drawImage(image, x, y, gp.tileSize * 2, gp.tileSize * 2, null);
-		g2.drawRect(x, y, player.width, player.height);
 	}
 
 	public boolean checkCollision(Tile t) {

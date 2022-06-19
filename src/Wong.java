@@ -1,4 +1,3 @@
-import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.FileNotFoundException;
@@ -6,12 +5,13 @@ import java.io.IOException;
 import java.util.Random;
 
 import javax.imageio.ImageIO;
+import java.awt.Graphics2D;
 
 public class Wong extends Character {
-
 	GamePanel gp;
 	private int screenX;
 	private int screenY;
+	boolean airborne;
 	int actionLockCounter = 0;
 
 	public Wong(GamePanel gp) {
@@ -22,8 +22,9 @@ public class Wong extends Character {
 	}
 
 	public void setDefaultValues() {
-		speed = 0.1;
-		player = new Rectangle((int) (gp.tileSize * 0), 0, gp.tileSize, gp.tileSize * 2);
+		xVel = 0;
+		speed = 1;
+		player = new Rectangle((int) (gp.tileSize * 5), (int) (gp.tileSize * 15), gp.tileSize * 2, gp.tileSize * 2);
 		maxHp = 5;
 		hp = maxHp;
 		dmg = 2;
@@ -59,7 +60,7 @@ public class Wong extends Character {
 		actionLockCounter++;
 		// random left or right
 		Random random = new Random();
-		int i = random.nextInt(100) + 1;
+		int i = random.nextInt(50) + 1;
 
 		if (actionLockCounter == 20) {
 			// if random number is divisible by 5, then the tyler is idle
@@ -71,11 +72,9 @@ public class Wong extends Character {
 				}
 				// if random number is even then the tyler moves right
 			} else if (i % 2 != 0) {
-				player.x += speed;
 				direction = "right";
 				// else then the tyler moves left
 			} else {
-				player.x -= speed;
 				direction = "left";
 			}
 
@@ -96,6 +95,17 @@ public class Wong extends Character {
 			}
 			spriteCounter = 0;
 		}
+	}
+
+	public void move() {
+		if (direction.equals("left")) {
+			xVel = -speed;
+		} else if (direction.equals("right")) {
+			xVel = speed;
+		} else {
+			xVel = 0;
+		}
+		player.x += xVel;
 	}
 
 	public void draw(Graphics2D g2) {
@@ -137,19 +147,88 @@ public class Wong extends Character {
 			System.out.println("null");
 		}
 
-		int x = screenX;
-		int y = screenY;
-		if (screenX > player.x)
-			x = player.x;
-		int bottomOffSet = gp.screenY - screenY;
-		if (bottomOffSet > gp.worldHeight - player.y) {
-			y = gp.screenY - (gp.worldHeight - player.y);
+		int x = player.x - gp.max.player.x + gp.max.getScreenX();
+		int y = player.y - gp.max.player.y + gp.max.getScreenY();
+
+		if ((player.x >= (gp.max.player.x - gp.screenX) && (player.x <= gp.max.player.x + gp.screenX))) {
+			System.out.println("yes");
+			g2.drawImage(image, x, y, gp.tileSize * 2, gp.tileSize * 2, null);
+		} else
+			System.out.println("no");
+		// draw enemy
+
+	}
+
+	public boolean checkCollision(Tile t) {
+		Rectangle block = t.getHitbox();
+		if (player.intersects(block)) {
+			double left1 = player.getX();
+			double right1 = player.getX() + player.getWidth();
+			double top1 = player.getY();
+			double bottom1 = player.getY() + player.getHeight();
+			double left2 = block.getX();
+			double right2 = block.getX() + block.getWidth();
+			double top2 = block.getY();
+			double bottom2 = block.getY() + block.getHeight();
+			if (right1 > left2 &&
+					left1 < left2 &&
+					right1 - left2 < bottom1 - top2 &&
+					right1 - left2 < bottom2 - top1) {
+				// rect collides from left side of the wall
+				if (t.isCollision()) {
+					player.x = block.x - player.width;
+					return true;
+				}
+			} else if (left1 < right2 &&
+					right1 > right2 &&
+					right2 - left1 < bottom1 - top2 &&
+					right2 - left1 < bottom2 - top1) {
+				// rect collides from right side of the wall
+				if (t.isCollision()) {
+					player.x = block.x + block.width;
+					return true;
+				}
+			} else if (bottom1 > top2 && top1 < top2) {
+				// rect collides from top side of the wall
+				if (t.isCollision()) {
+					airborne = false;
+					yVel = 0;
+					player.y = block.y - player.height;
+					return true;
+				}
+			} else if (top1 < bottom2 && bottom1 > bottom2) {
+				// rect collides from bottom side of the wall
+				if (t.isCollision()) {
+					player.y = block.y + block.height;
+					airborne = true;
+				} else
+					airborne = true;
+			}
+		}
+		if ((player.y + gp.tileSize * 2) >= gp.tileSize * 17) {
+			airborne = false;
+		}
+		return false;
+
+	}
+
+	public void keepInBound() {
+		if (player.x < 0) {
+			player.x = 0;
 		}
 
-		// System.out.println("x: " + player.x + "y: " + player.y);
+		if (player.x > 8064 - 16 * 3 * 13) {
+			player.x = 8064 - 16 * 3 * 13;
+		}
 
-		g2.drawImage(image, x, y, gp.tileSize * 2, gp.tileSize * 2, null);
-
+		// if (player.y < 0) {
+		// player.y = 0;
+		// yVel = 0;
+		// } else if (player.y > gp.screenY - player.height) {
+		// player.y = gp.screenY - player.height;
+		// airborne = false;
+		// yVel = 0;
+		// }
 	}
 
 }

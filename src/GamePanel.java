@@ -32,7 +32,8 @@ public class GamePanel extends JPanel implements Runnable {
     Thread thread; // thread
     // player
     Max max = new Max(this, keyH);
-    Wong tyler = new Wong(this);
+    Tyler tyler = new Tyler(this);
+    Wong wong = new Wong(this);
     // image background
     Image background;
 
@@ -82,6 +83,11 @@ public class GamePanel extends JPanel implements Runnable {
         max.keepInBound();
         checkCollision();
         tyler.setAction();
+        tyler.move();
+        tyler.keepInBound();
+        wong.setAction();
+        wong.move();
+        wong.keepInBound();
 
     }
 
@@ -92,6 +98,11 @@ public class GamePanel extends JPanel implements Runnable {
                 flag = true;
             }
         }
+        // for (int i = 0; i < tileM.getTiles().size(); i++) {
+        // if (tyler.checkCollision(tileM.getTiles().get(i))) {
+        // flag = true;
+        // }
+        // }
         // if (!flag) {
         // max.setAirborne(true);
         // }
@@ -122,7 +133,7 @@ public class GamePanel extends JPanel implements Runnable {
         tileM.draw(g2);
         max.draw(g2);
         tyler.draw(g2);
-
+        wong.draw(g2);
     }
 
     public static void main(String[] args) {
