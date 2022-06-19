@@ -46,7 +46,7 @@ public class Max extends Character {
 		speed = 1;
 		jumpSpeed = 20;
 		gravity = 0.8;
-		player = new Rectangle((int) (gp.tileSize * 0), 0, gp.tileSize, gp.tileSize * 2);
+		player = new Rectangle((int) (gp.tileSize * 0), (int) (gp.tileSize * 0), gp.tileSize * 2, gp.tileSize * 2);
 		maxHp = 4;
 		hp = maxHp;
 		dmg = 1;
@@ -246,23 +246,20 @@ public class Max extends Character {
 		int y = screenY;
 		if (screenX > player.x)
 			x = player.x;
-		if(screenY > player.y)
-			y=player.y;
-	
-		
-			
+		if (screenY > player.y)
+			y = player.y;
+
 		int bottomOffSet = gp.screenY - screenY;
 		if (bottomOffSet > gp.worldHeight - player.y) {
 			y = gp.screenY - (gp.worldHeight - player.y);
 		}
 
-		
-		//System.out.println(player.x);
+		// System.out.println(player.x);
 		g2.drawImage(image, x, y, gp.tileSize * 2, gp.tileSize * 2, null);
-
+		g2.drawRect(x, y, player.width, player.height);
 	}
 
-	public void checkCollision(Tile t) {
+	public boolean checkCollision(Tile t) {
 		Rectangle block = t.getHitbox();
 		if (player.intersects(block)) {
 			double left1 = player.getX();
@@ -280,6 +277,7 @@ public class Max extends Character {
 				// rect collides from left side of the wall
 				if (t.isCollision()) {
 					player.x = block.x - player.width;
+					return true;
 				}
 			} else if (left1 < right2 &&
 					right1 > right2 &&
@@ -288,12 +286,15 @@ public class Max extends Character {
 				// rect collides from right side of the wall
 				if (t.isCollision()) {
 					player.x = block.x + block.width;
+					return true;
 				}
 			} else if (bottom1 > top2 && top1 < top2) {
 				// rect collides from top side of the wall
 				if (t.isCollision()) {
-					player.y = block.y - player.height;
 					airborne = false;
+					yVel = 0;
+					player.y = block.y - player.height;
+					return true;
 				}
 			} else if (top1 < bottom2 && bottom1 > bottom2) {
 				// rect collides from bottom side of the wall
@@ -304,6 +305,11 @@ public class Max extends Character {
 					airborne = true;
 			}
 		}
+		if ((player.y + gp.tileSize * 2) >= gp.tileSize * 17) {
+			airborne = false;
+		}
+		return false;
+
 	}
 
 	// Name: keepInBound
@@ -315,10 +321,10 @@ public class Max extends Character {
 			player.x = 0;
 		}
 
-		if (player.x > 8064-16*3*13) {
-			player.x = 8064-16*3*13;
+		if (player.x > 8064 - 16 * 3 * 13) {
+			player.x = 8064 - 16 * 3 * 13;
 		}
-		
+
 		if (player.y < 0) {
 			player.y = 0;
 			yVel = 0;
@@ -343,6 +349,14 @@ public class Max extends Character {
 
 	public void setScreenY(int screenY) {
 		this.screenY = screenY;
+	}
+
+	public boolean isAirborne() {
+		return airborne;
+	}
+
+	public void setAirborne(boolean airborne) {
+		this.airborne = airborne;
 	}
 
 }

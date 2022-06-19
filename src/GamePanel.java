@@ -21,7 +21,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     int maxWorldCol = 168;
     int maxWorldRow = 22;
-    int worldHeight = maxWorldCol * tileSize;  
+    int worldHeight = maxWorldCol * tileSize;
     int worldWidth = maxWorldRow * tileSize;
 
     int FPS = 60; // fps
@@ -81,15 +81,20 @@ public class GamePanel extends JPanel implements Runnable {
         max.move();
         max.keepInBound();
         checkCollision();
-
         tyler.setAction();
 
     }
 
     public void checkCollision() {
+        boolean flag = false;
         for (int i = 0; i < tileM.getTiles().size(); i++) {
-            max.checkCollision(tileM.getTiles().get(i));
+            if (max.checkCollision(tileM.getTiles().get(i))) {
+                flag = true;
+            }
         }
+        // if (!flag) {
+        // max.setAirborne(true);
+        // }
     }
 
     // Name:

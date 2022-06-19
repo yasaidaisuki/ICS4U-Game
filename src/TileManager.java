@@ -8,7 +8,7 @@ import java.util.StringTokenizer;
 
 import javax.imageio.ImageIO;
 
-
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
@@ -93,13 +93,15 @@ public class TileManager {
 
 					mapTileNum[col][row] = num;
 
-					
-					
-					if(tiles.size()<3696) {
-						if(num==1||num==6||num==2)
-							tiles.add(new Tile(tile[num].image, new Rectangle(col*gp.tileSize,row*gp.tileSize,gp.tileSize,gp.tileSize), num, true));
+					if (tiles.size() < 3696) {
+						if (num == 1 || num == 6 || num == 2)
+							tiles.add(new Tile(tile[num].image,
+									new Rectangle(col * gp.tileSize, row * gp.tileSize, gp.tileSize, gp.tileSize), num,
+									true));
 						else
-							tiles.add(new Tile(tile[num].image, new Rectangle(col*gp.tileSize,row*gp.tileSize,gp.tileSize,gp.tileSize), num, false));
+							tiles.add(new Tile(tile[num].image,
+									new Rectangle(col * gp.tileSize, row * gp.tileSize, gp.tileSize, gp.tileSize), num,
+									false));
 					}
 
 					col++;
@@ -133,23 +135,21 @@ public class TileManager {
 			int screenX = worldX - gp.max.player.x + gp.max.getScreenX();
 			int screenY = worldY - gp.max.player.y + gp.max.getScreenY();
 
-			if(gp.max.getScreenX() > gp.max.player.x)
+			if (gp.max.getScreenX() > gp.max.player.x)
 				screenX = worldX;
 
-			if(gp.max.getScreenY() > gp.max.player.y)
+			if (gp.max.getScreenY() > gp.max.player.y)
 				screenY = worldY;
-			
-			
+
 			int bottomOffSet = gp.screenY - gp.max.getScreenY();
 			if (bottomOffSet > gp.worldHeight - gp.max.player.y) {
 				screenY = gp.screenY - (gp.worldHeight - worldY);
 			}
 
-		
-				g2.drawImage(tile[tileNum].image, screenX, screenY, gp.tileSize, gp.tileSize, null);
-			
-			
-			
+			g2.drawImage(tile[tileNum].image, screenX, screenY, gp.tileSize, gp.tileSize,
+					null);
+			g2.drawRect(screenX, screenY, gp.tileSize, gp.tileSize);
+
 			col++;
 			x += gp.tileSize;
 
