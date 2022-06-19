@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.StringTokenizer;
 
 import javax.imageio.ImageIO;
+
+
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
@@ -91,14 +93,13 @@ public class TileManager {
 
 					mapTileNum[col][row] = num;
 
-					if (num != 0) {
-						tiles.add(new Tile(tile[num].image,
-								new Rectangle(col * gp.tileSize, row * gp.tileSize, gp.tileSize, gp.tileSize), num,
-								true));
-					} else {
-						tiles.add(new Tile(tile[num].image,
-								new Rectangle(col * gp.tileSize, row * gp.tileSize, gp.tileSize, gp.tileSize), num,
-								false));
+					
+					
+					if(tiles.size()<3696) {
+						if(num==1||num==6||num==2)
+							tiles.add(new Tile(tile[num].image, new Rectangle(col*gp.tileSize,row*gp.tileSize,gp.tileSize,gp.tileSize), num, true));
+						else
+							tiles.add(new Tile(tile[num].image, new Rectangle(col*gp.tileSize,row*gp.tileSize,gp.tileSize,gp.tileSize), num, false));
 					}
 
 					col++;
@@ -132,24 +133,23 @@ public class TileManager {
 			int screenX = worldX - gp.max.player.x + gp.max.getScreenX();
 			int screenY = worldY - gp.max.player.y + gp.max.getScreenY();
 
-			int rightOffSet = gp.screenX - gp.max.getScreenX();
+			if(gp.max.getScreenX() > gp.max.player.x)
+				screenX = worldX;
 
+			if(gp.max.getScreenY() > gp.max.player.y)
+				screenY = worldY;
+			
+			
 			int bottomOffSet = gp.screenY - gp.max.getScreenY();
 			if (bottomOffSet > gp.worldHeight - gp.max.player.y) {
 				screenY = gp.screenY - (gp.worldHeight - worldY);
 			}
 
-			if (worldX + gp.tileSize > gp.max.player.x - gp.max.getScreenX()
-					&& worldX - gp.tileSize < gp.max.player.x + gp.max.getScreenX() &&
-					worldY + gp.tileSize > gp.max.player.y - gp.max.getScreenY()
-					&& worldY - gp.tileSize < gp.max.player.y + gp.max.getScreenY()) {
+		
 				g2.drawImage(tile[tileNum].image, screenX, screenY, gp.tileSize, gp.tileSize, null);
-			} // reduce rendering and drawing out the whole map for better performance
-			else if (gp.max.getScreenX() > gp.max.player.x || gp.max.getScreenX() > gp.max.player.y ||
-					rightOffSet > gp.worldWidth - gp.max.player.x
-					|| bottomOffSet > gp.worldHeight - gp.max.player.y) {
-				g2.drawImage(tile[tileNum].image, screenX, screenY, gp.tileSize, gp.tileSize, null);
-			}
+			
+			
+			
 			col++;
 			x += gp.tileSize;
 
