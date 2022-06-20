@@ -23,8 +23,8 @@ public class Tyler extends Character {
 
 	public void setDefaultValues() {
 		xVel = 0;
-		speed = 0.5;
-		player = new Rectangle((int) (gp.tileSize * 10), (int) (gp.tileSize * 15), gp.tileSize * 2, gp.tileSize * 2);
+		speed = 2.5;
+		player = new Rectangle((int) (gp.tileSize * 20), (int) (gp.tileSize * 15), gp.tileSize * 2, gp.tileSize * 2);
 		maxHp = 5;
 		hp = maxHp;
 		dmg = 2;
@@ -101,7 +101,7 @@ public class Tyler extends Character {
 		if (direction.equals("left")) {
 			xVel = -speed;
 		} else if (direction.equals("right")) {
-			xVel = speed;
+			xVel = speed + 1;
 		} else {
 			xVel = 0;
 		}
@@ -147,12 +147,25 @@ public class Tyler extends Character {
 			System.out.println("null");
 		}
 
-		int x = player.x - gp.max.player.x + gp.max.getScreenX();
-		int y = player.y - gp.max.player.y + gp.max.getScreenY();
+		// int x = this.player.x - gp.max.getScreenX();
+		// int y = this.player.y - gp.max.getScreenY();
 
-		if ((player.x >= (gp.max.player.x - gp.screenX) && (player.x <= gp.max.player.x + gp.screenX))) {
-			g2.drawImage(image, x, y, gp.tileSize * 2, gp.tileSize * 2, null);
-		} 
+		// if ((player.x >= (gp.max.player.x - gp.screenX) && (player.x <=
+		// gp.max.player.x + gp.screenX))) {
+		// g2.drawImage(image, x, y, gp.tileSize * 2, gp.tileSize * 2, null);
+		// }
+		// get position relative to player camera
+
+		int xPosition = player.x - gp.max.player.x + gp.max.getScreenX();
+		int yPosition = player.y - gp.max.player.y + gp.max.getScreenY();
+
+		if (gp.max.getScreenX() > gp.max.player.x)
+			xPosition = player.x;
+		if (gp.max.getScreenY() > gp.max.player.y)
+			yPosition = player.y;
+
+		// draw enemy
+		g2.drawImage(image, xPosition, yPosition, gp.tileSize * 2, gp.tileSize * 2, null);
 
 	}
 
@@ -185,21 +198,21 @@ public class Tyler extends Character {
 					player.x = block.x + block.width;
 					return true;
 				}
-			} else if (bottom1 > top2 && top1 < top2) {
-				// rect collides from top side of the wall
-				if (t.isCollision()) {
-					airborne = false;
-					yVel = 0;
-					player.y = block.y - player.height;
-					return true;
-				}
-			} else if (top1 < bottom2 && bottom1 > bottom2) {
-				// rect collides from bottom side of the wall
-				if (t.isCollision()) {
-					player.y = block.y + block.height;
-					airborne = true;
-				} else
-					airborne = true;
+				// } else if (bottom1 > top2 && top1 < top2) {
+				// // rect collides from top side of the wall
+				// if (t.isCollision()) {
+				// airborne = false;
+				// yVel = 0;
+				// player.y = block.y - player.height;
+				// return true;
+				// }
+				// } else if (top1 < bottom2 && bottom1 > bottom2) {
+				// // rect collides from bottom side of the wall
+				// if (t.isCollision()) {
+				// player.y = block.y + block.height;
+				// airborne = true;
+				// } else
+				// airborne = true;
 			}
 		}
 		if ((player.y + gp.tileSize * 2) >= gp.tileSize * 17) {

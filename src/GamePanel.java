@@ -79,25 +79,45 @@ public class GamePanel extends JPanel implements Runnable {
     // Return: void
     public void update() {
 
-        max.move();
-        max.keepInBound();
+        maxAction();
+        tylerAction();
+        wongAction();
         checkCollision();
-        tyler.setAction();
-        tyler.move();
-        tyler.keepInBound();
-        wong.setAction();
-        wong.move();
-        wong.keepInBound();
 
     }
 
+    public void maxAction() {
+        max.move();
+        max.keepInBound();
+    }
+
+    public void tylerAction() {
+        tyler.move();
+        tyler.setAction();
+        tyler.keepInBound();
+    }
+
+    public void wongAction() {
+        wong.move();
+        wong.setAction();
+        wong.keepInBound();
+    }
+
     public void checkCollision() {
+        // player collision
         boolean flag = false;
         for (int i = 0; i < tileM.getTiles().size(); i++) {
             if (max.checkCollision(tileM.getTiles().get(i))) {
                 flag = true;
             }
+            if (tyler.checkCollision(tileM.getTiles().get(i))) {
+                flag = true;
+            }
+            if (wong.checkCollision(tileM.getTiles().get(i))) {
+                flag = true;
+            }
         }
+
         // for (int i = 0; i < tileM.getTiles().size(); i++) {
         // if (tyler.checkCollision(tileM.getTiles().get(i))) {
         // flag = true;

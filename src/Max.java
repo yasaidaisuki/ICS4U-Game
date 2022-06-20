@@ -99,10 +99,10 @@ public class Max extends Character {
 			attacking();
 		}
 
-		if (keyH.attack && xVel == 0 ) {
+		if (keyH.attack && xVel == 0) {
 			isAtk = true;
 		}
-		
+
 		if (keyH.left) {
 			if (xVel >= -3) {
 				xVel -= speed;
@@ -293,7 +293,6 @@ public class Max extends Character {
 		}
 
 		// System.out.println(player.x);
-		System.out.println(yVel);
 		g2.drawImage(image, x, y, gp.tileSize * 2, gp.tileSize * 2, null);
 	}
 
