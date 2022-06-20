@@ -105,11 +105,10 @@ public class Max extends Character {
 			}
 		}
 
-		else {
+		else if (!keyH.attack) {
 			if (direction.equals("left_atk")) {
 				direction = "idle_l";
-			}
-			else if (direction.equals("right_atk")) {
+			} else if (direction.equals("right_atk")) {
 				direction = "idle_r";
 			}
 
@@ -254,19 +253,13 @@ public class Max extends Character {
 		} else if (direction.equals("idle_r")) {
 			image = right;
 		} else if (direction.equals("left_atk")) {
-			if (spriteNum < 3) {
-				image = left_atk;
-			}
-			if (spriteNum >= 3) {
-				image = left;
-			}
+
+			image = left_atk;
+
 		} else if (direction.equals("right_atk")) {
-			if (spriteNum < 3) {
-				image = right_atk;
-			}
-			if (spriteNum >= 3) {
-				image = right;
-			}
+
+			image = right_atk;
+
 		}
 
 		// debug

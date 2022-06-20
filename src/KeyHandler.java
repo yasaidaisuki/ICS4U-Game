@@ -38,6 +38,9 @@ public class KeyHandler implements KeyListener {
 				left = false;
 				startAtk = System.currentTimeMillis();
 			}
+			else {
+				attack = false;
+			}
 		}
 	}
 
