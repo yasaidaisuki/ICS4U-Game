@@ -23,7 +23,7 @@ public class Wong extends Character {
 
 	public void setDefaultValues() {
 		xVel = 0;
-		speed = 1;
+		speed = 0.5;
 		player = new Rectangle((int) (gp.tileSize * 5), (int) (gp.tileSize * 15), gp.tileSize * 2, gp.tileSize * 2);
 		maxHp = 5;
 		hp = maxHp;
@@ -151,11 +151,8 @@ public class Wong extends Character {
 		int y = player.y - gp.max.player.y + gp.max.getScreenY();
 
 		if ((player.x >= (gp.max.player.x - gp.screenX) && (player.x <= gp.max.player.x + gp.screenX))) {
-			System.out.println("yes");
 			g2.drawImage(image, x, y, gp.tileSize * 2, gp.tileSize * 2, null);
-		} else
-			System.out.println("no");
-		// draw enemy
+		} 
 
 	}
 
