@@ -5,6 +5,7 @@ import java.awt.Graphics2D;
 import java.io.*;
 import java.awt.image.BufferedImage;
 import java.awt.Rectangle;
+import javax.swing.Timer;
 
 public class Max extends Character {
 
@@ -18,6 +19,7 @@ public class Max extends Character {
 	private boolean isHit;
 	private int screenX;
 	private int screenY;
+	private Timer timer;
 
 	// player exclusive frames || enemies dont need hp or jump sprites
 	BufferedImage left_up, right_up, heart, empty_heart;
@@ -95,12 +97,22 @@ public class Max extends Character {
 	// Return: void
 	public void move() {
 
-		if (isAtk == true) {
-			attacking();
+		if (keyH.attack && xVel == 0) {
+			if (direction.equals("idle_l")) {
+				direction = "left_atk";
+			} else if (direction.equals("idle_r")) {
+				direction = "right_atk";
+			}
 		}
 
-		if (keyH.attack && xVel == 0) {
-			isAtk = true;
+		else {
+			if (direction.equals("left_atk")) {
+				direction = "idle_l";
+			}
+			else if (direction.equals("right_atk")) {
+				direction = "idle_r";
+			}
+
 		}
 
 		if (keyH.left) {
@@ -173,20 +185,6 @@ public class Max extends Character {
 		}
 	}
 
-	private void attacking() {
-		spriteCounter++;
-
-		if (spriteCounter <= 10) {
-			spriteNum = 1;
-		}
-		if (spriteCounter > 10) {
-			spriteNum = 2;
-			spriteCounter = 0;
-			isAtk = false;
-		}
-
-	}
-
 	// Name: draw
 	// Purpose: draw the character sprites
 	// Param: Graphics2D
@@ -252,25 +250,21 @@ public class Max extends Character {
 		}
 		// checks for idle
 		else if (direction.equals("idle_l")) {
-			if (isAtk == true) {
-				if (spriteNum == 1) {
-					image = left_atk;
-				}
-				if (spriteNum == 2) {
-					image = left;
-				}
-			} else {
+			image = left;
+		} else if (direction.equals("idle_r")) {
+			image = right;
+		} else if (direction.equals("left_atk")) {
+			if (spriteNum < 3) {
+				image = left_atk;
+			}
+			if (spriteNum >= 3) {
 				image = left;
 			}
-		} else if (direction.equals("idle_r")) {
-			if (isAtk == true) {
-				if (spriteNum == 1) {
-					image = right_atk;
-				}
-				if (spriteNum == 2) {
-					image = right;
-				}
-			} else {
+		} else if (direction.equals("right_atk")) {
+			if (spriteNum < 3) {
+				image = right_atk;
+			}
+			if (spriteNum >= 3) {
 				image = right;
 			}
 		}
@@ -293,6 +287,7 @@ public class Max extends Character {
 		}
 
 		// System.out.println(player.x);
+
 		g2.drawImage(image, x, y, gp.tileSize * 2, gp.tileSize * 2, null);
 	}
 
