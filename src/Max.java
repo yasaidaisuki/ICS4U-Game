@@ -105,15 +105,14 @@ public class Max extends Character {
 			}
 		}
 
+
 		else if (!keyH.attack) {
 			if (direction.equals("left_atk")) {
 				direction = "idle_l";
 			} else if (direction.equals("right_atk")) {
 				direction = "idle_r";
 			}
-
 		}
-
 		if (keyH.left) {
 			if (xVel >= -3) {
 				xVel -= speed;
@@ -182,7 +181,7 @@ public class Max extends Character {
 			}
 			spriteCounter = 0;
 		}
-	}
+		}
 
 	// Name: draw
 	// Purpose: draw the character sprites
@@ -260,8 +259,9 @@ public class Max extends Character {
 
 			image = right_atk;
 
-		}
-
+			
+		} 
+		
 		// debug
 		if (image == null) {
 			System.out.println("null");

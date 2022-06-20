@@ -41,6 +41,7 @@ public class KeyHandler implements KeyListener {
 			else {
 				attack = false;
 			}
+
 		}
 	}
 
