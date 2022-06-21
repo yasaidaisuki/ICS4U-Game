@@ -3,15 +3,18 @@ import java.awt.Rectangle;
 
 public class Tile {
 
+    // initalization
     BufferedImage image;
     private boolean collision = false;
     private Rectangle hitbox;
     private int tileN;
 
+    // empty constructor
     public Tile() {
 
     }
 
+    // constructor for tiles that builds up the map
     public Tile(BufferedImage image, Rectangle hitbox, int tileN, boolean collision) {
         this.image = image;
         this.hitbox = hitbox;
@@ -19,6 +22,7 @@ public class Tile {
         this.collision = collision;
     }
 
+    // getters and setters
     public BufferedImage getImage() {
         return image;
     }

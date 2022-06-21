@@ -8,12 +8,18 @@ import javax.imageio.ImageIO;
 import java.awt.Graphics2D;
 
 public class Tyler extends Character {
+
+	// initalization
 	GamePanel gp;
 	private int screenX;
 	private int screenY;
 	boolean airborne;
 	int actionLockCounter = 0;
 
+	// Name: Tyler
+	// Purpose: to make a tyler
+	// Param: GamePanel
+	// Return: n/a
 	public Tyler(GamePanel gp) {
 		this.gp = gp;
 
@@ -21,6 +27,10 @@ public class Tyler extends Character {
 		getImg();
 	}
 
+	// Name: setDefaultValues
+	// Purpose: easy access to tyler attributes
+	// Param: n/a
+	// Return: void
 	public void setDefaultValues() {
 		xVel = 0;
 		speed = 2.5;
@@ -32,7 +42,12 @@ public class Tyler extends Character {
 
 	}
 
+	// Name: getImg
+	// Purpose: initialize the sprites using buffered images
+	// Param: n/a
+	// Return: void
 	public void getImg() {
+		// gets all the image
 		try {
 			left = ImageIO.read(getClass().getResourceAsStream("/tyler/tyler_left.png"));
 			right = ImageIO.read(getClass().getResourceAsStream("/tyler/tyler_right.png"));
@@ -55,6 +70,10 @@ public class Tyler extends Character {
 		}
 	}
 
+	// Name: setAction
+	// Purpose: randomizes tyler's actions
+	// Param: n/a
+	// Return: void
 	public void setAction() {
 
 		actionLockCounter++;
@@ -97,6 +116,10 @@ public class Tyler extends Character {
 		}
 	}
 
+	// Name: move
+	// Purpose: check for tyler movement
+	// Param: n/a
+	// Return: void
 	public void move() {
 		if (direction.equals("left")) {
 			xVel = -speed;
@@ -108,6 +131,10 @@ public class Tyler extends Character {
 		player.x += xVel;
 	}
 
+	// Name: draw
+	// Purpose: draw the character sprites
+	// Param: Graphics2D
+	// Return: void
 	public void draw(Graphics2D g2) {
 
 		BufferedImage image = null;
@@ -156,6 +183,7 @@ public class Tyler extends Character {
 		// }
 		// get position relative to player camera
 
+		// determines the position of the enemy
 		int xPosition = player.x - gp.max.player.x + gp.max.getScreenX();
 		int yPosition = player.y - gp.max.player.y + gp.max.getScreenY();
 
@@ -169,9 +197,16 @@ public class Tyler extends Character {
 
 	}
 
+	// Name: checkCollision
+	// Purpose: checks the collision around tyler with blocks
+	// Param: Tile object
+	// Return: boolean value of whether the block you collide with is a block that
+	// is actually collidable
 	public boolean checkCollision(Tile t) {
+		// initalization
 		Rectangle block = t.getHitbox();
 		if (player.intersects(block)) {
+			// attributes
 			double left1 = player.getX();
 			double right1 = player.getX() + player.getWidth();
 			double top1 = player.getY();
@@ -180,39 +215,21 @@ public class Tyler extends Character {
 			double right2 = block.getX() + block.getWidth();
 			double top2 = block.getY();
 			double bottom2 = block.getY() + block.getHeight();
-			if (right1 > left2 &&
-					left1 < left2 &&
-					right1 - left2 < bottom1 - top2 &&
-					right1 - left2 < bottom2 - top1) {
-				// rect collides from left side of the wall
+
+			// check collision from left side of the block
+			if (right1 > left2 && left1 < left2 && right1 - left2 < bottom1 - top2 && right1 - left2 < bottom2 - top1) {
 				if (t.isCollision()) {
 					player.x = block.x - player.width;
 					return true;
 				}
-			} else if (left1 < right2 &&
-					right1 > right2 &&
-					right2 - left1 < bottom1 - top2 &&
-					right2 - left1 < bottom2 - top1) {
-				// rect collides from right side of the wall
+			}
+			// check collision from right side of the block
+			else if (left1 < right2 && right1 > right2 && right2 - left1 < bottom1 - top2
+					&& right2 - left1 < bottom2 - top1) {
 				if (t.isCollision()) {
 					player.x = block.x + block.width;
 					return true;
 				}
-				// } else if (bottom1 > top2 && top1 < top2) {
-				// // rect collides from top side of the wall
-				// if (t.isCollision()) {
-				// airborne = false;
-				// yVel = 0;
-				// player.y = block.y - player.height;
-				// return true;
-				// }
-				// } else if (top1 < bottom2 && bottom1 > bottom2) {
-				// // rect collides from bottom side of the wall
-				// if (t.isCollision()) {
-				// player.y = block.y + block.height;
-				// airborne = true;
-				// } else
-				// airborne = true;
 			}
 		}
 		if ((player.y + gp.tileSize * 2) >= gp.tileSize * 17) {
@@ -222,7 +239,12 @@ public class Tyler extends Character {
 
 	}
 
+	// Name: keepInBound
+	// Purpose: keep player in bound
+	// Param: n/a
+	// Return: void
 	public void keepInBound() {
+		// check x bound
 		if (player.x < 0) {
 			player.x = 0;
 		}

@@ -290,19 +290,23 @@ public class Max extends Character {
 			g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f));
 		}
 
-		if (direction.equals("left_atk") || direction.equals("right_atk")) {
-			g2.drawImage(image, x, y, gp.tileSize * 3, gp.tileSize * 2, null);
-		} else {
-			g2.drawImage(image, x, y, gp.tileSize * 2, gp.tileSize * 2, null);
-		}
+		g2.drawImage(image, x, y, gp.tileSize * 2, gp.tileSize * 2, null);
+
 		// reset alpha
 		g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
 
 	}
 
+	// Name: checkCollision
+	// Purpose: checks the collision around player with blocks
+	// Param: Tile object
+	// Return: boolean value of whether the block you collide with is a block that
+	// is actually collidable
 	public boolean checkCollision(Tile t) {
+		// initalization
 		Rectangle block = t.getHitbox();
 		if (player.intersects(block)) {
+			// coordinate attributes
 			double left1 = player.getX();
 			double right1 = player.getX() + player.getWidth();
 			double top1 = player.getY();
@@ -311,36 +315,42 @@ public class Max extends Character {
 			double right2 = block.getX() + block.getWidth();
 			double top2 = block.getY();
 			double bottom2 = block.getY() + block.getHeight();
+
+			// check collision from left side of the block
 			if (right1 > left2 && left1 < left2 && right1 - left2 < bottom1 - top2 && right1 - left2 < bottom2 - top1) {
-				// rect collides from left side of the wall
 				if (t.isCollision()) {
 					player.x = block.x - player.width;
 					return true;
 				}
-			} else if (left1 < right2 && right1 > right2 && right2 - left1 < bottom1 - top2
+			}
+			// check collision from right side of the block
+			else if (left1 < right2 && right1 > right2 && right2 - left1 < bottom1 - top2
 					&& right2 - left1 < bottom2 - top1) {
-				// rect collides from right side of the wall
 				if (t.isCollision()) {
 					player.x = block.x + block.width;
 					return true;
 				}
-			} else if (bottom1 > top2 && top1 < top2) {
-				// rect collides from top side of the wall
+			}
+			// check collision from top side of the block
+			else if (bottom1 > top2 && top1 < top2) {
 				if (t.isCollision()) {
 					airborne = false;
 					yVel = 0;
 					player.y = block.y - player.height;
 					return true;
 				}
-			} else if (top1 < bottom2 && bottom1 > bottom2) {
-				// rect collides from bottom side of the wall
+			}
+			// check collsion from bottom side of the block
+			else if (top1 < bottom2 && bottom1 > bottom2) {
 				if (t.isCollision()) {
-					player.y = block.y + block.height;
 					airborne = true;
+					player.y = block.y + block.height;
 				} else
 					airborne = true;
 			}
 		}
+
+		// check if the collision is within the ground
 		if ((player.y + gp.tileSize * 2) >= gp.tileSize * 17) {
 			airborne = false;
 		}
@@ -348,7 +358,12 @@ public class Max extends Character {
 
 	}
 
+	// Name: checkTylerCollision
+	// Purpose: check if the player comes in contact with tyler
+	// Param: Tyler object
+	// Return: void
 	public void checkTylerCollision(Tyler tyler) {
+		// initalization of attributes
 		Rectangle ty = tyler.player;
 		double left1 = player.getX();
 		double right1 = player.getX() + player.getWidth();
@@ -358,16 +373,16 @@ public class Max extends Character {
 		double right2 = ty.getX() + ty.getWidth();
 		double top2 = ty.getY();
 		double bottom2 = ty.getY() + ty.getHeight();
+
 		if (player.intersects(ty)) {
 			long currentTime = System.currentTimeMillis();
 			if (right1 > left2 && left1 < left2 && right1 - left2 < bottom1 - top2 && right1 - left2 < bottom2 - top1) {
-				// rect collides from left side of the wall
 				player.x = ty.x - player.width;
 
-			} else if (left1 < right2 && right1 > right2 && right2 - left1 < bottom1 - top2
+			}
+			// if the player comes in contact with tyler from the right
+			else if (left1 < right2 && right1 > right2 && right2 - left1 < bottom1 - top2
 					&& right2 - left1 < bottom2 - top1) {
-				// rect collides from right side of the wall
-
 				player.x = ty.x + ty.width;
 
 			}
@@ -379,7 +394,13 @@ public class Max extends Character {
 		}
 	}
 
+	// Name: checkWongCollision
+	// Purpose: check if the player comes in contact with wong
+	// Param: Wong object
+	// Return: void
 	public void checkWongCollision(Wong wong) {
+		// initalization of attributes (got lazy and didnt want to change rectangle name
+		// hehe)
 		Rectangle ty = wong.player;
 		double left1 = player.getX();
 		double right1 = player.getX() + player.getWidth();
@@ -389,18 +410,20 @@ public class Max extends Character {
 		double right2 = ty.getX() + ty.getWidth();
 		double top2 = ty.getY();
 		double bottom2 = ty.getY() + ty.getHeight();
+
 		if (player.intersects(ty)) {
+			// if the player comes in contact with tyler from the left
 			if (right1 > left2 && left1 < left2 && right1 - left2 < bottom1 - top2 && right1 - left2 < bottom2 - top1) {
-				// rect collides from left side of the wall
 				player.x = ty.x - player.width;
 
-			} else if (left1 < right2 && right1 > right2 && right2 - left1 < bottom1 - top2
+			}
+			// if the player comes in contact with tyler from the right
+			else if (left1 < right2 && right1 > right2 && right2 - left1 < bottom1 - top2
 					&& right2 - left1 < bottom2 - top1) {
-				// rect collides from right side of the wall
-
 				player.x = ty.x + ty.width;
 
 			}
+			// decrease hp
 			hp--;
 		}
 	}
@@ -410,6 +433,7 @@ public class Max extends Character {
 	// Param: n/a
 	// Return: void
 	public void keepInBound() {
+		// check x bound
 		if (player.x < 0) {
 			player.x = 0;
 		}
@@ -418,6 +442,7 @@ public class Max extends Character {
 			player.x = 8064 - 16 * 3 * 13;
 		}
 
+		// check y bound
 		if (player.y < 0) {
 			player.y = 0;
 			yVel = 0;
@@ -428,6 +453,7 @@ public class Max extends Character {
 		}
 	}
 
+	// setters and getters
 	public int getScreenX() {
 		return screenX;
 	}
