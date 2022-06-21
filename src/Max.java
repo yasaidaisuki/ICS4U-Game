@@ -180,7 +180,7 @@ public class Max extends Character {
 			spriteCounter = 0;
 		}
 
-		// if u get hit then turn invincible 
+		// if u get hit then turn invincible
 		if (invincible == true) {
 			invincibleCount++;
 			if (invincibleCount > 80) {
@@ -290,8 +290,14 @@ public class Max extends Character {
 			g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f));
 		}
 
-		g2.drawImage(image, x, y, gp.tileSize * 2, gp.tileSize * 2, null);
-
+		// extend the x if attacking
+		if (direction.equals("left_atk")) {
+			g2.drawImage(image, x - gp.tileSize, y, gp.tileSize * 3, gp.tileSize * 2, null);
+		} else if (direction.equals("right_atk")) {
+			g2.drawImage(image, x, y, gp.tileSize * 3, gp.tileSize * 2, null);
+		} else {
+			g2.drawImage(image, x, y, gp.tileSize * 2, gp.tileSize * 2, null);
+		}
 		// reset alpha
 		g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
 
@@ -424,7 +430,10 @@ public class Max extends Character {
 
 			}
 			// decrease hp
-			hp--;
+			if (invincible == false) {
+				hp--;
+				invincible = true;
+			}
 		}
 	}
 
