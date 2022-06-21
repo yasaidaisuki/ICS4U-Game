@@ -13,24 +13,21 @@ public class Wong extends Character {
 	private int screenY;
 	boolean airborne;
 	int actionLockCounter = 0;
-<<<<<<< HEAD
-	
+
 	// projectile
 	int proj_Speed;
 	int projX, projY;
-	
+
 	// if projectile exists in the world
 	boolean proj_alive;
 	// how long the projectile exists
 	int projHp;
 	int projMaxHP;
 	// projectile direction
-	String projDirection ="left";
-	
-=======
+	String projDirection = "left";
+
 	int bullet_Speed = 0;
 
->>>>>>> 0b5b100996b1168d618237dbc9ce2c4de4acdddc
 	BufferedImage projectile;
 
 	public Wong(GamePanel gp) {
@@ -46,7 +43,7 @@ public class Wong extends Character {
 		player = new Rectangle((int) (gp.tileSize * 5), (int) (gp.tileSize * 10), gp.tileSize * 2, gp.tileSize * 2);
 		maxHp = 5;
 		hp = maxHp;
-		
+
 		direction = "idle_l";
 		// for projectile
 		projX = player.x;
@@ -85,15 +82,13 @@ public class Wong extends Character {
 	public void setAction() {
 
 		actionLockCounter++;
-		
-		
 
 		if (actionLockCounter == 20) {
-			
-		// random number generator 	
-		Random random = new Random();
-		int i = random.nextInt(50) + 1;
-		
+
+			// random number generator
+			Random random = new Random();
+			int i = random.nextInt(50) + 1;
+
 			// if random number is divisible by 5, then the tyler is idle
 			if (i % 5 == 0) {
 				if (direction.equals("left")) {
@@ -112,8 +107,8 @@ public class Wong extends Character {
 			actionLockCounter = 0;
 		}
 
-		int i = new Random().nextInt(50)+1; 
-		if (i > 49 && proj_alive == false ) {
+		int i = new Random().nextInt(50) + 1;
+		if (i > 49 && proj_alive == false) {
 			if (direction.equals("left") || direction.equals("idle_l")) {
 				direction = "left_atk";
 				projDirection = "left";
@@ -123,7 +118,7 @@ public class Wong extends Character {
 			}
 			proj_alive = true;
 		}
-		
+
 		// animation
 		spriteCounter++;
 		if (spriteCounter > 10) {
@@ -141,20 +136,19 @@ public class Wong extends Character {
 	}
 
 	public void move() {
-		
+
 		// projectile
 		if (projDirection.equals("left")) {
 			projX -= proj_Speed;
-		}
-		else if (projDirection.equals("right")) {
+		} else if (projDirection.equals("right")) {
 			projX += proj_Speed;
 		}
-		
-		projHp --;
-		if (projHp <=0) {
+
+		projHp--;
+		if (projHp <= 0) {
 			proj_alive = false;
 		}
-		
+
 		if (direction.equals("left")) {
 			xVel = -speed;
 		} else if (direction.equals("right")) {
@@ -163,7 +157,7 @@ public class Wong extends Character {
 			xVel = 0;
 		}
 		player.x += xVel;
-		
+
 	}
 
 	public void draw(Graphics2D g2) {
@@ -198,14 +192,12 @@ public class Wong extends Character {
 			image = left;
 		} else if (direction.equals("idle_r")) {
 			image = right;
-		}
-		else if (direction.equals("left_atk")) {
+		} else if (direction.equals("left_atk")) {
 			image = left_atk;
-		}
-		else if (direction.equals("right_atk")) {
+		} else if (direction.equals("right_atk")) {
 			image = right_atk;
 		}
-		
+
 		// debug
 		if (image == null) {
 			System.out.println("null");
@@ -219,15 +211,14 @@ public class Wong extends Character {
 		if (gp.max.getScreenY() > gp.max.player.y)
 			yPosition = player.y;
 
-		
-		// draw enemy 
+		// draw enemy
 		g2.drawImage(image, xPosition, yPosition, gp.tileSize * 2, gp.tileSize * 2, null);
 
-		// draw projectile 
-//		if (proj_alive) {
-			g2.drawImage(projectile, projX, projY, gp.tileSize, gp.tileSize, null);
-//		}
-		
+		// draw projectile
+		// if (proj_alive) {
+		g2.drawImage(projectile, projX, projY, gp.tileSize, gp.tileSize, null);
+		// }
+
 	}
 
 	public boolean checkCollision(Tile t) {

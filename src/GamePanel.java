@@ -170,7 +170,7 @@ public class GamePanel extends JPanel implements Runnable {
         // setups before the game starts running
 
         // if map 1
-        tylerList.add(new Tyler(this, (int) (tileSize * 20), (int) (tileSize * 10)));
+        tylerList.add(new Tyler(this, (int) (tileSize * 19), (int) (tileSize * 10)));
         tylerList.add(new Tyler(this, (int) (tileSize * 15), (int) (tileSize * 10)));
 
         try {
