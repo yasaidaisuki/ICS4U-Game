@@ -239,6 +239,35 @@ public class Tyler extends Character {
 
 	}
 
+	public void checkPlayerCollision(Max max, KeyHandler k) {
+		Rectangle m = max.player;
+		if (player.intersects(m)) {
+			// attributes
+			double left1 = player.getX() - gp.tileSize;
+			double right1 = player.getX() + player.getWidth() + gp.tileSize;
+			double top1 = player.getY();
+			double bottom1 = player.getY() + player.getHeight();
+			double left2 = m.getX();
+			double right2 = m.getX() + m.getWidth();
+			double top2 = m.getY();
+			double bottom2 = m.getY() + m.getHeight();
+
+			// check collision from left side of the block
+			if (right1 > left2 && left1 < left2 && right1 - left2 < bottom1 - top2 && right1 - left2 < bottom2 - top1) {
+				if (k.attack) {
+					System.out.println("yes");
+				}
+			}
+			// check collision from right side of the block
+			else if (left1 < right2 && right1 > right2 && right2 - left1 < bottom1 - top2
+					&& right2 - left1 < bottom2 - top1) {
+				if (k.attack) {
+					System.out.println("yes");
+				}
+			}
+		}
+	}
+
 	// Name: keepInBound
 	// Purpose: keep player in bound
 	// Param: n/a

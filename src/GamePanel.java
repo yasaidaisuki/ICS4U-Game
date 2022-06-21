@@ -94,6 +94,7 @@ public class GamePanel extends JPanel implements Runnable {
     public void tylerAction() {
         tyler.move();
         tyler.setAction();
+        tyler.checkPlayerCollision(max, keyH);
         tyler.keepInBound();
     }
 
