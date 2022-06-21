@@ -276,8 +276,8 @@ public class Tyler extends Character {
 		double right1 = player.getX() + player.getWidth();
 		double top1 = player.getY();
 		double bottom1 = player.getY() + player.getHeight();
-		double left2 = m.getX() - gp.tileSize * 1.3;
-		double right2 = m.getX() + m.getWidth() + gp.tileSize * 1.3;
+		double left2 = m.getX() - gp.tileSize * 1.2;
+		double right2 = m.getX() + m.getWidth() + gp.tileSize * 1.2;
 		double top2 = m.getY();
 		double bottom2 = m.getY() + m.getHeight();
 
