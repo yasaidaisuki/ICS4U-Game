@@ -1,5 +1,8 @@
 
 import javax.imageio.ImageIO;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 
 import java.awt.Graphics2D;
 import java.io.*;
@@ -12,8 +15,11 @@ public class Max extends Character {
 	// imports gamepanel and control handler
 	GamePanel gp;
 	KeyHandler keyH;
-	private double jumpSpeed;
+
+	Clip hit;
+
 	// character attributes
+	private double jumpSpeed;
 	private double gravity;
 	private boolean airborne;
 	private boolean isHit;
@@ -30,6 +36,16 @@ public class Max extends Character {
 	public Max(GamePanel gp, KeyHandler keyH) {
 		this.gp = gp; // import game panel to draw and update
 		this.keyH = keyH; // import keyH to control
+
+		// inputting sounds
+		try {
+			AudioInputStream as = AudioSystem.getAudioInputStream(new File("/max/max_hit.wav"));
+			hit = AudioSystem.getClip();
+			hit.open(as);
+		} catch (Exception e) {
+
+		}
+
 		// mmmmmm
 		setDefaultValues();
 		getMaxImg();
@@ -97,6 +113,7 @@ public class Max extends Character {
 	public void move() {
 
 		if (keyH.attack && xVel == 0) {
+			hit.start();
 			if (direction.equals("idle_l")) {
 				direction = "left_atk";
 			} else if (direction.equals("idle_r")) {
