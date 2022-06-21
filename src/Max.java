@@ -180,10 +180,10 @@ public class Max extends Character {
 			spriteCounter = 0;
 		}
 
-		// if u get hit then turn invincible || 60 frames/60 = 1 second invincibility
+		// if u get hit then turn invincible 
 		if (invincible == true) {
 			invincibleCount++;
-			if (invincibleCount > 60) {
+			if (invincibleCount > 80) {
 				invincible = false;
 				invincibleCount = 0;
 			}
