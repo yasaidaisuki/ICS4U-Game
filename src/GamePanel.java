@@ -2,6 +2,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import javax.imageio.ImageIO;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 
 import java.awt.Graphics2D;
 import java.io.*;
@@ -29,6 +32,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     // Tyler arrayList
     ArrayList<Tyler> tylerList = new ArrayList<>();
+    File[] sounds = new File[30];
 
     // Controls class
     TileManager tileM = new TileManager(this); // tile manager object
@@ -51,6 +55,13 @@ public class GamePanel extends JPanel implements Runnable {
         this.addKeyListener(keyH);
         this.setFocusable(true);
         // this.setDoubleBuffered(true);
+
+        // inputting sounds
+        try {
+            sounds[0] = new File("map1.wav");
+        } catch (Exception e) {
+            System.out.println(e);
+        }
 
         // start threading game
         thread = new Thread(this);
@@ -87,6 +98,12 @@ public class GamePanel extends JPanel implements Runnable {
         wongAction();
         checkCollision();
 
+        if (max.dead) {
+            max.player.x = 0;
+            max.player.y = 0;
+            max.dead = false;
+        }
+
     }
 
     public void maxAction() {
@@ -95,6 +112,8 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void tylerAction() {
+        tylerList.get(0).checkTylerCollision(tylerList.get(1));
+        tylerList.get(1).checkTylerCollision(tylerList.get(0));
         for (int i = 0; i < tylerList.size(); i++) {
             tylerList.get(i).move();
             tylerList.get(i).setAction();
@@ -149,6 +168,14 @@ public class GamePanel extends JPanel implements Runnable {
         // if map 1
         tylerList.add(new Tyler(this, (int) (tileSize * 5), (int) (tileSize * 5)));
         tylerList.add(new Tyler(this, (int) (tileSize * 10), (int) (tileSize * 10)));
+
+        try {
+            background = ImageIO.read(getClass().getResourceAsStream("/background/map1.png"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        playSound(0);
     }
 
     // Name: paintComponent
@@ -156,11 +183,6 @@ public class GamePanel extends JPanel implements Runnable {
     // Param: Graphics
     // Return: void
     public void paintComponent(Graphics g) {
-        try {
-            background = ImageIO.read(getClass().getResourceAsStream("/background/background1.png"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
@@ -176,8 +198,30 @@ public class GamePanel extends JPanel implements Runnable {
         wong.draw(g2);
     }
 
+    public void playSound(int i) {
+        try {
+            AudioInputStream ais = AudioSystem.getAudioInputStream(sounds[i]);
+            Clip clip = AudioSystem.getClip();
+            clip.open(ais);
+            clip.start();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void loopSound(int i) {
+        try {
+            AudioInputStream ais = AudioSystem.getAudioInputStream(sounds[i]);
+            Clip clip = AudioSystem.getClip();
+            clip.open(ais);
+            clip.loop(clip.LOOP_CONTINUOUSLY);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void main(String[] args) {
-        JFrame frame = new JFrame("Not Example");
+        JFrame frame = new JFrame("Max Souls");
         GamePanel myPanel = new GamePanel();
         frame.add(myPanel);
         frame.setVisible(true);

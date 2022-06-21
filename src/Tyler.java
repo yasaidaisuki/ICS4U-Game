@@ -307,6 +307,37 @@ public class Tyler extends Character {
 		}
 	}
 
+	// Name: checkTylerCollision
+	// Purpose: check if the player comes in contact with tyler
+	// Param: Tyler object
+	// Return: void
+	public void checkTylerCollision(Tyler tyler) {
+		// initalization of attributes
+		Rectangle ty = tyler.player;
+		double left1 = player.getX();
+		double right1 = player.getX() + player.getWidth();
+		double top1 = player.getY();
+		double bottom1 = player.getY() + player.getHeight();
+		double left2 = ty.getX();
+		double right2 = ty.getX() + ty.getWidth();
+		double top2 = ty.getY();
+		double bottom2 = ty.getY() + ty.getHeight();
+
+		if (player.intersects(ty)) {
+			long currentTime = System.currentTimeMillis();
+			// if the player comes in contact with tyler from the left
+			if (right1 > left2 && left1 < left2 && right1 - left2 < bottom1 - top2 && right1 - left2 < bottom2 - top1) {
+				player.x = ty.x - player.width;
+			}
+			// if the player comes in contact with tyler from the right
+			else if (left1 < right2 && right1 > right2 && right2 - left1 < bottom1 - top2
+					&& right2 - left1 < bottom2 - top1) {
+				player.x = ty.x + ty.width;
+
+			}
+		}
+	}
+
 	// Name: keepInBound
 	// Purpose: keep player in bound
 	// Param: n/a
