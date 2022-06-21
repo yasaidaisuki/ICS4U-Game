@@ -5,6 +5,7 @@ import javax.imageio.ImageIO;
 
 import java.awt.Graphics2D;
 import java.io.*;
+import java.util.ArrayList;
 import java.awt.image.BufferedImage;
 
 @SuppressWarnings("serial")
@@ -26,13 +27,15 @@ public class GamePanel extends JPanel implements Runnable {
 
     int FPS = 60; // fps
 
+    // Tyler arrayList
+    ArrayList<Tyler> tylerList = new ArrayList<>();
+
     // Controls class
     TileManager tileM = new TileManager(this); // tile manager object
     KeyHandler keyH = new KeyHandler(); // control handler object
     Thread thread; // thread
     // player
     Max max = new Max(this, keyH);
-    Tyler tyler = new Tyler(this);
     Wong wong = new Wong(this);
     // image background
     Image background;
@@ -92,10 +95,12 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void tylerAction() {
-        tyler.move();
-        tyler.setAction();
-        tyler.checkPlayerCollision(max, keyH);
-        tyler.keepInBound();
+        for (int i = 0; i < tylerList.size(); i++) {
+            tylerList.get(i).move();
+            tylerList.get(i).setAction();
+            tylerList.get(i).checkPlayerCollision(max, keyH);
+            tylerList.get(i).keepInBound();
+        }
     }
 
     public void wongAction() {
@@ -111,16 +116,18 @@ public class GamePanel extends JPanel implements Runnable {
             if (max.checkCollision(tileM.getTiles().get(i))) {
                 flag = true;
             }
-            if (tyler.checkCollision(tileM.getTiles().get(i))) {
-                flag = true;
+            for (int j = 0; j < tylerList.size(); j++) {
+                max.checkTylerCollision(tylerList.get(j));
+                if (tylerList.get(j).checkCollision(tileM.getTiles().get(i))) {
+                    flag = true;
+                }
             }
             if (wong.checkCollision(tileM.getTiles().get(i))) {
                 flag = true;
             }
         }
 
-        max.checkTylerCollision(tyler);
-//        max.checkWongCollision(wong);
+        // max.checkWongCollision(wong);
 
         // for (int i = 0; i < tileM.getTiles().size(); i++) {
         // if (tyler.checkCollision(tileM.getTiles().get(i))) {
@@ -139,6 +146,9 @@ public class GamePanel extends JPanel implements Runnable {
     public void initialize() {
         // setups before the game starts running
 
+        // if map 1
+        tylerList.add(new Tyler(this, (int) (tileSize * 5), (int) (tileSize * 5)));
+        tylerList.add(new Tyler(this, (int) (tileSize * 10), (int) (tileSize * 10)));
     }
 
     // Name: paintComponent
@@ -151,12 +161,18 @@ public class GamePanel extends JPanel implements Runnable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
         g2.drawImage(background, 0, 0, screenX + 200, screenY, null);
         tileM.draw(g2);
         max.draw(g2);
-        tyler.draw(g2);
+        for (int i = 0; i < tylerList.size(); i++) {
+            if (!tylerList.get(i).dead)
+                tylerList.get(i).draw(g2);
+            else
+                tylerList.remove(i);
+        }
         wong.draw(g2);
     }
 

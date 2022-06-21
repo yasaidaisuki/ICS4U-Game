@@ -24,6 +24,15 @@ public class Tyler extends Character {
 	// Return: n/a
 	public Tyler(GamePanel gp) {
 		this.gp = gp;
+		player = new Rectangle((int) (gp.tileSize * 20), (int) (gp.tileSize * 15), gp.tileSize * 2, gp.tileSize * 2);
+
+		setDefaultValues();
+		getImg();
+	}
+
+	public Tyler(GamePanel gp, int x, int y) {
+		this.gp = gp;
+		player = new Rectangle((int) (gp.tileSize * 20), (int) (gp.tileSize * 15), gp.tileSize * 2, gp.tileSize * 2);
 
 		setDefaultValues();
 		getImg();
@@ -36,12 +45,10 @@ public class Tyler extends Character {
 	public void setDefaultValues() {
 		xVel = 0;
 		speed = 2.5;
-		player = new Rectangle((int) (gp.tileSize * 20), (int) (gp.tileSize * 15), gp.tileSize * 2, gp.tileSize * 2);
 		maxHp = 5;
 		hp = maxHp;
 		dmg = 2;
 		direction = "idle_l";
-
 	}
 
 	// Name: getImg
@@ -294,6 +301,9 @@ public class Tyler extends Character {
 				}
 				System.out.println("yes");
 			}
+		}
+		if (hp == 0) {
+			dead = true;
 		}
 	}
 

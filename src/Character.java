@@ -23,8 +23,9 @@ public abstract class Character {
 	boolean isAtk = false;
 	boolean isHit = false;
 	boolean invincible = false;
-	int invincibleCount=0;
-	
+	boolean dead = false;
+	int invincibleCount = 0;
+
 	// for animation
 	public int spriteCounter = 0;
 	public int spriteNum = 1;
