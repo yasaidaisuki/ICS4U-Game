@@ -21,6 +21,7 @@ public class Max extends Character {
 	private double jumpSpeed;
 	private double gravity;
 	private boolean airborne;
+	private boolean jumping = false;
 	private boolean isHit;
 	private int screenX;
 	private int screenY;
@@ -158,19 +159,24 @@ public class Max extends Character {
 		}
 
 		if (airborne) {
-			if (keyH.right || direction.equals("idle_r")) {
-				direction = "right_up";
-			} else if (keyH.left || direction.equals("idle_l")) {
-				direction = "left_up";
+			if(jumping) {
+				if (keyH.right || direction.equals("idle_r")) {
+					direction = "right_up";
+				} else if (keyH.left || direction.equals("idle_l")) {
+					direction = "left_up";
+				}
 			}
 			yVel -= gravity;
 		} else {
 			yVel = 0;
 			if (keyH.jump) {
 				// sides of jump
+				jumping = true;
 				airborne = true;
 				yVel = jumpSpeed;
 			}
+			else
+				jumping = false;
 		}
 
 		// idle frame || left & right
@@ -344,7 +350,15 @@ public class Max extends Character {
 			double bottom2 = block.getY() + block.getHeight();
 
 			// check collision from left side of the block
-			if (right1 > left2 && left1 < left2 && right1 - left2 < bottom1 - top2 && right1 - left2 < bottom2 - top1) {
+			if (bottom1 > top2 && top1 < top2) {
+				if (t.isCollision()) {
+					airborne = false;
+					yVel = 0;
+					player.y = block.y - player.height;
+					return true;
+				}
+			}
+			else if (right1 > left2 && left1 < left2 && right1 - left2 < bottom1 - top2 && right1 - left2 < bottom2 - top1) {
 				if (t.isCollision()) {
 					player.x = block.x - player.width;
 					return true;
@@ -359,14 +373,6 @@ public class Max extends Character {
 				}
 			}
 			// check collision from top side of the block
-			else if (bottom1 > top2 && top1 < top2) {
-				if (t.isCollision()) {
-					airborne = false;
-					yVel = 0;
-					player.y = block.y - player.height;
-					return true;
-				}
-			}
 			// check collsion from bottom side of the block
 			else if (top1 < bottom2 && bottom1 > bottom2) {
 				if (t.isCollision()) {

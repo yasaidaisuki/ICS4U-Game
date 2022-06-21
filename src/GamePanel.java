@@ -101,6 +101,7 @@ public class GamePanel extends JPanel implements Runnable {
         if (max.dead) {
             max.player.x = 0;
             max.player.y = 0;
+            max.hp = max.maxHp;
             max.dead = false;
         }
 
