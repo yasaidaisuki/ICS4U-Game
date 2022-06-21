@@ -14,9 +14,9 @@ public class Wong extends Character {
 	boolean airborne;
 	int actionLockCounter = 0;
 	int bullet_Speed = 0;
-	
+
 	BufferedImage projectile;
-	
+
 	public Wong(GamePanel gp) {
 		this.gp = gp;
 
@@ -27,7 +27,7 @@ public class Wong extends Character {
 	public void setDefaultValues() {
 		xVel = 0;
 		speed = 2.5;
-		player = new Rectangle((int) (gp.tileSize * 5), (int) (gp.tileSize * 15), gp.tileSize * 2, gp.tileSize * 2);
+		player = new Rectangle((int) (gp.tileSize * 5), (int) (gp.tileSize * 10), gp.tileSize * 2, gp.tileSize * 2);
 		maxHp = 5;
 		hp = maxHp;
 		dmg = 2;

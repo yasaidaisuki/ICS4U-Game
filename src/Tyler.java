@@ -30,7 +30,7 @@ public class Tyler extends Character {
 	// Return: n/a
 	public Tyler(GamePanel gp) {
 		this.gp = gp;
-		player = new Rectangle((int) (gp.tileSize * 20), (int) (gp.tileSize * 15), gp.tileSize * 2, gp.tileSize * 2);
+		player = new Rectangle((int) (gp.tileSize * 20), (int) (gp.tileSize * 10), gp.tileSize * 2, gp.tileSize * 2);
 
 		setDefaultValues();
 		getImg();
@@ -38,7 +38,7 @@ public class Tyler extends Character {
 
 	public Tyler(GamePanel gp, int x, int y) {
 		this.gp = gp;
-		player = new Rectangle((int) (gp.tileSize * 20), (int) (gp.tileSize * 15), gp.tileSize * 2, gp.tileSize * 2);
+		player = new Rectangle(x, y, gp.tileSize * 2, gp.tileSize * 2);
 
 		setDefaultValues();
 		getImg();
