@@ -118,6 +118,9 @@ public class GamePanel extends JPanel implements Runnable {
             }
         }
 
+        max.checkTylerCollision(tyler);
+        // max.checkWongCollision(wong);
+
         // for (int i = 0; i < tileM.getTiles().size(); i++) {
         // if (tyler.checkCollision(tileM.getTiles().get(i))) {
         // flag = true;

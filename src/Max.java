@@ -344,6 +344,58 @@ public class Max extends Character {
 
 	}
 
+	public void checkTylerCollision(Tyler tyler) {
+		Rectangle ty = tyler.player;
+		double left1 = player.getX();
+		double right1 = player.getX() + player.getWidth();
+		double top1 = player.getY();
+		double bottom1 = player.getY() + player.getHeight();
+		double left2 = ty.getX();
+		double right2 = ty.getX() + ty.getWidth();
+		double top2 = ty.getY();
+		double bottom2 = ty.getY() + ty.getHeight();
+		if (player.intersects(ty)) {
+			if (right1 > left2 && left1 < left2 && right1 - left2 < bottom1 - top2 && right1 - left2 < bottom2 - top1) {
+				// rect collides from left side of the wall
+				player.x = ty.x - player.width;
+
+			} else if (left1 < right2 && right1 > right2 && right2 - left1 < bottom1 - top2
+					&& right2 - left1 < bottom2 - top1) {
+				// rect collides from right side of the wall
+
+				player.x = ty.x + ty.width;
+
+			}
+			hp--;
+		}
+	}
+
+	public void checkWongCollision(Wong wong) {
+		Rectangle ty = wong.player;
+		double left1 = player.getX();
+		double right1 = player.getX() + player.getWidth();
+		double top1 = player.getY();
+		double bottom1 = player.getY() + player.getHeight();
+		double left2 = ty.getX();
+		double right2 = ty.getX() + ty.getWidth();
+		double top2 = ty.getY();
+		double bottom2 = ty.getY() + ty.getHeight();
+		if (player.intersects(ty)) {
+			if (right1 > left2 && left1 < left2 && right1 - left2 < bottom1 - top2 && right1 - left2 < bottom2 - top1) {
+				// rect collides from left side of the wall
+				player.x = ty.x - player.width;
+
+			} else if (left1 < right2 && right1 > right2 && right2 - left1 < bottom1 - top2
+					&& right2 - left1 < bottom2 - top1) {
+				// rect collides from right side of the wall
+
+				player.x = ty.x + ty.width;
+
+			}
+			hp--;
+		}
+	}
+
 	// Name: keepInBound
 	// Purpose: keep player in bound
 	// Param: n/a
