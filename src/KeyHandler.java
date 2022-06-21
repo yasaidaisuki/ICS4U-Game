@@ -1,11 +1,9 @@
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import javax.swing.Timer;
 
 public class KeyHandler implements KeyListener {
 
-	private Timer timer;
 	// for attack
 	boolean flag = false;
 	boolean jump, left, right, attack; // check for player input

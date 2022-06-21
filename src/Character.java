@@ -2,6 +2,7 @@ import java.io.*;
 import java.util.*;
 import java.awt.image.BufferedImage;
 import java.awt.Rectangle;
+import java.awt.AlphaComposite;
 
 public abstract class Character {
 
@@ -21,6 +22,8 @@ public abstract class Character {
 	// attacking && hit detection
 	boolean isAtk = false;
 	boolean isHit = false;
+	boolean invincible = false;
+	int invincibleCount=0;
 	
 	// for animation
 	public int spriteCounter = 0;
