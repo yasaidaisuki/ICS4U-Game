@@ -5,7 +5,7 @@ import java.awt.Graphics2D;
 import java.io.*;
 import java.awt.image.BufferedImage;
 import java.awt.Rectangle;
-import javax.swing.Timer;
+import java.awt.AlphaComposite;
 
 public class Max extends Character {
 
@@ -19,7 +19,6 @@ public class Max extends Character {
 	private boolean isHit;
 	private int screenX;
 	private int screenY;
-	private Timer timer;
 
 	// player exclusive frames || enemies dont need hp or jump sprites
 	BufferedImage left_up, right_up, heart, empty_heart;
@@ -105,7 +104,6 @@ public class Max extends Character {
 			}
 		}
 
-
 		else if (!keyH.attack) {
 			if (direction.equals("left_atk")) {
 				direction = "idle_l";
@@ -181,7 +179,16 @@ public class Max extends Character {
 			}
 			spriteCounter = 0;
 		}
+		
+		// if u get hit then turn invincible || 60 frames/60 = 1 second invincibility
+		if (invincible == true) {
+			invincibleCount ++;
+			if (invincibleCount >60) {
+				invincible = false;
+				invincibleCount = 0;
+			}
 		}
+	}
 
 	// Name: draw
 	// Purpose: draw the character sprites
@@ -193,25 +200,25 @@ public class Max extends Character {
 		int hp_Y = gp.tileSize / 2;
 
 		int i = 0;
-		
+
 		// missing hp
 		while (i < gp.max.maxHp) {
 			g2.drawImage(empty_heart, hp_X, hp_Y, gp.tileSize, gp.tileSize, null);
 			i++;
 			hp_X += gp.tileSize;
 		}
-		
+
 		// reset variables
 		hp_X = gp.tileSize / 2;
 		hp_Y = gp.tileSize / 2;
 		i = 0;
-		
+
 		while (i < gp.max.hp) {
 			g2.drawImage(heart, hp_X, hp_Y, gp.tileSize, gp.tileSize, null);
 			i++;
 			hp_X += gp.tileSize;
 		}
-		
+
 		// initialize image
 
 		BufferedImage image = null;
@@ -259,9 +266,8 @@ public class Max extends Character {
 
 			image = right_atk;
 
-			
-		} 
-		
+		}
+
 		// debug
 		if (image == null) {
 			System.out.println("null");
@@ -279,9 +285,17 @@ public class Max extends Character {
 			y = gp.screenY - (gp.worldHeight - player.y);
 		}
 
-		// System.out.println(player.x);
+		// turns invisible
+		if (invincible == true) {
+			g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,0.5f));
+		}
+		
 
 		g2.drawImage(image, x, y, gp.tileSize * 2, gp.tileSize * 2, null);
+		
+		// reset alpha
+		g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,1f));
+		
 	}
 
 	public boolean checkCollision(Tile t) {
@@ -343,6 +357,7 @@ public class Max extends Character {
 		double top2 = ty.getY();
 		double bottom2 = ty.getY() + ty.getHeight();
 		if (player.intersects(ty)) {
+			long currentTime = System.currentTimeMillis();
 			if (right1 > left2 && left1 < left2 && right1 - left2 < bottom1 - top2 && right1 - left2 < bottom2 - top1) {
 				// rect collides from left side of the wall
 				player.x = ty.x - player.width;
@@ -354,7 +369,11 @@ public class Max extends Character {
 				player.x = ty.x + ty.width;
 
 			}
-			hp--;
+			// if get hit, then go invincible 
+			if (invincible == false) {
+				hp--;
+				invincible = true;
+			}
 		}
 	}
 
