@@ -106,6 +106,7 @@ public class Max extends Character {
 
 		else if (!keyH.attack) {
 			if (direction.equals("left_atk")) {
+				isAtk = true;
 				direction = "idle_l";
 			} else if (direction.equals("right_atk")) {
 				direction = "idle_r";
