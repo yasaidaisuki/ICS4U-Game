@@ -13,7 +13,10 @@ public class Wong extends Character {
 	private int screenY;
 	boolean airborne;
 	int actionLockCounter = 0;
-
+	int bullet_Speed = 0;
+	
+	BufferedImage projectile;
+	
 	public Wong(GamePanel gp) {
 		this.gp = gp;
 
@@ -28,12 +31,13 @@ public class Wong extends Character {
 		maxHp = 5;
 		hp = maxHp;
 		dmg = 2;
-		direction = "left";
+		direction = "idle_l";
 
 	}
 
 	public void getImg() {
 		try {
+			projectile = ImageIO.read(getClass().getResourceAsStream("/wong/mark.png"));
 			left = ImageIO.read(getClass().getResourceAsStream("/wong/wong_left.png"));
 			right = ImageIO.read(getClass().getResourceAsStream("/wong/wong_right.png"));
 			left = ImageIO.read(getClass().getResourceAsStream("/wong/wong_left.png"));

@@ -28,7 +28,7 @@ public class Tyler extends Character {
 		maxHp = 5;
 		hp = maxHp;
 		dmg = 2;
-		direction = "left";
+		direction = "idle_l";
 
 	}
 

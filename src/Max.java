@@ -193,25 +193,25 @@ public class Max extends Character {
 		int hp_Y = gp.tileSize / 2;
 
 		int i = 0;
-
-		// draw the current hp first, then fill in the missing
-		// current hp
-		while (i < gp.max.hp) {
-			g2.drawImage(heart, hp_X, hp_Y, gp.tileSize, gp.tileSize, null);
-			i++;
-			// change heart position for next draw.
-			hp_X += gp.tileSize;
-		}
-
-		// reset counter for next use
-		i = 0;
-
+		
 		// missing hp
-		while (i < gp.max.maxHp - gp.max.hp) {
+		while (i < gp.max.maxHp) {
 			g2.drawImage(empty_heart, hp_X, hp_Y, gp.tileSize, gp.tileSize, null);
 			i++;
 			hp_X += gp.tileSize;
 		}
+		
+		// reset variables
+		hp_X = gp.tileSize / 2;
+		hp_Y = gp.tileSize / 2;
+		i = 0;
+		
+		while (i < gp.max.hp) {
+			g2.drawImage(heart, hp_X, hp_Y, gp.tileSize, gp.tileSize, null);
+			i++;
+			hp_X += gp.tileSize;
+		}
+		
 		// initialize image
 
 		BufferedImage image = null;

@@ -6,6 +6,8 @@ import javax.swing.Timer;
 public class KeyHandler implements KeyListener {
 
 	private Timer timer;
+	// for attack
+	boolean flag = false;
 	boolean jump, left, right, attack; // check for player input
 	long startAtk = System.currentTimeMillis();
 
@@ -31,8 +33,9 @@ public class KeyHandler implements KeyListener {
 			jump = true;
 		} else if (key == KeyEvent.VK_J) {
 			long currentTime = System.currentTimeMillis();
-			if (attack == false && currentTime - startAtk >= 1000) {
+			if (attack == false && currentTime - startAtk >= 800 && flag == false) {
 				attack = true;
+				flag = true;
 				jump = false;
 				right = false;
 				left = false;
@@ -59,6 +62,7 @@ public class KeyHandler implements KeyListener {
 			jump = false;
 		} else if (key == KeyEvent.VK_J) {
 			attack = false;
+			flag = false;
 		}
 	}
 
