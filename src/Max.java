@@ -179,11 +179,11 @@ public class Max extends Character {
 			}
 			spriteCounter = 0;
 		}
-		
+
 		// if u get hit then turn invincible || 60 frames/60 = 1 second invincibility
 		if (invincible == true) {
-			invincibleCount ++;
-			if (invincibleCount >60) {
+			invincibleCount++;
+			if (invincibleCount > 60) {
 				invincible = false;
 				invincibleCount = 0;
 			}
@@ -287,15 +287,17 @@ public class Max extends Character {
 
 		// turns invisible
 		if (invincible == true) {
-			g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,0.5f));
+			g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f));
 		}
-		
 
-		g2.drawImage(image, x, y, gp.tileSize * 2, gp.tileSize * 2, null);
-		
+		if (direction.equals("left_atk") || direction.equals("right_atk")) {
+			g2.drawImage(image, x, y, gp.tileSize * 3, gp.tileSize * 2, null);
+		} else {
+			g2.drawImage(image, x, y, gp.tileSize * 2, gp.tileSize * 2, null);
+		}
 		// reset alpha
-		g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER,1f));
-		
+		g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
+
 	}
 
 	public boolean checkCollision(Tile t) {
@@ -369,7 +371,7 @@ public class Max extends Character {
 				player.x = ty.x + ty.width;
 
 			}
-			// if get hit, then go invincible 
+			// if get hit, then go invincible
 			if (invincible == false) {
 				hp--;
 				invincible = true;
