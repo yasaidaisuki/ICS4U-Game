@@ -170,8 +170,8 @@ public class GamePanel extends JPanel implements Runnable {
         // setups before the game starts running
 
         // if map 1
-        tylerList.add(new Tyler(this, (int) (tileSize * 5), (int) (tileSize * 5)));
-        tylerList.add(new Tyler(this, (int) (tileSize * 10), (int) (tileSize * 10)));
+        tylerList.add(new Tyler(this, (int) (tileSize * 20), (int) (tileSize * 10)));
+        tylerList.add(new Tyler(this, (int) (tileSize * 15), (int) (tileSize * 10)));
 
         try {
             background = ImageIO.read(getClass().getResourceAsStream("/background/map1.png"));

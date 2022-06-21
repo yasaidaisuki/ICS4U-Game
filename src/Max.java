@@ -63,7 +63,7 @@ public class Max extends Character {
 		speed = 1;
 		jumpSpeed = 20;
 		gravity = 0.8;
-		player = new Rectangle((int) (gp.tileSize * 0), (int) (gp.tileSize * 0), gp.tileSize * 2, gp.tileSize * 2);
+		player = new Rectangle((int) (gp.tileSize * 8), (int) (gp.tileSize * 9), gp.tileSize * 2, gp.tileSize * 2);
 		maxHp = 4;
 		hp = maxHp;
 		dmg = 1;
@@ -159,7 +159,7 @@ public class Max extends Character {
 		}
 
 		if (airborne) {
-			if(jumping) {
+			if (jumping) {
 				if (keyH.right || direction.equals("idle_r")) {
 					direction = "right_up";
 				} else if (keyH.left || direction.equals("idle_l")) {
@@ -174,9 +174,9 @@ public class Max extends Character {
 				jumping = true;
 				airborne = true;
 				yVel = jumpSpeed;
-			}
-			else
+			} else {
 				jumping = false;
+			}
 		}
 
 		// idle frame || left & right
@@ -350,15 +350,7 @@ public class Max extends Character {
 			double bottom2 = block.getY() + block.getHeight();
 
 			// check collision from left side of the block
-			if (bottom1 > top2 && top1 < top2) {
-				if (t.isCollision()) {
-					airborne = false;
-					yVel = 0;
-					player.y = block.y - player.height;
-					return true;
-				}
-			}
-			else if (right1 > left2 && left1 < left2 && right1 - left2 < bottom1 - top2 && right1 - left2 < bottom2 - top1) {
+			if (right1 > left2 && left1 < left2 && right1 - left2 < bottom1 - top2 && right1 - left2 < bottom2 - top1) {
 				if (t.isCollision()) {
 					player.x = block.x - player.width;
 					return true;
@@ -373,6 +365,14 @@ public class Max extends Character {
 				}
 			}
 			// check collision from top side of the block
+			else if (bottom1 > top2 && top1 < top2) {
+				if (t.isCollision()) {
+					airborne = false;
+					yVel = 0;
+					player.y = block.y - player.height;
+					return true;
+				}
+			}
 			// check collsion from bottom side of the block
 			else if (top1 < bottom2 && bottom1 > bottom2) {
 				if (t.isCollision()) {
@@ -489,14 +489,11 @@ public class Max extends Character {
 		if (player.y < 0) {
 			player.y = 0;
 			yVel = 0;
+		} else if (player.y > gp.screenY - player.height) {
+			player.y = gp.screenY - player.height;
+			airborne = false;
+			yVel = 0;
 		}
-	
-// useless now
-//		else if (player.y > gp.screenY - player.height) {
-//			player.y = gp.screenY - player.height;
-//			airborne = false;
-//			yVel = 0;
-//		}
 	}
 
 	public void playSound(int i) {
