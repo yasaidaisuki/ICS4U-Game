@@ -112,8 +112,11 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void tylerAction() {
-        tylerList.get(0).checkTylerCollision(tylerList.get(1));
-        tylerList.get(1).checkTylerCollision(tylerList.get(0));
+        for (int i = 0; i < tylerList.size(); i++) {
+            for (int j = tylerList.size() - 1; j >= 0; j--) {
+                tylerList.get(j).checkTylerCollision(tylerList.get(i));
+            }
+        }
         for (int i = 0; i < tylerList.size(); i++) {
             tylerList.get(i).move();
             tylerList.get(i).setAction();
