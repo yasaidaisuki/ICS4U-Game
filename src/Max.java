@@ -489,11 +489,14 @@ public class Max extends Character {
 		if (player.y < 0) {
 			player.y = 0;
 			yVel = 0;
-		} else if (player.y > gp.screenY - player.height) {
-			player.y = gp.screenY - player.height;
-			airborne = false;
-			yVel = 0;
 		}
+	
+// useless now
+//		else if (player.y > gp.screenY - player.height) {
+//			player.y = gp.screenY - player.height;
+//			airborne = false;
+//			yVel = 0;
+//		}
 	}
 
 	public void playSound(int i) {
