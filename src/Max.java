@@ -383,14 +383,17 @@ public class Max extends Character {
 
 		if (player.intersects(ty)) {
 			long currentTime = System.currentTimeMillis();
+			// if the player comes in contact with tyler from the left
 			if (right1 > left2 && left1 < left2 && right1 - left2 < bottom1 - top2 && right1 - left2 < bottom2 - top1) {
 				player.x = ty.x - player.width;
+				tyler.direction = "left_atk";
 
 			}
 			// if the player comes in contact with tyler from the right
 			else if (left1 < right2 && right1 > right2 && right2 - left1 < bottom1 - top2
 					&& right2 - left1 < bottom2 - top1) {
 				player.x = ty.x + ty.width;
+				tyler.direction = "right_atk";
 
 			}
 			// if get hit, then go invincible

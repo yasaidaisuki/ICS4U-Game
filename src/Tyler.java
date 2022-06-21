@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.util.Random;
 
 import javax.imageio.ImageIO;
+
+import java.awt.AlphaComposite;
 import java.awt.Graphics2D;
 
 public class Tyler extends Character {
@@ -114,6 +116,14 @@ public class Tyler extends Character {
 			}
 			spriteCounter = 0;
 		}
+
+		if (invincible == true) {
+			invincibleCount++;
+			if (invincibleCount > 60) {
+				invincible = false;
+				invincibleCount = 0;
+			}
+		}
 	}
 
 	// Name: move
@@ -169,6 +179,12 @@ public class Tyler extends Character {
 			image = right;
 		}
 
+		else if (direction.equals("left_atk")) {
+			image = left_atk;
+		} else if (direction.equals("right_atk")) {
+			image = right_atk;
+		}
+
 		// debug
 		if (image == null) {
 			System.out.println("null");
@@ -192,9 +208,16 @@ public class Tyler extends Character {
 		if (gp.max.getScreenY() > gp.max.player.y)
 			yPosition = player.y;
 
+		// invicible set invisible
+		if (invincible == true) {
+			g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f));
+		}
+
 		// draw enemy
 		g2.drawImage(image, xPosition, yPosition, gp.tileSize * 2, gp.tileSize * 2, null);
 
+		// reset alpha
+		g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
 	}
 
 	// Name: checkCollision
@@ -246,21 +269,29 @@ public class Tyler extends Character {
 		double right1 = player.getX() + player.getWidth();
 		double top1 = player.getY();
 		double bottom1 = player.getY() + player.getHeight();
-		double left2 = m.getX() - gp.tileSize * 1.5;
-		double right2 = m.getX() + m.getWidth() + gp.tileSize * 1.5;
+		double left2 = m.getX() - gp.tileSize * 1.3;
+		double right2 = m.getX() + m.getWidth() + gp.tileSize * 1.3;
 		double top2 = m.getY();
 		double bottom2 = m.getY() + m.getHeight();
 
 		// check collision from left side of the block
 		if (right1 > left2 && left1 < left2 && right1 - left2 < bottom1 - top2 && right1 - left2 < bottom2 - top1) {
-			if (k.attack) {
+			if (k.attack && max.direction.equals("left_atk")) {
+				if (invincible == false) {
+					hp--;
+					invincible = true;
+				}
 				System.out.println("yes");
 			}
 		}
 		// check collision from right side of the block
 		else if (left1 < right2 && right1 > right2 && right2 - left1 < bottom1 - top2
 				&& right2 - left1 < bottom2 - top1) {
-			if (k.attack) {
+			if (k.attack && max.direction.equals("right_atk")) {
+				if (invincible == false) {
+					hp--;
+					invincible = true;
+				}
 				System.out.println("yes");
 			}
 		}
