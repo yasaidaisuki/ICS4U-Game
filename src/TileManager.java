@@ -94,7 +94,7 @@ public class TileManager {
 					mapTileNum[col][row] = num;
 
 					if (tiles.size() < 3696) {
-						if (num == 1 || num == 6 || num == 2)
+						if (num == 1 || num == 6 || num == 2 || num == 7 || num == 4)
 							tiles.add(new Tile(tile[num].image,
 									new Rectangle(col * gp.tileSize, row * gp.tileSize, gp.tileSize, gp.tileSize), num,
 									true));

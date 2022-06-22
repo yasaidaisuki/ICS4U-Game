@@ -19,6 +19,7 @@ public class Tyler extends Character {
 	GamePanel gp;
 	private int screenX;
 	private int screenY;
+	private int yLoc;
 	boolean airborne;
 	int actionLockCounter = 0;
 
@@ -36,9 +37,10 @@ public class Tyler extends Character {
 		getImg();
 	}
 
-	public Tyler(GamePanel gp, int x, int y) {
+	public Tyler(GamePanel gp, int x, int y, int yLoc) {
 		this.gp = gp;
 		player = new Rectangle(x, y, gp.tileSize * 2, gp.tileSize * 2);
+		this.yLoc = yLoc;
 
 		setDefaultValues();
 		getImg();
@@ -248,7 +250,7 @@ public class Tyler extends Character {
 	// Param: Tile object
 	// Return: boolean value of whether the block you collide with is a block that
 	// is actually collidable
-	public boolean checkCollision(Tile t) {
+	public boolean checkCollision(Tile t, int yLoc) {
 		// initalization
 		Rectangle block = t.getHitbox();
 		if (player.intersects(block)) {
@@ -278,7 +280,7 @@ public class Tyler extends Character {
 				}
 			}
 		}
-		if ((player.y + gp.tileSize * 2) >= gp.tileSize * 17) {
+		if ((player.y + gp.tileSize * 2) >= gp.tileSize * yLoc) {
 			airborne = false;
 		}
 		return false;
@@ -389,6 +391,10 @@ public class Tyler extends Character {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	public int getyLoc() {
+		return yLoc;
 	}
 
 }

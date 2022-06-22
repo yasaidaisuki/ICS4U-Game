@@ -3,7 +3,6 @@ import javax.imageio.ImageIO;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
-import javax.sound.sampled.UnsupportedAudioFileException;
 
 import java.awt.Graphics2D;
 import java.io.*;
@@ -63,7 +62,7 @@ public class Max extends Character {
 		speed = 1;
 		jumpSpeed = 20;
 		gravity = 0.8;
-		player = new Rectangle((int) (gp.tileSize * 8), (int) (gp.tileSize * 9), gp.tileSize * 2, gp.tileSize * 2);
+		player = new Rectangle((int) (gp.tileSize * 0), (int) (gp.tileSize * 9), gp.tileSize * 2, gp.tileSize * 2);
 		maxHp = 4;
 		hp = maxHp;
 		dmg = 1;

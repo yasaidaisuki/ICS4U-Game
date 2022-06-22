@@ -145,7 +145,7 @@ public class GamePanel extends JPanel implements Runnable {
             }
             for (int j = 0; j < tylerList.size(); j++) {
                 max.checkTylerCollision(tylerList.get(j));
-                if (tylerList.get(j).checkCollision(tileM.getTiles().get(i))) {
+                if (tylerList.get(j).checkCollision(tileM.getTiles().get(i), tylerList.get(j).getyLoc())) {
                     flag = true;
                 }
             }
@@ -178,8 +178,8 @@ public class GamePanel extends JPanel implements Runnable {
         // setups before the game starts running
 
         // if map 1
-        // tylerList.add(new Tyler(this, (int) (tileSize * 19), (int) (tileSize * 10)));
-        // tylerList.add(new Tyler(this, (int) (tileSize * 15), (int) (tileSize * 10)));
+        tylerList.add(new Tyler(this, (int) (tileSize * 14), (int) (tileSize * 15), 16));
+        tylerList.add(new Tyler(this, (int) (tileSize * 96), (int) (tileSize * 7), 7));
 
         try {
             background = ImageIO.read(getClass().getResourceAsStream("/background/map1.png"));

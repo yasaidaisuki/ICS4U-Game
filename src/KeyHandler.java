@@ -33,52 +33,52 @@ public class KeyHandler implements KeyListener {
 		int key = e.getKeyCode();
 
 		// title state
-		if (gp.gameState == gp.titleState) {
-			// scrolling down commands
-			if (key == KeyEvent.VK_W) {
-				gp.commandNum ++;
-			}
-			// resets the scroll if it reaches the end
-			if (gp.commandNum >= 5) {
-				gp.commandNum = 0;
-			}
-			// enter command
-			if (key == KeyEvent.VK_ENTER) {
-				if(gp.commandNum == 0) {
-					gp.gameState = gp.playState;
-				}
-				if (gp.commandNum == 4) {
-					System.exit(0);
-				}
-			}
-		}
-		
-		// game play state
-		else if (gp.gameState == gp.playState) {
-			if (key == KeyEvent.VK_A) {
-				left = true;
-				right = false;
-			} else if (key == KeyEvent.VK_D) {
-				right = true;
-				left = false;
-			} else if (key == KeyEvent.VK_W) {
-				jump = true;
-			} else if (key == KeyEvent.VK_J) {
-				long currentTime = System.currentTimeMillis();
-				if (attack == false && currentTime - startAtk >= 800 && flag == false) {
-					attack = true;
-					flag = true;
-					jump = false;
-					right = false;
-					left = false;
-					startAtk = System.currentTimeMillis();
-				} else {
-					attack = false;
-				}
+		// if (gp.gameState == gp.titleState) {
+		// // scrolling down commands
+		// if (key == KeyEvent.VK_W) {
+		// gp.commandNum ++;
+		// }
+		// // resets the scroll if it reaches the end
+		// if (gp.commandNum >= 5) {
+		// gp.commandNum = 0;
+		// }
+		// // enter command
+		// if (key == KeyEvent.VK_ENTER) {
+		// if(gp.commandNum == 0) {
+		// gp.gameState = gp.playState;
+		// }
+		// if (gp.commandNum == 4) {
+		// System.exit(0);
+		// }
+		// }
+		// }
 
+		// // game play state
+		// else if (gp.gameState == gp.playState) {
+		if (key == KeyEvent.VK_A) {
+			left = true;
+			right = false;
+		} else if (key == KeyEvent.VK_D) {
+			right = true;
+			left = false;
+		} else if (key == KeyEvent.VK_W) {
+			jump = true;
+		} else if (key == KeyEvent.VK_J) {
+			long currentTime = System.currentTimeMillis();
+			if (attack == false && currentTime - startAtk >= 800 && flag == false) {
+				attack = true;
+				flag = true;
+				jump = false;
+				right = false;
+				left = false;
+				startAtk = System.currentTimeMillis();
+			} else {
+				attack = false;
 			}
+
 		}
 	}
+	// }
 
 	// Name: keyReleased
 	// Purpose: check for key released
