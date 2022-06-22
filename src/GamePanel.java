@@ -69,7 +69,6 @@ public class GamePanel extends JPanel implements Runnable {
 
         // inputting sounds
         try {
-            sounds[0] = new File("title.wav");
             sounds[1] = new File("map1.wav");
         } catch (Exception e) {
             System.out.println(e);
@@ -107,7 +106,6 @@ public class GamePanel extends JPanel implements Runnable {
 
         // setups before the game starts running
         playSound(0);
-        gameState = titleState;
 
         // if map 1
         // tylerList.add(new Tyler(this, (int) (tileSize * 19), (int) (tileSize * 10)));
@@ -182,6 +180,10 @@ public class GamePanel extends JPanel implements Runnable {
             }
             if (wong.checkCollision(tileM.getTiles().get(i))) {
                 flag = true;
+            }
+            for (int k = 0; i < wong.projList.size(); i++) {
+                max.checkProjCollision(wong.proj);
+                wong.checkProjCollision(tileM.getTiles().get(i), k, max);
             }
         }
 
