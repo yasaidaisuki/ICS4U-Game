@@ -57,9 +57,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     // Title menu commands
     int commandNum = 0;
-    
-    
-    
+
     // Name: GamePanel
     // Purpose: game constructor
     // Param: n/a
@@ -186,10 +184,6 @@ public class GamePanel extends JPanel implements Runnable {
             if (wong.checkCollision(tileM.getTiles().get(i))) {
                 flag = true;
             }
-            for (int k = 0; i < wong.projList.size(); i++) {
-                max.checkProjCollision(wong.proj);
-                wong.checkProjCollision(tileM.getTiles().get(i), k, max);
-            }
         }
 
         // max.checkWongCollision(wong);
@@ -284,7 +278,7 @@ public class GamePanel extends JPanel implements Runnable {
             y += tileSize * 3;
             g2.drawString(text, x, y);
             if (commandNum == 0) {
-            	g2.drawString(">",x-tileSize,y);
+                g2.drawString(">", x - tileSize, y);
             }
 
             text = "Leaderboard";
@@ -292,24 +286,23 @@ public class GamePanel extends JPanel implements Runnable {
             y += tileSize * 2;
             g2.drawString(text, x, y);
             if (commandNum == 1) {
-            	g2.drawString(">",x-tileSize,y);
+                g2.drawString(">", x - tileSize, y);
             }
-            
+
             text = "Help";
             x = (float) (tileSize * 9.6);
             y += tileSize * 2;
             g2.drawString(text, x, y);
             if (commandNum == 2) {
-            	g2.drawString(">",x-tileSize,y);
+                g2.drawString(">", x - tileSize, y);
             }
-            
-            
+
             text = "Credits";
             x = (float) (tileSize * 8.5);
             y += tileSize * 2;
             g2.drawString(text, x, y);
             if (commandNum == 3) {
-            	g2.drawString(">",x-tileSize,y);
+                g2.drawString(">", x - tileSize, y);
             }
 
             text = "Quit";
@@ -317,9 +310,9 @@ public class GamePanel extends JPanel implements Runnable {
             y += tileSize * 2;
             g2.drawString(text, x, y);
             if (commandNum == 4) {
-            	g2.drawString(">",x-tileSize,y);
+                g2.drawString(">", x - tileSize, y);
             }
-            
+
         } catch (IOException | FontFormatException e) {
         } catch (Exception e) {
         }
