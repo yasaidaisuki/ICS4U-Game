@@ -167,7 +167,7 @@ public class Wong extends Character {
 	}
 
 	public void move() {
-
+		
 		// projectile
 
 		for (int i = 0; i < projList.size(); i++) {
@@ -323,6 +323,7 @@ public class Wong extends Character {
 			if (k.attack && max.direction.equals("left_atk")) {
 				if (invincible == false) {
 					gp.soundEffect(2);
+					gp.soundEffect(11);
 					hp-=max.dmg;
 					invincible = true;
 				}
@@ -334,13 +335,14 @@ public class Wong extends Character {
 			if (k.attack && max.direction.equals("right_atk")) {
 				if (invincible == false) {
 					gp.soundEffect(2);
+					gp.soundEffect(11);
 					hp-=max.dmg;
 					invincible = true;
 				}
 			}
 		}
+		
 		if (hp <= 0) {
-			gp.soundEffect(11);
 			dead = true;
 		}
 	}
