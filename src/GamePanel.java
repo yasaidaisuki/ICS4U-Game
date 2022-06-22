@@ -112,11 +112,10 @@ public class GamePanel extends JPanel implements Runnable {
 		gameState = titleState;
 		playMusic(0);
 		tileM.loadMap();
-
+		
 		// if map 1
 		tylerList.add(new Tyler(this, (int) (tileSize * 8), (int) (tileSize * 15), 15));
 		tylerList.add(new Tyler(this, (int) (tileSize * 96), (int) (tileSize * 7), 8));
-
 		try {
 			background = ImageIO.read(getClass().getResourceAsStream("/background/map1.png"));
 		} catch (IOException e) {
@@ -235,17 +234,25 @@ public class GamePanel extends JPanel implements Runnable {
 		} 
 		// Death state
 		if (max.dead) {
+			keyH.left = false;
+			keyH.right = false;
+			keyH.jump = false;
 			tylerList.removeAll(tylerList);
 			stopSound(0);
 			max.player.x = 0;
-			max.player.y = 0;
+			max.player.y = 15*tileSize;
 			drawDeath(g2);
+			mapNum = 1;
+			initialize();
+			
 		}
 		// Game Screen
 		else if (gameState == playState){
 			g2.drawImage(background, 0, 0, screenX + 200, screenY, null);
 			tileM.draw(g2);
 			max.draw(g2);
+			
+				
 			for (int i = 0; i < tylerList.size(); i++) {
 				if (!tylerList.get(i).dead)
 					tylerList.get(i).draw(g2);

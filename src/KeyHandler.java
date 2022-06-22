@@ -70,7 +70,6 @@ public class KeyHandler implements KeyListener {
 		if (gp.gameState == gp.playState || gp.gameState == gp.map2) {
 
 			if (gp.max.dead && gp.canAlive == true && key == KeyEvent.VK_ENTER) {
-				
 				gp.gameState = gp.playState;
 				gp.max.dead = false;
 				gp.max.hp = gp.max.maxHp;

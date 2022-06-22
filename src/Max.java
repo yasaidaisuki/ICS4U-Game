@@ -48,7 +48,7 @@ public class Max extends Character {
 		speed = 10;
 		jumpSpeed = 20;
 		gravity = 0.8;
-		player = new Rectangle((int) (gp.tileSize * 0), (int) (gp.tileSize * 9), gp.tileSize * 2, gp.tileSize * 2);
+		player = new Rectangle((int) (gp.tileSize * 0), (int) (gp.tileSize * 15), gp.tileSize * 2, gp.tileSize * 2);
 		maxHp = 4;
 		hp = maxHp;
 		dmg = 2;
@@ -295,6 +295,7 @@ public class Max extends Character {
 			y = gp.screenY - (gp.worldHeight - player.y);
 		}
 
+		System.out.println(xVel);
 		// turns invisible
 		if (invincible == true) {
 			g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f));
