@@ -48,18 +48,19 @@ public class TileManager {
 			tile[4].image = ImageIO.read(getClass().getResourceAsStream("/background/rock_w.png"));
 			// dirt wall
 			tile[5] = new Tile();
-			tile[5].image = ImageIO.read(getClass().getResourceAsStream("/background/dirt_w.png"));
-			// dirt floor
+			tile[5].image = ImageIO.read(getClass().getResourceAsStream("/background/wall.png"));
+			// diurt
 			tile[6] = new Tile();
 			tile[6].image = ImageIO.read(getClass().getResourceAsStream("/background/dirt_f.png"));
 			// brick
 			tile[7] = new Tile();
 			tile[7].image = ImageIO.read(getClass().getResourceAsStream("/background/brick.png"));
-			// water 1 || water 2
+			// water 1 
 			tile[8] = new Tile();
 			tile[8].image = ImageIO.read(getClass().getResourceAsStream("/background/water1.png"));
+			// right dirt
 			tile[9] = new Tile();
-			tile[9].image = ImageIO.read(getClass().getResourceAsStream("/background/water2.png"));
+			tile[9].image = ImageIO.read(getClass().getResourceAsStream("/background/dirt_right.png"));
 			// flowers || 1 - grass || 2 - white flower || 3 - flower bush
 			tile[10] = new Tile();
 			tile[10].image = ImageIO.read(getClass().getResourceAsStream("/background/flower1.png"));

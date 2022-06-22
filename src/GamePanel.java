@@ -258,10 +258,13 @@ public class GamePanel extends JPanel implements Runnable {
     // Return: void
     public void drawTitle(Graphics2D g2) {
 
+    	titleImg = new ImageIcon("ICS4U_title.jpg").getImage();
+    	
         // Black background
         g2.setColor(Color.black);
         g2.fillRect(0, 0, screenX, screenY);
-
+        g2.drawImage(titleImg, -440, -200, null);
+        
         try {
             // Title
             font = Font.createFont(Font.TRUETYPE_FONT, new File("OptimusPrinceps.ttf"));
