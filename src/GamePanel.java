@@ -109,7 +109,6 @@ public class GamePanel extends JPanel implements Runnable {
     public void initialize() {
 
         // setups before the game starts running
-        playSound(0);
         gameState = titleState;
 
         // if map 1
@@ -204,6 +203,7 @@ public class GamePanel extends JPanel implements Runnable {
 
         // title Screen
         if (gameState == titleState) {
+        	playSound(0);
             drawTitle(g2);
         }
 
