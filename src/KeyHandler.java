@@ -4,10 +4,9 @@ import java.awt.event.KeyListener;
 
 public class KeyHandler implements KeyListener {
 
-<<<<<<< Updated upstream
+
 	// for menu controls
-=======
->>>>>>> Stashed changes
+
 	GamePanel gp;
 	// for attack
 	boolean flag = false;
@@ -16,13 +15,8 @@ public class KeyHandler implements KeyListener {
 
 	// Name: KeyHandler
 	// Purpose: constructor
-<<<<<<< Updated upstream
-	// Param:
-	// Return:
-=======
 	// Param: n/a
 	// Return: n/a
->>>>>>> Stashed changes
 	public KeyHandler(GamePanel gp) {
 		this.gp = gp;
 	}
@@ -38,7 +32,6 @@ public class KeyHandler implements KeyListener {
 	public void keyPressed(KeyEvent e) {
 		int key = e.getKeyCode();
 
-<<<<<<< Updated upstream
 		// title state
 		if (gp.gameState == gp.titleState) {
 			// scrolling down commands
@@ -60,18 +53,12 @@ public class KeyHandler implements KeyListener {
 			}
 		}
 		
-		// game play state
-		else if (gp.gameState == gp.playState) {
-=======
-		// Title state
-		if (gp.gameState == gp.titleState) {
-			
-		}
+		
+		
 		
 		
 		// Play state
 		if (gp.gameState == gp.playState) {
->>>>>>> Stashed changes
 			if (key == KeyEvent.VK_A) {
 				left = true;
 				right = false;
