@@ -500,5 +500,4 @@ public class GamePanel extends JPanel implements Runnable {
         frame.setResizable(false);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
-
 }
