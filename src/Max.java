@@ -471,6 +471,15 @@ public class Max extends Character {
 		}
 	}
 
+	public void checkProjCollision(Rectangle proj) {
+		if (player.intersects(proj)) {
+			if (invincible == false) {
+				hp--;
+				invincible = true;
+			}
+		}
+	}
+
 	// Purpose: keep player in bound
 	// Param: n/a
 	// Return: void

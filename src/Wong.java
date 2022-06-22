@@ -2,6 +2,7 @@ import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Random;
 
 import javax.imageio.ImageIO;
@@ -13,16 +14,18 @@ public class Wong extends Character {
 	private int screenY;
 	boolean airborne;
 	int actionLockCounter = 0;
+	private final long createdMillis = System.currentTimeMillis();
+	Rectangle wong;
 
 	// projectile
 	int proj_Speed;
-	int projX, projY;
 
 	// if projectile exists in the world
-	boolean proj_alive;
 	// how long the projectile exists
 	int projHp;
 	int projMaxHP;
+	Rectangle proj;
+	ArrayList<Rectangle> projList = new ArrayList<>();
 	// projectile direction
 	String projDirection = "left";
 
@@ -40,16 +43,13 @@ public class Wong extends Character {
 	public void setDefaultValues() {
 		xVel = 0;
 		speed = 2.5;
-		player = new Rectangle((int) (gp.tileSize * 5), (int) (gp.tileSize * 10), gp.tileSize * 2, gp.tileSize * 2);
-		maxHp = 5;
+		wong = new Rectangle((int) (gp.tileSize * 5), (int) (gp.tileSize * 10), gp.tileSize * 2, gp.tileSize * 2);
+		maxHp = 10;
 		hp = maxHp;
-
 		direction = "idle_l";
+
 		// for projectile
-		projX = player.x;
-		projY = player.y;
-		proj_Speed = 5;
-		proj_alive = false;
+		proj_Speed = 2;
 		dmg = 2;
 		projMaxHP = 80;
 		projHp = projMaxHP;
@@ -100,6 +100,29 @@ public class Wong extends Character {
 			} else if (i % 2 != 0) {
 				direction = "right";
 				// else then the tyler moves left
+			} else if (i % 4 == 0) {
+				if (projList.size() < 5) {
+					proj = new Rectangle(wong.x, wong.y, gp.tileSize, gp.tileSize);
+					projList.add(proj);
+				}
+			} else if (i % 17 == 0) {
+				if (projList.size() < 2) {
+					proj = new Rectangle(wong.x + gp.tileSize, wong.y, gp.tileSize, gp.tileSize);
+					projList.add(proj);
+					proj = new Rectangle(wong.x, wong.y, gp.tileSize, gp.tileSize);
+					projList.add(proj);
+					proj = new Rectangle(wong.x - gp.tileSize, wong.y, gp.tileSize, gp.tileSize);
+					projList.add(proj);
+				}
+			} else if (i % 19 == 0) {
+				if (projList.size() < 2) {
+					proj = new Rectangle(wong.x, wong.y + gp.tileSize, gp.tileSize, gp.tileSize);
+					projList.add(proj);
+					proj = new Rectangle(wong.x, wong.y, gp.tileSize, gp.tileSize);
+					projList.add(proj);
+					proj = new Rectangle(wong.x, wong.y - gp.tileSize, gp.tileSize, gp.tileSize);
+					projList.add(proj);
+				}
 			} else {
 				direction = "left";
 			}
@@ -108,7 +131,7 @@ public class Wong extends Character {
 		}
 
 		int i = new Random().nextInt(50) + 1;
-		if (i > 49 && proj_alive == false) {
+		if (i > 49) {
 			if (direction.equals("left") || direction.equals("idle_l")) {
 				direction = "left_atk";
 				projDirection = "left";
@@ -116,7 +139,6 @@ public class Wong extends Character {
 				direction = "right_atk";
 				projDirection = "right";
 			}
-			proj_alive = true;
 		}
 
 		// animation
@@ -138,15 +160,17 @@ public class Wong extends Character {
 	public void move() {
 
 		// projectile
-		if (projDirection.equals("left")) {
-			projX -= proj_Speed;
-		} else if (projDirection.equals("right")) {
-			projX += proj_Speed;
-		}
 
-		projHp--;
-		if (projHp <= 0) {
-			proj_alive = false;
+		for (int i = 0; i < projList.size(); i++) {
+			long nowMillis = System.currentTimeMillis();
+			if (projDirection.equals("left")) {
+				projList.get(i).x -= proj_Speed;
+			} else if (projDirection.equals("right")) {
+				projList.get(i).x += proj_Speed;
+			}
+			if ((int) ((nowMillis - this.createdMillis) / 1000) % 10 == 0) {
+				projList.remove(i);
+			}
 		}
 
 		if (direction.equals("left")) {
@@ -156,7 +180,7 @@ public class Wong extends Character {
 		} else {
 			xVel = 0;
 		}
-		player.x += xVel;
+		wong.x += xVel;
 
 	}
 
@@ -203,31 +227,39 @@ public class Wong extends Character {
 			System.out.println("null");
 		}
 
-		int xPosition = player.x - gp.max.player.x + gp.max.getScreenX();
-		int yPosition = player.y - gp.max.player.y + gp.max.getScreenY();
+		int xPosition = wong.x - gp.max.player.x + gp.max.getScreenX();
+		int yPosition = wong.y - gp.max.player.y + gp.max.getScreenY();
 
 		if (gp.max.getScreenX() > gp.max.player.x)
-			xPosition = player.x;
+			xPosition = wong.x;
 		if (gp.max.getScreenY() > gp.max.player.y)
-			yPosition = player.y;
+			yPosition = wong.y;
 
 		// draw enemy
 		g2.drawImage(image, xPosition, yPosition, gp.tileSize * 2, gp.tileSize * 2, null);
 
-		// draw projectile
-		// if (proj_alive) {
-		g2.drawImage(projectile, projX, projY, gp.tileSize, gp.tileSize, null);
-		// }
+		for (int i = 0; i < projList.size(); i++) {
+			int projX = projList.get(i).x - gp.max.player.x + gp.max.getScreenX();
+			int projY = projList.get(i).y - gp.max.player.y + gp.max.getScreenY();
 
+			if (gp.max.getScreenX() > gp.max.player.x)
+				projX = proj.x;
+			if (gp.max.getScreenY() > gp.max.player.y)
+				projY = proj.y;
+
+			// draw projectile
+			// if (proj_alive) {
+			g2.drawImage(projectile, projX, projY, gp.tileSize, gp.tileSize, null);
+		}
 	}
 
 	public boolean checkCollision(Tile t) {
 		Rectangle block = t.getHitbox();
-		if (player.intersects(block)) {
-			double left1 = player.getX();
-			double right1 = player.getX() + player.getWidth();
-			double top1 = player.getY();
-			double bottom1 = player.getY() + player.getHeight();
+		if (wong.intersects(block)) {
+			double left1 = wong.getX();
+			double right1 = wong.getX() + wong.getWidth();
+			double top1 = wong.getY();
+			double bottom1 = wong.getY() + wong.getHeight();
 			double left2 = block.getX();
 			double right2 = block.getX() + block.getWidth();
 			double top2 = block.getY();
@@ -238,7 +270,7 @@ public class Wong extends Character {
 					right1 - left2 < bottom2 - top1) {
 				// rect collides from left side of the wall
 				if (t.isCollision()) {
-					player.x = block.x - player.width;
+					wong.x = block.x - wong.width;
 					return true;
 				}
 			} else if (left1 < right2 &&
@@ -247,7 +279,7 @@ public class Wong extends Character {
 					right2 - left1 < bottom2 - top1) {
 				// rect collides from right side of the wall
 				if (t.isCollision()) {
-					player.x = block.x + block.width;
+					wong.x = block.x + block.width;
 					return true;
 				}
 				// } else if (bottom1 > top2 && top1 < top2) {
@@ -255,42 +287,98 @@ public class Wong extends Character {
 				// if (t.isCollision()) {
 				// airborne = false;
 				// yVel = 0;
-				// player.y = block.y - player.height;
+				// wong.y = block.y - wong.height;
 				// return true;
 				// }
 				// } else if (top1 < bottom2 && bottom1 > bottom2) {
 				// // rect collides from bottom side of the wall
 				// if (t.isCollision()) {
-				// player.y = block.y + block.height;
+				// wong.y = block.y + block.height;
 				// airborne = true;
 				// } else
 				// airborne = true;
 			}
 		}
-		if ((player.y + gp.tileSize * 2) >= gp.tileSize * 17) {
+		if ((wong.y + gp.tileSize * 2) >= gp.tileSize * 17) {
 			airborne = false;
 		}
 		return false;
 
 	}
 
+	public void checkPlayerCollision(Max max, KeyHandler k) {
+		Rectangle m = max.player;
+		// attributes
+		double left1 = player.getX();
+		double right1 = player.getX() + player.getWidth();
+		double top1 = player.getY();
+		double bottom1 = player.getY() + player.getHeight();
+		double left2 = m.getX() - gp.tileSize * 1.2;
+		double right2 = m.getX() + m.getWidth() + gp.tileSize * 1.2;
+		double top2 = m.getY();
+		double bottom2 = m.getY() + m.getHeight();
+
+		// check collision from left side of the block
+		if (right1 > left2 && left1 < left2 && right1 - left2 < bottom1 - top2 && right1 - left2 < bottom2 - top1) {
+			if (k.attack && max.direction.equals("left_atk")) {
+				if (invincible == false) {
+					hp--;
+					invincible = true;
+				}
+			}
+		}
+		// check collision from right side of the block
+		else if (left1 < right2 && right1 > right2 && right2 - left1 < bottom1 - top2
+				&& right2 - left1 < bottom2 - top1) {
+			if (k.attack && max.direction.equals("right_atk")) {
+				if (invincible == false) {
+					hp--;
+					invincible = true;
+				}
+			}
+		}
+		if (hp == 0) {
+			dead = true;
+		}
+	}
+
 	public void keepInBound() {
-		if (player.x < 0) {
-			player.x = 0;
+		if (wong.x < 0) {
+			wong.x = 0;
 		}
 
-		if (player.x > 8064 - 16 * 3 * 13) {
-			player.x = 8064 - 16 * 3 * 13;
+		if (wong.x > 8064 - 16 * 3 * 13) {
+			wong.x = 8064 - 16 * 3 * 13;
 		}
 
-		// if (player.y < 0) {
-		// player.y = 0;
+		// if (wong.y < 0) {
+		// wong.y = 0;
 		// yVel = 0;
-		// } else if (player.y > gp.screenY - player.height) {
-		// player.y = gp.screenY - player.height;
+		// } else if (wong.y > gp.screenY - wong.height) {
+		// wong.y = gp.screenY - wong.height;
 		// airborne = false;
 		// yVel = 0;
 		// }
+	}
+
+	// projectile collision
+	public void checkProjCollision(Tile t, int i, Max m) {
+		Rectangle block = t.getHitbox();
+		if (proj.intersects(block) || proj.intersects(m.player)) {
+			projList.remove(i);
+		}
+	}
+
+	public void keepInBoundProj() {
+		for (int i = 0; i < projList.size(); i++) {
+			if (proj.x < 0) {
+				proj.x = 0;
+			}
+
+			if (proj.x > 8064 - 16 * 3 * 13) {
+				proj.x = 8064 - 16 * 3 * 13;
+			}
+		}
 	}
 
 }
