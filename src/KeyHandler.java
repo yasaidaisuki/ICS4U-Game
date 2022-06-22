@@ -9,6 +9,7 @@ public class KeyHandler implements KeyListener {
 	boolean flag = false;
 	boolean jump, left, right, attack; // check for player input
 	long startAtk = System.currentTimeMillis();
+	boolean retry = false;
 
 	// Name: KeyHandler
 	// Purpose: constructor
@@ -58,6 +59,7 @@ public class KeyHandler implements KeyListener {
 			}
 		}
 
+		// escape from screens
 		if (gp.gameState == gp.creditState || gp.gameState == gp.helpState || gp.gameState == gp.leaderBState) {
 			if (key == KeyEvent.VK_ESCAPE) {
 				gp.gameState = gp.titleState;
@@ -65,7 +67,17 @@ public class KeyHandler implements KeyListener {
 		}
 
 		// Play state
-		if (gp.gameState == gp.playState) {
+		if (gp.gameState == gp.playState || gp.gameState == gp.map2) {
+
+			if (gp.max.dead && gp.canAlive == true && key == KeyEvent.VK_ENTER) {
+				
+				gp.gameState = gp.playState;
+				gp.max.dead = false;
+				gp.max.hp = gp.max.maxHp;
+				gp.tylerAction();
+				gp.startDeath = System.currentTimeMillis();
+			}
+
 			if (key == KeyEvent.VK_A) {
 				left = true;
 				right = false;
