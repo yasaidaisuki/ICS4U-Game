@@ -55,7 +55,7 @@ public class TileManager {
 			// brick
 			tile[7] = new Tile();
 			tile[7].image = ImageIO.read(getClass().getResourceAsStream("/background/brick.png"));
-			// water 1 
+			// water 1
 			tile[8] = new Tile();
 			tile[8].image = ImageIO.read(getClass().getResourceAsStream("/background/water1.png"));
 			// right dirt
@@ -95,7 +95,7 @@ public class TileManager {
 					mapTileNum[col][row] = num;
 
 					if (tiles.size() < 3696) {
-						if (num == 1 || num == 6 || num == 2 || num == 7 || num == 4)
+						if (num == 1 || num == 6 || num == 2 || num == 7 || num == 4 || num == 9)
 							tiles.add(new Tile(tile[num].image,
 									new Rectangle(col * gp.tileSize, row * gp.tileSize, gp.tileSize, gp.tileSize), num,
 									true));
