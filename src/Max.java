@@ -480,7 +480,6 @@ public class Max extends Character {
 		}
 	}
 
-	// Name: keepInBound
 	// Purpose: keep player in bound
 	// Param: n/a
 	// Return: void
