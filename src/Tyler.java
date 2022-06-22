@@ -305,6 +305,7 @@ public class Tyler extends Character {
 					hp--;
 					invincible = true;
 				}
+				System.out.println("yes");
 			}
 		}
 		// check collision from right side of the block
@@ -316,6 +317,7 @@ public class Tyler extends Character {
 					hp--;
 					invincible = true;
 				}
+				System.out.println("yes");
 			}
 		}
 		if (hp == 0) {

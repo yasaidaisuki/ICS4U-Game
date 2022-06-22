@@ -14,7 +14,6 @@ public class Wong extends Character {
 	private int screenY;
 	boolean airborne;
 	int actionLockCounter = 0;
-	private final long createdMillis = System.currentTimeMillis();
 	Rectangle wong;
 
 	// projectile
@@ -44,12 +43,12 @@ public class Wong extends Character {
 		xVel = 0;
 		speed = 2.5;
 		wong = new Rectangle((int) (gp.tileSize * 5), (int) (gp.tileSize * 10), gp.tileSize * 2, gp.tileSize * 2);
-		maxHp = 10;
+		maxHp = 5;
 		hp = maxHp;
 		direction = "idle_l";
 
 		// for projectile
-		proj_Speed = 2;
+		proj_Speed = 5;
 		dmg = 2;
 		projMaxHP = 80;
 		projHp = projMaxHP;
@@ -160,16 +159,11 @@ public class Wong extends Character {
 	public void move() {
 
 		// projectile
-
 		for (int i = 0; i < projList.size(); i++) {
-			long nowMillis = System.currentTimeMillis();
 			if (projDirection.equals("left")) {
 				projList.get(i).x -= proj_Speed;
 			} else if (projDirection.equals("right")) {
 				projList.get(i).x += proj_Speed;
-			}
-			if ((int) ((nowMillis - this.createdMillis) / 1000) % 10 == 0) {
-				projList.remove(i);
 			}
 		}
 
@@ -306,42 +300,6 @@ public class Wong extends Character {
 
 	}
 
-	public void checkPlayerCollision(Max max, KeyHandler k) {
-		Rectangle m = max.player;
-		// attributes
-		double left1 = player.getX();
-		double right1 = player.getX() + player.getWidth();
-		double top1 = player.getY();
-		double bottom1 = player.getY() + player.getHeight();
-		double left2 = m.getX() - gp.tileSize * 1.2;
-		double right2 = m.getX() + m.getWidth() + gp.tileSize * 1.2;
-		double top2 = m.getY();
-		double bottom2 = m.getY() + m.getHeight();
-
-		// check collision from left side of the block
-		if (right1 > left2 && left1 < left2 && right1 - left2 < bottom1 - top2 && right1 - left2 < bottom2 - top1) {
-			if (k.attack && max.direction.equals("left_atk")) {
-				if (invincible == false) {
-					hp--;
-					invincible = true;
-				}
-			}
-		}
-		// check collision from right side of the block
-		else if (left1 < right2 && right1 > right2 && right2 - left1 < bottom1 - top2
-				&& right2 - left1 < bottom2 - top1) {
-			if (k.attack && max.direction.equals("right_atk")) {
-				if (invincible == false) {
-					hp--;
-					invincible = true;
-				}
-			}
-		}
-		if (hp == 0) {
-			dead = true;
-		}
-	}
-
 	public void keepInBound() {
 		if (wong.x < 0) {
 			wong.x = 0;
@@ -367,10 +325,6 @@ public class Wong extends Character {
 		if (proj.intersects(block) || proj.intersects(m.player)) {
 			projList.remove(i);
 		}
-	}
-
-	public void countProj() {
-
 	}
 
 	public void keepInBoundProj() {
