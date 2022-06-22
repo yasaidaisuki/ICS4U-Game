@@ -45,7 +45,7 @@ public class Max extends Character {
 		airborne = true;
 		xVel = 0;
 		yVel = 0;
-		speed = 5;
+		speed = 10;
 		jumpSpeed = 20;
 		gravity = 0.8;
 		player = new Rectangle((int) (gp.tileSize * 0), (int) (gp.tileSize * 9), gp.tileSize * 2, gp.tileSize * 2);
