@@ -81,8 +81,7 @@ public class KeyHandler implements KeyListener {
 				jump = true;
 			} else if (key == KeyEvent.VK_J) {
 				long currentTime = System.currentTimeMillis();
-				if (attack == false && currentTime - startAtk >= 800 && flag == false && gp.max.isAirborne() == false) {
-
+				if (attack == false && currentTime - startAtk >= 800 && flag == false) {
 					gp.soundEffect(6);
 					gp.soundEffect(3);
 					attack = true;

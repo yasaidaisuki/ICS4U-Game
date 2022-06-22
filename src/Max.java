@@ -274,11 +274,11 @@ public class Max extends Character {
 		} else if (direction.equals("idle_r")) {
 			image = right;
 		} else if (direction.equals("left_atk")) {
-			System.out.println(true);
+			
 			image = left_atk;
 
 		} else if (direction.equals("right_atk")) {
-			System.out.println(true);
+			
 			image = right_atk;
 		}
 
