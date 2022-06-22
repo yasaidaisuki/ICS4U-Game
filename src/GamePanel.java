@@ -38,7 +38,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     // Controls class
     TileManager tileM = new TileManager(this); // tile manager object
-    KeyHandler keyH = new KeyHandler(); // control handler object
+    KeyHandler keyH = new KeyHandler(this); // control handler object
     Thread thread; // thread
     // player
     Max max = new Max(this, keyH);
@@ -55,6 +55,11 @@ public class GamePanel extends JPanel implements Runnable {
     int titleState = 0;
     int playState = 1;
 
+    // Title menu commands
+    int commandNum = 0;
+    
+    
+    
     // Name: GamePanel
     // Purpose: game constructor
     // Param: n/a
@@ -257,12 +262,9 @@ public class GamePanel extends JPanel implements Runnable {
     // Return: void
     public void drawTitle(Graphics2D g2) {
 
-        titleImg = new ImageIcon("ICS4U_title.png").getImage();
-
         // Black background
         g2.setColor(Color.black);
         g2.fillRect(0, 0, screenX, screenY);
-        g2.drawImage(titleImg, 0, 0, screenX + 200, screenY, null);
 
         try {
             // Title
@@ -270,7 +272,7 @@ public class GamePanel extends JPanel implements Runnable {
             g2.setFont(font.deriveFont(80f));
             String title = "Max Souls";
             float x = (float) (tileSize * 7.5);
-            float y = (float) (tileSize * 4);
+            float y = (float) (tileSize * 2);
 
             g2.setColor(Color.white);
             g2.drawString(title, x, y);
@@ -281,22 +283,43 @@ public class GamePanel extends JPanel implements Runnable {
             x = (float) (tileSize * 9.6);
             y += tileSize * 3;
             g2.drawString(text, x, y);
+            if (commandNum == 0) {
+            	g2.drawString(">",x-tileSize,y);
+            }
 
+            text = "Leaderboard";
+            x = (float) (tileSize * 7);
+            y += tileSize * 2;
+            g2.drawString(text, x, y);
+            if (commandNum == 1) {
+            	g2.drawString(">",x-tileSize,y);
+            }
+            
             text = "Help";
             x = (float) (tileSize * 9.6);
             y += tileSize * 2;
             g2.drawString(text, x, y);
-
+            if (commandNum == 2) {
+            	g2.drawString(">",x-tileSize,y);
+            }
+            
+            
             text = "Credits";
             x = (float) (tileSize * 8.5);
             y += tileSize * 2;
             g2.drawString(text, x, y);
+            if (commandNum == 3) {
+            	g2.drawString(">",x-tileSize,y);
+            }
 
             text = "Quit";
             x = (float) (tileSize * 9.6);
             y += tileSize * 2;
             g2.drawString(text, x, y);
-
+            if (commandNum == 4) {
+            	g2.drawString(">",x-tileSize,y);
+            }
+            
         } catch (IOException | FontFormatException e) {
         } catch (Exception e) {
         }
