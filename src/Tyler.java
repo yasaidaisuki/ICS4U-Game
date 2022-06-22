@@ -6,9 +6,6 @@ import java.io.IOException;
 import java.util.Random;
 
 import javax.imageio.ImageIO;
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
 
 import java.awt.AlphaComposite;
 import java.awt.Graphics2D;
@@ -22,8 +19,6 @@ public class Tyler extends Character {
 	private int yLoc;
 	boolean airborne;
 	int actionLockCounter = 0;
-
-	File[] sounds = new File[30];
 
 	// Name: Tyler
 	// Purpose: to make a tyler
@@ -57,14 +52,6 @@ public class Tyler extends Character {
 		hp = maxHp;
 		dmg = 2;
 		direction = "idle_l";
-
-		// sounds
-		try {
-			sounds[0] = new File("hit.wav");
-			sounds[1] = new File("tyler_hit.wav");
-		} catch (Exception e) {
-			System.out.println(e);
-		}
 	}
 
 	// Name: getImg
@@ -203,10 +190,8 @@ public class Tyler extends Character {
 		}
 
 		else if (direction.equals("left_atk")) {
-			playSound(1);
 			image = left_atk;
 		} else if (direction.equals("right_atk")) {
-			playSound(1);
 			image = right_atk;
 		}
 
@@ -303,7 +288,7 @@ public class Tyler extends Character {
 		if (right1 > left2 && left1 < left2 && right1 - left2 < bottom1 - top2 && right1 - left2 < bottom2 - top1) {
 			if (k.attack && max.direction.equals("left_atk")) {
 				if (invincible == false) {
-					playSound(0);
+					gp.soundEffect(2);
 					hp--;
 					invincible = true;
 				}
@@ -315,7 +300,7 @@ public class Tyler extends Character {
 				&& right2 - left1 < bottom2 - top1) {
 			if (k.attack && max.direction.equals("right_atk")) {
 				if (invincible == false) {
-					playSound(0);
+					gp.soundEffect(2);
 					hp--;
 					invincible = true;
 				}
@@ -382,16 +367,6 @@ public class Tyler extends Character {
 		// }
 	}
 
-	public void playSound(int i) {
-		try {
-			AudioInputStream ais = AudioSystem.getAudioInputStream(sounds[i]);
-			Clip clip = AudioSystem.getClip();
-			clip.open(ais);
-			clip.start();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
 
 	public int getyLoc() {
 		return yLoc;

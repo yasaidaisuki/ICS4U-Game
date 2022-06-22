@@ -2,10 +2,13 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+
 public class KeyHandler implements KeyListener {
 
 	// for menu controls
-
 	GamePanel gp;
 	// for attack
 	boolean flag = false;
@@ -34,7 +37,7 @@ public class KeyHandler implements KeyListener {
 		// title state
 		if (gp.gameState == gp.titleState) {
 			// scrolling down commands
-			if (key == KeyEvent.VK_W) {
+			if (key == KeyEvent.VK_SPACE) {
 				gp.commandNum++;
 			}
 			// resets the scroll if it reaches the end
@@ -44,11 +47,25 @@ public class KeyHandler implements KeyListener {
 			// enter command
 			if (key == KeyEvent.VK_ENTER) {
 				if (gp.commandNum == 0) {
+					gp.stopSound(0);
+					gp.playMusic(1);
 					gp.gameState = gp.playState;
+				}
+				if (gp.commandNum == 2) {
+					gp.gameState = gp.helpState;
+				}
+				if (gp.commandNum == 3) {
+					gp.gameState = gp.creditState;
 				}
 				if (gp.commandNum == 4) {
 					System.exit(0);
 				}
+			}
+		}
+
+		if (gp.gameState == gp.creditState || gp.gameState == gp.helpState || gp.gameState == gp.leaderBState) {
+			if (key == KeyEvent.VK_ESCAPE) {
+				gp.gameState = gp.titleState;
 			}
 		}
 
@@ -64,7 +81,10 @@ public class KeyHandler implements KeyListener {
 				jump = true;
 			} else if (key == KeyEvent.VK_J) {
 				long currentTime = System.currentTimeMillis();
-				if (attack == false && currentTime - startAtk >= 800 && flag == false) {
+				if (attack == false && currentTime - startAtk >= 800 && flag == false && gp.max.isAirborne() == false) {
+
+					gp.soundEffect(6);
+					gp.soundEffect(3);
 					attack = true;
 					flag = true;
 					jump = false;

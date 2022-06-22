@@ -25,8 +25,6 @@ public class Max extends Character {
 	private int screenX;
 	private int screenY;
 
-	private File[] sounds = new File[30];
-
 	// player exclusive frames || enemies dont need hp or jump sprites
 	BufferedImage left_up, right_up, heart, empty_heart;
 
@@ -37,14 +35,6 @@ public class Max extends Character {
 	public Max(GamePanel gp, KeyHandler keyH) {
 		this.gp = gp; // import game panel to draw and update
 		this.keyH = keyH; // import keyH to control
-
-		// inputting sounds
-		try {
-			sounds[0] = new File("max_hit.wav");
-			sounds[1] = new File("max_deathTyler.wav");
-		} catch (Exception e) {
-			System.out.println(e);
-		}
 
 		// mmmmmm
 		setDefaultValues();
@@ -112,21 +102,19 @@ public class Max extends Character {
 	// Return: void
 	public void move() {
 
-		if (keyH.attack) {
-			playSound(0);
-		}
-
 		if (keyH.attack && xVel == 0) {
+			isAtk = true;
 			if (direction.equals("idle_l")) {
 				direction = "left_atk";
 			} else if (direction.equals("idle_r")) {
+
 				direction = "right_atk";
 			}
 		}
 
 		else if (!keyH.attack) {
+			isAtk = false;
 			if (direction.equals("left_atk")) {
-				isAtk = true;
 				direction = "idle_l";
 			} else if (direction.equals("right_atk")) {
 				direction = "idle_r";
@@ -169,6 +157,7 @@ public class Max extends Character {
 		} else {
 			yVel = 0;
 			if (keyH.jump) {
+				gp.soundEffect(5);
 				// sides of jump
 				jumping = true;
 				airborne = true;
@@ -285,13 +274,12 @@ public class Max extends Character {
 		} else if (direction.equals("idle_r")) {
 			image = right;
 		} else if (direction.equals("left_atk")) {
-
+			System.out.println(true);
 			image = left_atk;
 
 		} else if (direction.equals("right_atk")) {
-
+			System.out.println(true);
 			image = right_atk;
-
 		}
 
 		// debug
@@ -423,11 +411,14 @@ public class Max extends Character {
 			}
 			// if get hit, then go invincible
 			if (invincible == false) {
+				gp.soundEffect(2);
+				gp.soundEffect(4);
 				hp--;
 				invincible = true;
 			}
-			if (hp == 0) {
-				playSound(1);
+			if (hp <= 0) {
+				gp.soundEffect(5);
+				gp.soundEffect(7);
 				dead = true;
 			}
 		}
@@ -500,17 +491,6 @@ public class Max extends Character {
 			player.y = gp.screenY - player.height;
 			airborne = false;
 			yVel = 0;
-		}
-	}
-
-	public void playSound(int i) {
-		try {
-			AudioInputStream ais = AudioSystem.getAudioInputStream(sounds[i]);
-			Clip clip = AudioSystem.getClip();
-			clip.open(ais);
-			clip.start();
-		} catch (Exception e) {
-			e.printStackTrace();
 		}
 	}
 
