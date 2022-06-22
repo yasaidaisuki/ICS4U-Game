@@ -4,6 +4,7 @@ import javax.imageio.ImageIO;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 @SuppressWarnings("serial")
 public class GamePanel extends JPanel implements Runnable {
@@ -29,13 +30,17 @@ public class GamePanel extends JPanel implements Runnable {
 
 	// Tyler arrayList
 	ArrayList<Tyler> tylerList = new ArrayList<>();
-	Sound sound = new Sound();
+
+	// leaderboard
+	HashMap<String, Integer> leaderboard = new HashMap<>();
+	ArrayList<Record> sortedScores = new ArrayList<>();
 
 	// Controls class
 	TileManager tileM = new TileManager(this); // tile manager object
 	KeyHandler keyH = new KeyHandler(this); // control handler object
 	Thread thread; // thread
-	
+	Sound sound = new Sound();
+
 	// player
 	Max max = new Max(this, keyH);
 	Wong wong = new Wong(this);
@@ -153,7 +158,6 @@ public class GamePanel extends JPanel implements Runnable {
 			changeWord = false;
 		}
 
-		
 	}
 
 	public void maxAction() {
@@ -231,7 +235,7 @@ public class GamePanel extends JPanel implements Runnable {
 			if (!wong.dead) {
 				wong.draw(g2);
 			}
-		} 
+		}
 		// Death state
 		if (max.dead) {
 			keyH.left = false;
@@ -247,7 +251,7 @@ public class GamePanel extends JPanel implements Runnable {
 			
 		}
 		// Game Screen
-		else if (gameState == playState){
+		else if (gameState == playState) {
 			g2.drawImage(background, 0, 0, screenX + 200, screenY, null);
 			tileM.draw(g2);
 			max.draw(g2);
@@ -511,7 +515,7 @@ public class GamePanel extends JPanel implements Runnable {
 		if (currentTime - startDeath >= 3000) {
 			canAlive = true;
 			text = "> Retry";
-			x = (float) (tileSize *9.7);
+			x = (float) (tileSize * 9.7);
 			y += tileSize * 3;
 			g2.setColor(Color.white);
 			g2.drawString(text, x, y);
