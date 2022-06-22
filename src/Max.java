@@ -62,7 +62,7 @@ public class Max extends Character {
 		speed = 1;
 		jumpSpeed = 20;
 		gravity = 0.8;
-		player = new Rectangle((int) (gp.tileSize * 0), (int) (gp.tileSize * 9), gp.tileSize * 2, gp.tileSize * 2);
+		player = new Rectangle((int) (gp.tileSize * 96), (int) (gp.tileSize * 9), gp.tileSize * 2, gp.tileSize * 2);
 		maxHp = 4;
 		hp = maxHp;
 		dmg = 1;

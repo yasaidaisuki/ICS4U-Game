@@ -113,8 +113,8 @@ public class GamePanel extends JPanel implements Runnable {
         gameState = titleState;
 
         // if map 1
-        // tylerList.add(new Tyler(this, (int) (tileSize * 19), (int) (tileSize * 10)));
-        // tylerList.add(new Tyler(this, (int) (tileSize * 15), (int) (tileSize * 10)));
+        tylerList.add(new Tyler(this, (int) (tileSize * 8), (int) (tileSize * 15), 15));
+        tylerList.add(new Tyler(this, (int) (tileSize * 96), (int) (tileSize * 7), 8));
 
         try {
             background = ImageIO.read(getClass().getResourceAsStream("/background/map1.png"));
@@ -183,21 +183,14 @@ public class GamePanel extends JPanel implements Runnable {
                     flag = true;
                 }
             }
+            for (int k = 0; i < wong.projList.size(); i++) {
+                max.checkProjCollision(wong.proj);
+                wong.checkProjCollision(tileM.getTiles().get(i), k, max);
+            }
             if (wong.checkCollision(tileM.getTiles().get(i))) {
                 flag = true;
             }
         }
-
-        // max.checkWongCollision(wong);
-
-        // for (int i = 0; i < tileM.getTiles().size(); i++) {
-        // if (tyler.checkCollision(tileM.getTiles().get(i))) {
-        // flag = true;
-        // }
-        // }
-        // if (!flag) {
-        // max.setAirborne(true);
-        // }
     }
 
     // Name: paintComponent
@@ -258,13 +251,17 @@ public class GamePanel extends JPanel implements Runnable {
     // Return: void
     public void drawTitle(Graphics2D g2) {
 
+
     	titleImg = new ImageIcon("ICS4U_title.jpg").getImage();
     	
+
+
         // Black background
         g2.setColor(Color.black);
         g2.fillRect(0, 0, screenX, screenY);
         g2.drawImage(titleImg, -440, -200, null);
-        
+
+
         try {
             // Title
             font = Font.createFont(Font.TRUETYPE_FONT, new File("OptimusPrinceps.ttf"));
