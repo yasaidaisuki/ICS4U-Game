@@ -130,6 +130,7 @@ public class GamePanel extends JPanel implements Runnable {
         wong.move();
         wong.setAction();
         wong.keepInBound();
+        wong.keepInBoundProj();
     }
 
     public void checkCollision() {
@@ -147,6 +148,10 @@ public class GamePanel extends JPanel implements Runnable {
             }
             if (wong.checkCollision(tileM.getTiles().get(i))) {
                 flag = true;
+            }
+            for (int k = 0; i < wong.projList.size(); i++) {
+                max.checkProjCollision(wong.proj);
+                wong.checkProjCollision(tileM.getTiles().get(i), k, max);
             }
         }
 
@@ -170,8 +175,8 @@ public class GamePanel extends JPanel implements Runnable {
         // setups before the game starts running
 
         // if map 1
-        tylerList.add(new Tyler(this, (int) (tileSize * 19), (int) (tileSize * 10)));
-        tylerList.add(new Tyler(this, (int) (tileSize * 15), (int) (tileSize * 10)));
+        // tylerList.add(new Tyler(this, (int) (tileSize * 19), (int) (tileSize * 10)));
+        // tylerList.add(new Tyler(this, (int) (tileSize * 15), (int) (tileSize * 10)));
 
         try {
             background = ImageIO.read(getClass().getResourceAsStream("/background/map1.png"));
