@@ -51,7 +51,7 @@ public class Max extends Character {
 		player = new Rectangle((int) (gp.tileSize * 0), (int) (gp.tileSize * 9), gp.tileSize * 2, gp.tileSize * 2);
 		maxHp = 4;
 		hp = maxHp;
-		dmg = 1;
+		dmg = 1000;
 		// default sprite
 		direction = "right";
 		screenX = gp.screenX / 2 - (gp.tileSize / 2);
@@ -346,6 +346,7 @@ public class Max extends Character {
 					player.x = block.x + block.width;
 					return true;
 				} else if (t.getTileN() == 13 || t.getTileN() == 14 || t.getTileN() == 15 || t.getTileN() == 16) {
+					gp.stopSound(1);
 					gp.changeWord = true;
 					return true;
 				}
@@ -422,6 +423,7 @@ public class Max extends Character {
 				invincible = true;
 			}
 			if (hp <= 0) {
+				gp.soundEffect(8);
 				gp.soundEffect(5);
 				gp.soundEffect(7);
 				dead = true;
@@ -460,12 +462,14 @@ public class Max extends Character {
 			}
 			// decrease hp
 			if (invincible == false) {
+				gp.soundEffect(10);
+				gp.soundEffect(2);
 				hp--;
 				invincible = true;
 			}
 			if (hp <= 0) {
+				gp.soundEffect(8);
 				gp.soundEffect(5);
-				gp.soundEffect(7);
 				dead = true;
 			}
 		}
@@ -474,8 +478,15 @@ public class Max extends Character {
 	public void checkProjCollision(Rectangle proj) {
 		if (player.intersects(proj)) {
 			if (invincible == false) {
+				gp.soundEffect(10);
+				gp.soundEffect(2);
 				hp--;
 				invincible = true;
+			}
+			if (hp <= 0) {
+				gp.soundEffect(8);
+				gp.soundEffect(5);
+				dead = true;
 			}
 		}
 	}

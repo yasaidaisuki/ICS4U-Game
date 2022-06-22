@@ -135,8 +135,9 @@ public class GamePanel extends JPanel implements Runnable {
             wongAction();
             checkCollision();
         }
-
         if (changeWord) {
+        	stopSound(1);
+			playMusic(9);
             for (int i = 0; i < tylerList.size(); i++) {
                 tylerList.remove(i);
             }
