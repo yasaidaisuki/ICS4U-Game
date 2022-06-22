@@ -203,7 +203,7 @@ public class GamePanel extends JPanel implements Runnable {
 
         // title Screen
         if (gameState == titleState) {
-        	playSound(0);
+            playSound(0);
             drawTitle(g2);
         }
 
@@ -234,6 +234,17 @@ public class GamePanel extends JPanel implements Runnable {
         }
     }
 
+    public void stopSound(int i) {
+        try {
+            AudioInputStream ais = AudioSystem.getAudioInputStream(sounds[i]);
+            Clip clip = AudioSystem.getClip();
+            clip.open(ais);
+            clip.stop();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public void loopSound(int i) {
         try {
             AudioInputStream ais = AudioSystem.getAudioInputStream(sounds[i]);
@@ -251,16 +262,12 @@ public class GamePanel extends JPanel implements Runnable {
     // Return: void
     public void drawTitle(Graphics2D g2) {
 
-
-    	titleImg = new ImageIcon("ICS4U_title.jpg").getImage();
-    	
-
+        titleImg = new ImageIcon("ICS4U_title.jpg").getImage();
 
         // Black background
         g2.setColor(Color.black);
         g2.fillRect(0, 0, screenX, screenY);
         g2.drawImage(titleImg, -440, -200, null);
-
 
         try {
             // Title
