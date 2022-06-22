@@ -1,10 +1,5 @@
-import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
 
 public class KeyHandler implements KeyListener {
 
@@ -94,6 +89,30 @@ public class KeyHandler implements KeyListener {
 					attack = false;
 				}
 			}
+		} else if (gp.gameState == gp.map2) {
+			if (key == KeyEvent.VK_A) {
+				left = true;
+				right = false;
+			} else if (key == KeyEvent.VK_D) {
+				right = true;
+				left = false;
+			} else if (key == KeyEvent.VK_W) {
+				jump = true;
+			} else if (key == KeyEvent.VK_J) {
+				long currentTime = System.currentTimeMillis();
+				if (attack == false && currentTime - startAtk >= 800 && flag == false) {
+					gp.soundEffect(6);
+					gp.soundEffect(3);
+					attack = true;
+					flag = true;
+					jump = false;
+					right = false;
+					left = false;
+					startAtk = System.currentTimeMillis();
+				} else {
+					attack = false;
+				}
+			}
 		}
 	}
 
@@ -106,6 +125,17 @@ public class KeyHandler implements KeyListener {
 
 		// Play state
 		if (gp.gameState == gp.playState) {
+			if (key == KeyEvent.VK_A) {
+				left = false;
+			} else if (key == KeyEvent.VK_D) {
+				right = false;
+			} else if (key == KeyEvent.VK_W) {
+				jump = false;
+			} else if (key == KeyEvent.VK_J) {
+				attack = false;
+				flag = false;
+			}
+		} else if (gp.gameState == gp.map2) {
 			if (key == KeyEvent.VK_A) {
 				left = false;
 			} else if (key == KeyEvent.VK_D) {

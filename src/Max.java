@@ -1,8 +1,5 @@
 
 import javax.imageio.ImageIO;
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
 
 import java.awt.Graphics2D;
 import java.io.*;
@@ -21,7 +18,6 @@ public class Max extends Character {
 	private double gravity;
 	private boolean airborne;
 	private boolean jumping = false;
-	private boolean isHit;
 	private int screenX;
 	private int screenY;
 
@@ -49,8 +45,8 @@ public class Max extends Character {
 		airborne = true;
 		xVel = 0;
 		yVel = 0;
-		speed = 1;
-		jumpSpeed = 20;
+		speed = 10;
+		jumpSpeed = 30;
 		gravity = 0.8;
 		player = new Rectangle((int) (gp.tileSize * 0), (int) (gp.tileSize * 9), gp.tileSize * 2, gp.tileSize * 2);
 		maxHp = 4;
@@ -274,11 +270,11 @@ public class Max extends Character {
 		} else if (direction.equals("idle_r")) {
 			image = right;
 		} else if (direction.equals("left_atk")) {
-			
+
 			image = left_atk;
 
 		} else if (direction.equals("right_atk")) {
-			
+
 			image = right_atk;
 		}
 
@@ -349,6 +345,9 @@ public class Max extends Character {
 				if (t.isCollision()) {
 					player.x = block.x + block.width;
 					return true;
+				} else if (t.getTileN() == 13 || t.getTileN() == 14 || t.getTileN() == 15 || t.getTileN() == 16) {
+					gp.changeWord = true;
+					return true;
 				}
 			}
 			// check collision from top side of the block
@@ -357,6 +356,13 @@ public class Max extends Character {
 					airborne = false;
 					yVel = 0;
 					player.y = block.y - player.height;
+					return true;
+				} else if (t.getTileN() == 8) {
+					System.out.println(true);
+					dead = true;
+					return true;
+				} else if (t.getTileN() == 13 || t.getTileN() == 14 || t.getTileN() == 15 || t.getTileN() == 16) {
+					gp.changeWord = true;
 					return true;
 				}
 			}
@@ -395,7 +401,6 @@ public class Max extends Character {
 		double bottom2 = ty.getY() + ty.getHeight();
 
 		if (player.intersects(ty)) {
-			long currentTime = System.currentTimeMillis();
 			// if the player comes in contact with tyler from the left
 			if (right1 > left2 && left1 < left2 && right1 - left2 < bottom1 - top2 && right1 - left2 < bottom2 - top1) {
 				player.x = ty.x - player.width;
@@ -457,6 +462,11 @@ public class Max extends Character {
 			if (invincible == false) {
 				hp--;
 				invincible = true;
+			}
+			if (hp <= 0) {
+				gp.soundEffect(5);
+				gp.soundEffect(7);
+				dead = true;
 			}
 		}
 	}

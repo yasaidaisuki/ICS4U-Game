@@ -1,5 +1,6 @@
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -22,11 +23,10 @@ public class TileManager {
 	public TileManager(GamePanel gp) {
 		this.gp = gp;
 
-		tile = new Tile[13];
+		tile = new Tile[17];
 		mapTileNum = new int[gp.maxWorldCol][gp.maxWorldRow];
 
 		getTileImage();
-		loadMap();
 
 	}
 
@@ -68,15 +68,23 @@ public class TileManager {
 			tile[11].image = ImageIO.read(getClass().getResourceAsStream("/background/flower2.png"));
 			tile[12] = new Tile();
 			tile[12].image = ImageIO.read(getClass().getResourceAsStream("/background/flower3.png"));
-
+			tile[13] = new Tile();
+			tile[13].image = ImageIO.read(getClass().getResourceAsStream("/background/c1.png"));
+			tile[14] = new Tile();
+			tile[14].image = ImageIO.read(getClass().getResourceAsStream("/background/c2.png"));
+			tile[15] = new Tile();
+			tile[15].image = ImageIO.read(getClass().getResourceAsStream("/background/c3.png"));
+			tile[16] = new Tile();
+			tile[16].image = ImageIO.read(getClass().getResourceAsStream("/background/c4.png"));
 		} catch (IOException e) {
 			System.out.println("IOExceptio " + e);
 		}
 	}
 
 	public void loadMap() {
+		tiles.clear();
 		try {
-			InputStream is = getClass().getResourceAsStream("/map/map01.txt");
+			InputStream is = getClass().getResourceAsStream("/map/map0" + gp.mapNum + ".txt");
 			BufferedReader br = new BufferedReader((new InputStreamReader(is)));
 
 			int col = 0;
@@ -95,7 +103,8 @@ public class TileManager {
 					mapTileNum[col][row] = num;
 
 					if (tiles.size() < 3696) {
-						if (num == 1 || num == 3 || num == 6 || num == 2 || num == 7 || num == 4 || num == 9 || num == 8)
+						if (num == 1 || num == 3 || num == 6 || num == 2 || num == 7 || num == 4 || num == 9
+								|| num == 8)
 							tiles.add(new Tile(tile[num].image,
 									new Rectangle(col * gp.tileSize, row * gp.tileSize, gp.tileSize, gp.tileSize), num,
 									true));

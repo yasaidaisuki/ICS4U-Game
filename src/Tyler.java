@@ -292,7 +292,7 @@ public class Tyler extends Character {
 					hp--;
 					invincible = true;
 				}
-				
+
 			}
 		}
 		// check collision from right side of the block
@@ -304,7 +304,7 @@ public class Tyler extends Character {
 					hp--;
 					invincible = true;
 				}
-				
+
 			}
 		}
 		if (hp == 0) {
@@ -329,7 +329,6 @@ public class Tyler extends Character {
 		double bottom2 = ty.getY() + ty.getHeight();
 
 		if (player.intersects(ty)) {
-			long currentTime = System.currentTimeMillis();
 			// if the player comes in contact with tyler from the left
 			if (right1 > left2 && left1 < left2 && right1 - left2 < bottom1 - top2 && right1 - left2 < bottom2 - top1) {
 				player.x = ty.x - player.width;
@@ -366,7 +365,6 @@ public class Tyler extends Character {
 		// yVel = 0;
 		// }
 	}
-
 
 	public int getyLoc() {
 		return yLoc;

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import javax.imageio.ImageIO;
+import java.awt.AlphaComposite;
 import java.awt.Graphics2D;
 
 public class Wong extends Character {
@@ -43,7 +44,7 @@ public class Wong extends Character {
 	public void setDefaultValues() {
 		xVel = 0;
 		speed = 2.5;
-		wong = new Rectangle((int) (gp.tileSize * 5), (int) (gp.tileSize * 10), gp.tileSize * 2, gp.tileSize * 2);
+		wong = new Rectangle((int) (gp.tileSize * 92), (int) (gp.tileSize * 15), gp.tileSize * 2, gp.tileSize * 2);
 		maxHp = 10;
 		hp = maxHp;
 		direction = "idle_l";
@@ -97,10 +98,10 @@ public class Wong extends Character {
 					direction = "idle_r";
 				}
 				// if random number is even then the tyler moves right
-			} else if (i % 2 != 0) {
+			} else if (i % 2 == 0) {
 				direction = "right";
 				// else then the tyler moves left
-			} else if (i % 4 == 0) {
+			} else if (i % 3 == 0) {
 				if (projList.size() < 5) {
 					proj = new Rectangle(wong.x, wong.y, gp.tileSize, gp.tileSize);
 					projList.add(proj);
@@ -154,6 +155,14 @@ public class Wong extends Character {
 				spriteNum = 1;
 			}
 			spriteCounter = 0;
+		}
+
+		if (invincible == true) {
+			invincibleCount++;
+			if (invincibleCount > 60) {
+				invincible = false;
+				invincibleCount = 0;
+			}
 		}
 	}
 
@@ -235,8 +244,14 @@ public class Wong extends Character {
 		if (gp.max.getScreenY() > gp.max.player.y)
 			yPosition = wong.y;
 
+		if (invincible == true) {
+			g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f));
+		}
+
 		// draw enemy
 		g2.drawImage(image, xPosition, yPosition, gp.tileSize * 2, gp.tileSize * 2, null);
+
+		g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
 
 		for (int i = 0; i < projList.size(); i++) {
 			int projX = projList.get(i).x - gp.max.player.x + gp.max.getScreenX();
@@ -282,24 +297,9 @@ public class Wong extends Character {
 					wong.x = block.x + block.width;
 					return true;
 				}
-				// } else if (bottom1 > top2 && top1 < top2) {
-				// // rect collides from top side of the wall
-				// if (t.isCollision()) {
-				// airborne = false;
-				// yVel = 0;
-				// wong.y = block.y - wong.height;
-				// return true;
-				// }
-				// } else if (top1 < bottom2 && bottom1 > bottom2) {
-				// // rect collides from bottom side of the wall
-				// if (t.isCollision()) {
-				// wong.y = block.y + block.height;
-				// airborne = true;
-				// } else
-				// airborne = true;
 			}
 		}
-		if ((wong.y + gp.tileSize * 2) >= gp.tileSize * 17) {
+		if ((wong.y + gp.tileSize * 2) >= gp.tileSize * 15) {
 			airborne = false;
 		}
 		return false;
@@ -309,10 +309,10 @@ public class Wong extends Character {
 	public void checkPlayerCollision(Max max, KeyHandler k) {
 		Rectangle m = max.player;
 		// attributes
-		double left1 = player.getX();
-		double right1 = player.getX() + player.getWidth();
-		double top1 = player.getY();
-		double bottom1 = player.getY() + player.getHeight();
+		double left1 = wong.getX();
+		double right1 = wong.getX() + wong.getWidth();
+		double top1 = wong.getY();
+		double bottom1 = wong.getY() + wong.getHeight();
 		double left2 = m.getX() - gp.tileSize * 1.2;
 		double right2 = m.getX() + m.getWidth() + gp.tileSize * 1.2;
 		double top2 = m.getY();
@@ -322,6 +322,7 @@ public class Wong extends Character {
 		if (right1 > left2 && left1 < left2 && right1 - left2 < bottom1 - top2 && right1 - left2 < bottom2 - top1) {
 			if (k.attack && max.direction.equals("left_atk")) {
 				if (invincible == false) {
+					gp.soundEffect(2);
 					hp--;
 					invincible = true;
 				}
@@ -332,6 +333,7 @@ public class Wong extends Character {
 				&& right2 - left1 < bottom2 - top1) {
 			if (k.attack && max.direction.equals("right_atk")) {
 				if (invincible == false) {
+					gp.soundEffect(2);
 					hp--;
 					invincible = true;
 				}
@@ -343,22 +345,15 @@ public class Wong extends Character {
 	}
 
 	public void keepInBound() {
-		if (wong.x < 0) {
-			wong.x = 0;
+		if (wong.x < gp.tileSize * 71) {
+			wong.x = gp.tileSize * 71;
+			direction = "right";
 		}
 
-		if (wong.x > 8064 - 16 * 3 * 13) {
-			wong.x = 8064 - 16 * 3 * 13;
+		if (wong.x > gp.tileSize * 114) {
+			wong.x = gp.tileSize * 114;
+			direction = "left";
 		}
-
-		// if (wong.y < 0) {
-		// wong.y = 0;
-		// yVel = 0;
-		// } else if (wong.y > gp.screenY - wong.height) {
-		// wong.y = gp.screenY - wong.height;
-		// airborne = false;
-		// yVel = 0;
-		// }
 	}
 
 	// projectile collision
@@ -371,12 +366,12 @@ public class Wong extends Character {
 
 	public void keepInBoundProj() {
 		for (int i = 0; i < projList.size(); i++) {
-			if (proj.x < 0) {
-				proj.x = 0;
+			if (proj.x < gp.tileSize * 71) {
+				proj.x = gp.tileSize * 71;
 			}
 
-			if (proj.x > 8064 - 16 * 3 * 13) {
-				proj.x = 8064 - 16 * 3 * 13;
+			if (proj.x > gp.tileSize * 114) {
+				proj.x = gp.tileSize * 114;
 			}
 		}
 	}
