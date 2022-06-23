@@ -66,6 +66,7 @@ public class KeyHandler implements KeyListener {
 			}
 		}
 		
+		// escape from win screen
 		if (gp.gameState == gp.winState) {
 			if (key== KeyEvent.VK_ENTER) {
 				gp.gameState = gp.titleState;
@@ -75,6 +76,8 @@ public class KeyHandler implements KeyListener {
 		// Play state || first map
 		if (gp.gameState == gp.playState || gp.gameState == gp.map2) {
 
+			// if max is dead and dead screen 
+			// enter to exit death screen
 			if (gp.max.dead && gp.canAlive == true && key == KeyEvent.VK_ENTER) {
 				gp.stopSound(0);
 				gp.gameState = gp.playState;
@@ -84,6 +87,7 @@ public class KeyHandler implements KeyListener {
 				gp.startDeath = System.currentTimeMillis();
 			}
 
+			// inputs for player
 			if (key == KeyEvent.VK_A) {
 				left = true;
 				right = false;
@@ -93,8 +97,10 @@ public class KeyHandler implements KeyListener {
 			} else if (key == KeyEvent.VK_W) {
 				jump = true;
 			} else if (key == KeyEvent.VK_J) {
+				// time cooldown for attack
 				long currentTime = System.currentTimeMillis();
 				if (attack == false && currentTime - startAtk >= 800 && flag == false) {
+					// attack sound effects
 					gp.soundEffect(6);
 					gp.soundEffect(3);
 					attack = true;
@@ -110,6 +116,8 @@ public class KeyHandler implements KeyListener {
 			
 		// if second map
 		} else if (gp.gameState == gp.map2) {
+			
+			// player inputs
 			if (key == KeyEvent.VK_A) {
 				left = true;
 				right = false;
@@ -143,7 +151,7 @@ public class KeyHandler implements KeyListener {
 	public void keyReleased(KeyEvent e) {
 		int key = e.getKeyCode();
 
-		// Play state
+		// Play state map1
 		if (gp.gameState == gp.playState) {
 			if (key == KeyEvent.VK_A) {
 				left = false;
@@ -155,6 +163,7 @@ public class KeyHandler implements KeyListener {
 				attack = false;
 				flag = false;
 			}
+		// Play state map2
 		} else if (gp.gameState == gp.map2) {
 			if (key == KeyEvent.VK_A) {
 				left = false;

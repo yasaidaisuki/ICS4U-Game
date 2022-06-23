@@ -97,17 +97,16 @@ public class Max extends Character {
 	// Param: n/a
 	// Return: void
 	public void move() {
-
+		// attack 
 		if (keyH.attack && xVel == 0) {
 			isAtk = true;
 			if (direction.equals("idle_l")) {
 				direction = "left_atk";
 			} else if (direction.equals("idle_r")) {
-
 				direction = "right_atk";
 			}
 		}
-
+		// idle
 		else if (!keyH.attack) {
 			isAtk = false;
 			if (direction.equals("left_atk")) {
@@ -116,13 +115,14 @@ public class Max extends Character {
 				direction = "idle_r";
 			}
 		}
+		// move left
 		if (keyH.left) {
 			if (xVel >= -3) {
 				xVel -= speed;
 			}
 			direction = "left";
+		// move right
 		} else if (keyH.right) {
-
 			if (xVel <= 3) {
 				xVel += speed;
 			}
@@ -132,7 +132,7 @@ public class Max extends Character {
 		else {
 			xVel = 0;
 		}
-
+		// if not in air
 		if (!airborne) {
 			if (direction.equals("left_up") || direction.equals("idle_l")) {
 				direction = "left";
@@ -140,7 +140,7 @@ public class Max extends Character {
 				direction = "right";
 			}
 		}
-
+		// if in air
 		if (airborne) {
 			if (jumping) {
 				if (keyH.right || direction.equals("idle_r")) {
@@ -151,6 +151,7 @@ public class Max extends Character {
 			}
 			yVel -= gravity;
 		} else {
+			// jumping
 			yVel = 0;
 			if (keyH.jump) {
 				gp.soundEffect(5);
@@ -296,20 +297,22 @@ public class Max extends Character {
 		}
 
 		System.out.println(xVel);
-		// turns invisible
+		// turns invisible when hit
 		if (invincible == true) {
 			g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f));
 		}
 
-		// extend the x if attacking
+		// fixes character sprite when attack || x dimension is different
 		if (direction.equals("left_atk")) {
 			g2.drawImage(image, x - gp.tileSize, y, gp.tileSize * 3, gp.tileSize * 2, null);
 		} else if (direction.equals("right_atk")) {
 			g2.drawImage(image, x, y, gp.tileSize * 3, gp.tileSize * 2, null);
+		// not attacks
 		} else {
 			g2.drawImage(image, x, y, gp.tileSize * 2, gp.tileSize * 2, null);
 		}
-		// reset alpha
+		
+		// reset invisibility for contacting enemies
 		g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
 
 	}
@@ -423,6 +426,7 @@ public class Max extends Character {
 				hp--;
 				invincible = true;
 			}
+			// if max dies by tyler
 			if (hp <= 0) {
 				gp.startDeath = System.currentTimeMillis();
 				gp.soundEffect(8);
@@ -469,6 +473,7 @@ public class Max extends Character {
 				hp--;
 				invincible = true;
 			}
+			// when dies to ms wong
 			if (hp <= 0) {
 				gp.soundEffect(8);
 				gp.soundEffect(5);
@@ -476,15 +481,20 @@ public class Max extends Character {
 			}
 		}
 	}
-
+	
+	// Purpose: checks wong projectile
+	// Param: n/a
+	// Return: void
 	public void checkProjCollision(Rectangle proj) {
 		if (player.intersects(proj)) {
+			// when hit by projectile
 			if (invincible == false) {
 				gp.soundEffect(10);
 				gp.soundEffect(2);
 				hp--;
 				invincible = true;
 			}
+			// when die by ms wong
 			if (hp <= 0) {
 				gp.soundEffect(8);
 				gp.soundEffect(5);

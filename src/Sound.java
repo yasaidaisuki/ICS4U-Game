@@ -10,6 +10,10 @@ public class Sound {
     Clip clip;
     URL soundURL[] = new URL[30];
 
+    // method: Sound
+    // Purpose: preset sound wav files
+    // Param: n/a
+ 	// Return: n/a
     public Sound() {
         soundURL[0] = getClass().getResource("/sound/title.wav");
         soundURL[1] = getClass().getResource("/sound/map1.wav");
@@ -25,6 +29,10 @@ public class Sound {
         soundURL[11] = getClass().getResource("/sound/deathtoboss.wav");
     }
     
+    // method: setFile
+    // Purpose: reads in file path and sets it as clip
+    // Param: int
+ 	// Return: n/a
     public void setFile(int i) {
 
         try {
@@ -39,14 +47,26 @@ public class Sound {
 
     }
 
+    // method: play
+    // Purpose: plays file
+    // Param: n/a
+ 	// Return: void
     public void play() {
         clip.start();
     }
 
+    // method: stop
+    // Purpose: stops file
+    // Param: n/a
+ 	// Return: void
     public void stop() {
         clip.stop();
     }
 
+    // method: loop	
+    // Purpose: loops file
+    // Param: n/a
+ 	// Return: void
     public void loop() {
         clip.loop(Clip.LOOP_CONTINUOUSLY);
     }

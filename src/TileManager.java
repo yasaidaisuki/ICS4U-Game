@@ -15,14 +15,20 @@ import java.awt.Rectangle;
 
 public class TileManager {
 
+	// some dank variables
 	private GamePanel gp;
 	private Tile[] tile;
 	private int mapTileNum[][];
 	private ArrayList<Tile> tiles = new ArrayList<>();
 
+	// method: tileManager
+    // Purpose: manages some tiles/blocks
+    // Param: GamePanel
+ 	// Return: n/a
 	public TileManager(GamePanel gp) {
 		this.gp = gp;
 
+		// 17 blocks in total
 		tile = new Tile[17];
 		mapTileNum = new int[gp.maxWorldCol][gp.maxWorldRow];
 
@@ -30,6 +36,10 @@ public class TileManager {
 
 	}
 
+	// method: getTileImage
+    // Purpose: reads in block images/ sprites
+    // Param: n/a
+ 	// Return: void
 	public void getTileImage() {
 		try {
 			tile[0] = new Tile();
@@ -81,15 +91,21 @@ public class TileManager {
 		}
 	}
 
+	// method: loadMap
+    // Purpose: loads map from text file
+    // Param: n/a
+ 	// Return: void
 	public void loadMap() {
 		tiles.clear();
 		try {
+			// uses the map number
 			InputStream is = getClass().getResourceAsStream("/map/map0" + gp.mapNum + ".txt");
 			BufferedReader br = new BufferedReader((new InputStreamReader(is)));
 
 			int col = 0;
 			int row = 0;
 
+			// loads the map using the tiles 
 			while (row < gp.maxWorldRow) {
 				String line = br.readLine();
 
@@ -103,11 +119,13 @@ public class TileManager {
 					mapTileNum[col][row] = num;
 
 					if (tiles.size() < 3696) {
+						// tiles with collision
 						if (num == 1 || num == 3 || num == 6 || num == 2 || num == 7 || num == 4 || num == 9
 								|| num == 8)
 							tiles.add(new Tile(tile[num].image,
 									new Rectangle(col * gp.tileSize, row * gp.tileSize, gp.tileSize, gp.tileSize), num,
 									true));
+						// tiles without collision
 						else
 							tiles.add(new Tile(tile[num].image,
 									new Rectangle(col * gp.tileSize, row * gp.tileSize, gp.tileSize, gp.tileSize), num,
@@ -129,6 +147,10 @@ public class TileManager {
 		}
 	}
 
+	// method: draw
+    // Purpose: draws the map
+    // Param: Graphics2D
+ 	// Return: void
 	public void draw(Graphics2D g2) {
 
 		int col = 0;
@@ -136,9 +158,11 @@ public class TileManager {
 		int x = 0;
 		int y = 0;
 
+		// creates the map using the map dimensions
 		while (col < gp.maxWorldCol && row < gp.maxWorldRow) {
 			int tileNum = mapTileNum[col][row];
 
+			// uses columns of the map and the tile size to find world dimensions
 			int worldX = col * gp.tileSize;
 			int worldY = row * gp.tileSize;
 
@@ -172,6 +196,10 @@ public class TileManager {
 
 	}
 
+	// method: getTiles
+    // Purpose: returns tiles
+    // Param: n/a
+ 	// Return: ArrayList<Tile>
 	public ArrayList<Tile> getTiles() {
 		return tiles;
 	}

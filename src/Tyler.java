@@ -200,13 +200,6 @@ public class Tyler extends Character {
 			System.out.println("null");
 		}
 
-		// int x = this.player.x - gp.max.getScreenX();
-		// int y = this.player.y - gp.max.getScreenY();
-
-		// if ((player.x >= (gp.max.player.x - gp.screenX) && (player.x <=
-		// gp.max.player.x + gp.screenX))) {
-		// g2.drawImage(image, x, y, gp.tileSize * 2, gp.tileSize * 2, null);
-		// }
 		// get position relative to player camera
 
 		// determines the position of the enemy
@@ -272,6 +265,11 @@ public class Tyler extends Character {
 
 	}
 
+	// Name: checkPlayerCollision
+	// Purpose: checks the collision around tyler with player
+	// Param: Max, KeyHandler
+	// Return: void
+	// is actually collidable
 	public void checkPlayerCollision(Max max, KeyHandler k) {
 		Rectangle m = max.player;
 		// attributes
@@ -367,6 +365,10 @@ public class Tyler extends Character {
 		// }
 	}
 
+	// method: getyLoc
+    // Purpose: gets the y lock for camera 
+    // Param: n/a
+ 	// Return: int
 	public int getyLoc() {
 		return yLoc;
 	}

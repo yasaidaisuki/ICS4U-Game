@@ -108,18 +108,20 @@ public class GamePanel extends JPanel implements Runnable {
 		}
 	}
 
-	// Name:
-	// Purpose:
-	// Param:
-	// Return:
+	// Name: initialize
+	// Purpose: start any variables and actions before the thread 
+	// Param: n/a
+	// Return:void
 	public void initialize() {
 
 		// setups before the game starts running
 		gameState = titleState;
+		// play starting music
 		playMusic(0);
+		// load map 1
 		tileM.loadMap();
 		
-		// if map 1
+		// if add 2 tylers to the tyler list
 		tylerList.add(new Tyler(this, (int) (tileSize * 8), (int) (tileSize * 15), 15));
 		tylerList.add(new Tyler(this, (int) (tileSize * 96), (int) (tileSize * 7), 8));
 		try {
@@ -135,37 +137,51 @@ public class GamePanel extends JPanel implements Runnable {
 	// Param: n/a
 	// Return: void
 	public void update() {
+		// if game state is map 1 then load max and tyler
 		if (gameState == playState) {
 			maxAction();
 			tylerAction();
 			checkCollision();
+		// if game state is map 2 then load max and wong
 		} else if (gameState == map2) {
 			maxAction();
 			wongAction();
 			checkCollision();
 		}
+		// if switch map, then remove the tylers and change the map
 		if (changeWord) {
 			for (int i = 0; i < tylerList.size(); i++) {
 				tylerList.remove(i);
 			}
 			tylerList.clear();
+			// change state and change map
 			gameState = map2;
 			mapNum = 2;
 			tileM.loadMap();
 			max.player.x = 0;
 			max.player.y = 0;
+			// set it back to false
 			changeWord = false;
 		}
 
 	}
 
+	// Name: maxAction
+	// Purpose: allows max to move and keep in bound
+	// Param: n/a
+	// Return: void
 	public void maxAction() {
 		max.xVel = 0;
 		max.move();
 		max.keepInBound();
 	}
 
+	// Name: tylerAction
+	// Purpose: allows tyler to move and keep in bound
+	// Param: n/a
+	// Return: void
 	public void tylerAction() {
+		// checks collision for all tylers
 		for (int i = 0; i < tylerList.size(); i++) {
 			for (int j = tylerList.size() - 1; j >= 0; j--) {
 				tylerList.get(j).checkTylerCollision(tylerList.get(i));
@@ -181,13 +197,22 @@ public class GamePanel extends JPanel implements Runnable {
 		}
 	}
 
+	// Name: maxAction
+	// Purpose: allows tyler to move and keep in bound
+	// Param: n/a
+	// Return: void
 	public void wongAction() {
 		wong.move();
 		wong.setAction();
 		wong.keepInBound();
+		// checks if wong comes in contact with max
 		wong.checkPlayerCollision(max, keyH);
 	}
 
+	// Name: checkCollision
+	// Purpose: checks colision for all characters
+	// Param: n/a
+	// Return: void
 	public void checkCollision() {
 		// player collision
 		boolean flag = false;
@@ -195,12 +220,14 @@ public class GamePanel extends JPanel implements Runnable {
 			if (max.checkCollision(tileM.getTiles().get(i))) {
 				flag = true;
 			}
+			// tyler collision
 			for (int j = 0; j < tylerList.size(); j++) {
 				max.checkTylerCollision(tylerList.get(j));
 				if (tylerList.get(j).checkCollision(tileM.getTiles().get(i), tylerList.get(j).getyLoc())) {
 					flag = true;
 				}
 			}
+			// wong collision
 			for (int k = 0; i < wong.projList.size(); i++) {
 				max.checkProjCollision(wong.proj);
 				wong.checkProjCollision(tileM.getTiles().get(i), k, max);
@@ -220,7 +247,7 @@ public class GamePanel extends JPanel implements Runnable {
 		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D) g;
 
-		// title Screen
+		// title Screen & menu
 		if (gameState == titleState) {
 			drawTitle(g2);
 		} else if (gameState == helpState) {
@@ -235,6 +262,7 @@ public class GamePanel extends JPanel implements Runnable {
 				wong.draw(g2);
 			}
 		}
+		
 		// Death state
 		if (max.dead) {
 			keyH.left = false;
@@ -249,18 +277,21 @@ public class GamePanel extends JPanel implements Runnable {
 			initialize();
 			
 		}
+		
+		// win state
 		if (gameState == winState) {
 			tylerList.removeAll(tylerList);
 			stopSound(0);
 			drawWin(g2);
 		}
+		
 		// Game Screen
 		else if (gameState == playState) {
 			g2.drawImage(background, 0, 0, screenX + 200, screenY, null);
 			tileM.draw(g2);
 			max.draw(g2);
 			
-				
+			// draws tyler if alive	
 			for (int i = 0; i < tylerList.size(); i++) {
 				if (!tylerList.get(i).dead)
 					tylerList.get(i).draw(g2);
@@ -271,17 +302,30 @@ public class GamePanel extends JPanel implements Runnable {
 
 	}
 
+	// Name: playMusic
+	// Purpose: plays sound and loops it
+	// Param: n/a
+	// Return: void
 	public void playMusic(int i) {
+		// takes the pre inputted wav file and loops it
 		sound.setFile(i);
 		sound.play();
 		sound.loop();
 
 	}
 
+	// Name: stopSound
+	// Purpose: stops sound
+	// Param: n/a
+	// Return: void
 	public void stopSound(int i) {
 		sound.stop();
 	}
 
+	// Name: soundEffect
+	// Purpose: plays sound and but doesnt loop
+	// Param: n/a
+	// Return: void
 	public void soundEffect(int i) {
 		sound.setFile(i);
 		sound.play();

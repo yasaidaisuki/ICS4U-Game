@@ -34,13 +34,21 @@ public class Wong extends Character {
 
 	BufferedImage projectile;
 
+	// method: Wong
+    // Purpose: wong object
+    // Param: GamePanel
+ 	// Return: n/a
 	public Wong(GamePanel gp) {
 		this.gp = gp;
 
 		setDefaultValues();
 		getImg();
 	}
-
+	
+	// Name: setDefaultValues
+	// Purpose: easy access to tyler attributes
+	// Param: n/a
+	// Return: void
 	public void setDefaultValues() {
 		xVel = 0;
 		speed = 2.5;
@@ -55,7 +63,11 @@ public class Wong extends Character {
 		projMaxHP = 80;
 		projHp = projMaxHP;
 	}
-
+	
+	// Name: getImg
+	// Purpose: initialize the sprites using buffered images
+	// Param: n/a
+	// Return: void
 	public void getImg() {
 		try {
 			projectile = ImageIO.read(getClass().getResourceAsStream("/wong/mark.png"));
@@ -80,6 +92,10 @@ public class Wong extends Character {
 		}
 	}
 
+	// Name: setAction
+	// Purpose: randomizes tyler's actions
+	// Param: n/a
+	// Return: void
 	public void setAction() {
 
 		actionLockCounter++;
@@ -166,6 +182,10 @@ public class Wong extends Character {
 		}
 	}
 
+	// Name: move
+	// Purpose: check for tyler movement
+	// Param: n/a
+	// Return: void
 	public void move() {
 		
 		// projectile
@@ -193,6 +213,10 @@ public class Wong extends Character {
 
 	}
 
+	// Name: draw
+	// Purpose: draw the character sprites
+	// Param: Graphics2D
+	// Return: void
 	public void draw(Graphics2D g2) {
 
 		BufferedImage image = null;
@@ -268,6 +292,11 @@ public class Wong extends Character {
 		}
 	}
 
+	// Name: checkCollision
+	// Purpose: checks the collision around wong with blocks
+	// Param: Tile object
+	// Return: boolean value of whether the block you collide with is a block that
+	// is actually collidable
 	public boolean checkCollision(Tile t) {
 		Rectangle block = t.getHitbox();
 		if (wong.intersects(block)) {
@@ -306,6 +335,10 @@ public class Wong extends Character {
 
 	}
 
+	// Name: checkPlayerCollision
+	// Purpose: checks the collision around wong with player
+	// Param: Max, KeyHandler
+	// Return: void
 	public void checkPlayerCollision(Max max, KeyHandler k) {
 		Rectangle m = max.player;
 		// attributes
@@ -349,6 +382,10 @@ public class Wong extends Character {
 		}
 	}
 
+	// Name: keepInBound
+	// Purpose: keeps Ms Wong in bounds
+	// Param: n/a
+	// Return: void
 	public void keepInBound() {
 		if (wong.x < gp.tileSize * 71) {
 			wong.x = gp.tileSize * 71;
@@ -361,6 +398,10 @@ public class Wong extends Character {
 		}
 	}
 
+	// Name: checkProjCollision
+	// Purpose: checks the collision of porjectile
+	// Param: Tile, int, Max
+	// Return: void
 	// projectile collision
 	public void checkProjCollision(Tile t, int i, Max m) {
 		Rectangle block = t.getHitbox();
@@ -369,6 +410,10 @@ public class Wong extends Character {
 		}
 	}
 
+	// Name: keepInbBoundProj
+	// Purpose: keeps Projectile in bound
+	// Param: n/a
+	// Return: void
 	public void keepInBoundProj() {
 		for (int i = 0; i < projList.size(); i++) {
 			if (proj.x < gp.tileSize * 71) {
