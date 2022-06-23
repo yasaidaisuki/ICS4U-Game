@@ -1,3 +1,8 @@
+// Assignment: ISU
+// Name: Max Luo and Dami Peng
+// Date: June 22, 2022
+// Description: a class for handling key events
+
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
@@ -72,7 +77,7 @@ public class KeyHandler implements KeyListener {
 		// escape from win screen
 		if (gp.gameState == gp.winState) {
 			if (key == KeyEvent.VK_ENTER) {
-				gp.gameState = gp.titleState;
+				System.exit(0);
 			}
 		}
 

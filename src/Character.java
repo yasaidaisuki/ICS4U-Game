@@ -1,3 +1,8 @@
+// Assignment: ISU
+// Name: Max Luo and Dami Peng
+// Date: June 22, 2022
+// Description: an abstract class for character attributes
+
 import java.io.*;
 import java.util.*;
 import java.awt.image.BufferedImage;

@@ -1,3 +1,7 @@
+// Assignment: ISU
+// Name: Max Luo and Dami Peng
+// Date: June 22, 2022
+// Description: a class for player
 
 import javax.imageio.ImageIO;
 

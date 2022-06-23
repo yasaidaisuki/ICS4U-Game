@@ -1,3 +1,8 @@
+// Assignment: ISU
+// Name: Max Luo and Dami Peng
+// Date: June 22, 2022
+// Description: a class for handling tiles
+
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -22,9 +27,9 @@ public class TileManager {
 	private ArrayList<Tile> tiles = new ArrayList<>();
 
 	// method: tileManager
-    // Purpose: manages some tiles/blocks
-    // Param: GamePanel
- 	// Return: n/a
+	// Purpose: manages some tiles/blocks
+	// Param: GamePanel
+	// Return: n/a
 	public TileManager(GamePanel gp) {
 		this.gp = gp;
 
@@ -37,9 +42,9 @@ public class TileManager {
 	}
 
 	// method: getTileImage
-    // Purpose: reads in block images/ sprites
-    // Param: n/a
- 	// Return: void
+	// Purpose: reads in block images/ sprites
+	// Param: n/a
+	// Return: void
 	public void getTileImage() {
 		try {
 			tile[0] = new Tile();
@@ -92,9 +97,9 @@ public class TileManager {
 	}
 
 	// method: loadMap
-    // Purpose: loads map from text file
-    // Param: n/a
- 	// Return: void
+	// Purpose: loads map from text file
+	// Param: n/a
+	// Return: void
 	public void loadMap() {
 		tiles.clear();
 		try {
@@ -105,7 +110,7 @@ public class TileManager {
 			int col = 0;
 			int row = 0;
 
-			// loads the map using the tiles 
+			// loads the map using the tiles
 			while (row < gp.maxWorldRow) {
 				String line = br.readLine();
 
@@ -148,9 +153,9 @@ public class TileManager {
 	}
 
 	// method: draw
-    // Purpose: draws the map
-    // Param: Graphics2D
- 	// Return: void
+	// Purpose: draws the map
+	// Param: Graphics2D
+	// Return: void
 	public void draw(Graphics2D g2) {
 
 		int col = 0;
@@ -197,9 +202,9 @@ public class TileManager {
 	}
 
 	// method: getTiles
-    // Purpose: returns tiles
-    // Param: n/a
- 	// Return: ArrayList<Tile>
+	// Purpose: returns tiles
+	// Param: n/a
+	// Return: ArrayList<Tile>
 	public ArrayList<Tile> getTiles() {
 		return tiles;
 	}

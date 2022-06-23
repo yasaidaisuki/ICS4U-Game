@@ -1,3 +1,8 @@
+// Assignment: ISU
+// Name: Max Luo and Dami Peng
+// Date: June 22, 2022
+// Description: a class for wong object
+
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.FileNotFoundException;
@@ -35,16 +40,16 @@ public class Wong extends Character {
 	BufferedImage projectile;
 
 	// method: Wong
-    // Purpose: wong object
-    // Param: GamePanel
- 	// Return: n/a
+	// Purpose: wong object
+	// Param: GamePanel
+	// Return: n/a
 	public Wong(GamePanel gp) {
 		this.gp = gp;
 
 		setDefaultValues();
 		getImg();
 	}
-	
+
 	// Name: setDefaultValues
 	// Purpose: easy access to tyler attributes
 	// Param: n/a
@@ -63,7 +68,7 @@ public class Wong extends Character {
 		projMaxHP = 80;
 		projHp = projMaxHP;
 	}
-	
+
 	// Name: getImg
 	// Purpose: initialize the sprites using buffered images
 	// Param: n/a

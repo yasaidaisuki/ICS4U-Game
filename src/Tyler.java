@@ -1,3 +1,8 @@
+// Assignment: ISU
+// Name: Max Luo and Dami Peng
+// Date: June 22, 2022
+// Description: a class for tyler objects
+
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -367,9 +372,9 @@ public class Tyler extends Character {
 	}
 
 	// method: getyLoc
-    // Purpose: gets the y lock for camera 
-    // Param: n/a
- 	// Return: int
+	// Purpose: gets the y lock for camera
+	// Param: n/a
+	// Return: int
 	public int getyLoc() {
 		return yLoc;
 	}

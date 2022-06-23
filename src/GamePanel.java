@@ -1,3 +1,8 @@
+// Assignment: ISU
+// Name: Max Luo and Dami Peng
+// Date: June 22, 2022
+// Description: A rendition of Darksouls. A single-player platformer where the character attempts to eliminate threats (tyler) and defeat lord of cinder (ms wong)
+
 import javax.swing.*;
 
 import java.awt.*;
