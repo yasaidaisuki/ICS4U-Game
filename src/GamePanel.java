@@ -138,7 +138,11 @@ public class GamePanel extends JPanel implements Runnable {
 		// load map 1
 		tileM.loadMap();
 
+<<<<<<< Updated upstream
 		// if add 2 tylers to the tyler list
+=======
+		// if map 1
+>>>>>>> Stashed changes
 		tylerList.add(new Tyler(this, (int) (tileSize * 8), (int) (tileSize * 15), 15));
 		tylerList.add(new Tyler(this, (int) (tileSize * 96), (int) (tileSize * 7), 8));
 		try {
