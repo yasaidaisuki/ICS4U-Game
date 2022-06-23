@@ -436,8 +436,7 @@ public class GamePanel extends JPanel implements Runnable {
 
 	}
 
-	// Name: drawCredit
-	// Purpose: draw the credit screen
+	// Purpose: draw the leader screen
 	// Param: Graphics2D
 	// Return: void
 	public void drawLeader(Graphics2D g2) {
@@ -447,67 +446,126 @@ public class GamePanel extends JPanel implements Runnable {
 
 		// Title Name
 		g2.setFont(font.deriveFont(Font.BOLD, 60F));
-		String text = "CREDITS";
+		String text = "LEADERBOARDS";
 		float x = (float) (tileSize * 9);
 		float y = (float) (tileSize * 1.5);
 		g2.setColor(Color.white);
 		g2.drawString(text, x, y + 5);
 
-		g2.setFont(font.deriveFont(50F));
-		text = "Developers:";
-		x = (float) (tileSize * 9.25);
-		y += tileSize * 2;
+		// main title color
 		g2.setColor(Color.white);
 		g2.drawString(text, x, y);
 
-		g2.setFont(font.deriveFont(Font.BOLD, 40F));
-		text = "Ming Luo";
-		x = (float) (tileSize * 9.8);
-		y += tileSize * 1.5;
+		// seperating lines
+		g2.setColor(Color.black);
+		g2.setStroke(new BasicStroke(10));
+		x = (int) (tileSize * 4.5);
+		y = (int) (tileSize * 3.5);
+		g2.drawLine((int) x * 2, (int) y, (int) (screenX - x * 2), (int) y);
+
+		// numbers
+		g2.setFont(g2.getFont().deriveFont(Font.BOLD, 50F));
+		text = "1.";
+		x = tileSize * 5;
+		y = (int) (tileSize * 6.5);
+
+		g2.setColor(Color.black);
+		g2.drawString(text, x + 5, y + 5);
+
 		g2.setColor(Color.white);
 		g2.drawString(text, x, y);
 
-		g2.setFont(font.deriveFont(Font.BOLD, 40F));
-		text = "Dami Peng";
-		x = (float) (tileSize * 9.6);
-		y += tileSize * 1.5;
+		text = "2.";
+		y = (int) (tileSize * 8.5);
+
+		g2.setColor(Color.black);
+		g2.drawString(text, x + 5, y + 5);
+
 		g2.setColor(Color.white);
 		g2.drawString(text, x, y);
 
-		g2.setFont(font.deriveFont(Font.BOLD, 40F));
-		text = "Sami Peng";
-		x = (float) (tileSize * 9.7);
-		y += tileSize * 1.5;
+		text = "3.";
+		y = (int) (tileSize * 10.5);
+
+		g2.setColor(Color.black);
+		g2.drawString(text, x + 5, y + 5);
+
 		g2.setColor(Color.white);
 		g2.drawString(text, x, y);
 
-		g2.setFont(font.deriveFont(50F));
-		text = "VOICE ACTORS:";
-		x = (float) (tileSize * 7.8);
-		y += tileSize * 1.5;
+		text = "4.";
+		y = (int) (tileSize * 12.5);
+
+		g2.setColor(Color.black);
+		g2.drawString(text, x + 5, y + 5);
+
 		g2.setColor(Color.white);
 		g2.drawString(text, x, y);
 
-		g2.setFont(font.deriveFont(Font.BOLD, 40F));
-		text = "Tyler Zeng";
-		x = (float) (tileSize * 9.6);
-		y += tileSize * 1.5;
+		text = "5.";
+		y = (int) (tileSize * 14.5);
+
+		g2.setColor(Color.black);
+		g2.drawString(text, x + 5, y + 5);
+
 		g2.setColor(Color.white);
 		g2.drawString(text, x, y);
 
-		g2.setFont(font.deriveFont(Font.BOLD, 40F));
-		text = "Yunji Zhang";
-		x = (float) (tileSize * 9.3);
-		y += tileSize * 1.5;
+		// Labels
+		g2.setFont(g2.getFont().deriveFont(Font.BOLD, 50F));
+		text = "ATTEMPT";
+		x = tileSize * 9;
+		y = tileSize * 5;
+
+		g2.setColor(Color.black);
+		g2.drawString(text, x + 5, y + 5);
+
 		g2.setColor(Color.white);
 		g2.drawString(text, x, y);
 
-		g2.setFont(font.deriveFont(Font.BOLD, 50F));
-		text = "| PRESS ESCAPE TO EXIT |";
-		x = (float) (tileSize * 6.2);
-		y += tileSize * 1.5;
+		text = "SOULS";
+		x = tileSize * 15;
+		y = tileSize * 5;
+
+		g2.setColor(Color.black);
+		g2.drawString(text, x + 5, y + 5);
+
 		g2.setColor(Color.white);
 		g2.drawString(text, x, y);
+
+		// Load Leaderboard - Dates
+		x = tileSize * 7;
+		y = (int) (tileSize * 4.5);
+		for (int i = 0; i < 5; i++) {
+			if (i < sortedScores.size()) {
+				g2.setFont(g2.getFont().deriveFont(Font.BOLD, 35F));
+				text = Integer.toString(sortedScores.get(i).getattempt());
+				y += (int) (tileSize * 2);
+
+				g2.setColor(Color.black);
+				g2.drawString(text, x + 5, y + 5);
+
+				g2.setColor(Color.white);
+				g2.drawString(text, x, y);
+			}
+		}
+
+		// Load Leaderboard - Dates
+		x = tileSize * 16;
+		y = (int) (tileSize * 4.5);
+		for (int i = 0; i < 5; i++) {
+			if (i < sortedScores.size()) {
+				g2.setFont(g2.getFont().deriveFont(Font.BOLD, 35F));
+				text = Integer.toString(sortedScores.get(i).getscore());
+				y += (int) (tileSize * 2);
+
+				g2.setColor(Color.black);
+				g2.drawString(text, x + 5, y + 5);
+
+				g2.setColor(Color.white);
+				g2.drawString(text, x, y);
+			}
+		}
 	}
 
 	// Name: drawCredit
