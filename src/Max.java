@@ -51,7 +51,7 @@ public class Max extends Character {
 		player = new Rectangle((int) (gp.tileSize * 0), (int) (gp.tileSize * 15), gp.tileSize * 2, gp.tileSize * 2);
 		maxHp = 4;
 		hp = maxHp;
-		dmg = 2;
+		dmg = 1000;
 		// default sprite
 		direction = "right";
 		screenX = gp.screenX / 2 - (gp.tileSize / 2);

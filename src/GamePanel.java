@@ -58,6 +58,7 @@ public class GamePanel extends JPanel implements Runnable {
 	int leaderBState = 2;
 	int helpState = 3;
 	int creditState = 4;
+	int winState =69;
 	int map2 = 5;
 	int death = 6;
 	public int mapNum = 1;
@@ -144,8 +145,6 @@ public class GamePanel extends JPanel implements Runnable {
 			checkCollision();
 		}
 		if (changeWord) {
-			stopSound(1);
-			playMusic(9);
 			for (int i = 0; i < tylerList.size(); i++) {
 				tylerList.remove(i);
 			}
@@ -249,6 +248,11 @@ public class GamePanel extends JPanel implements Runnable {
 			mapNum = 1;
 			initialize();
 			
+		}
+		if (gameState == winState) {
+			tylerList.removeAll(tylerList);
+			stopSound(0);
+			drawWin(g2);
 		}
 		// Game Screen
 		else if (gameState == playState) {
@@ -498,6 +502,10 @@ public class GamePanel extends JPanel implements Runnable {
 		g2.drawString(text, x, y);
 	}
 
+	// Name: drawDeath
+	// Purpose: draw the death screen
+	// Param: Graphics2D
+	// Return: void
 	public void drawDeath(Graphics2D g2) {
 
 		// draw rectangle
@@ -520,6 +528,34 @@ public class GamePanel extends JPanel implements Runnable {
 			g2.setColor(Color.white);
 			g2.drawString(text, x, y);
 		}
+	}
+	
+	// Name: drawWin
+	// Purpose: draw the win screen
+	// Param: Graphics2D
+	// Return: void
+	public void drawWin(Graphics2D g2) {
+
+		// draw rectangle
+		g2.setColor(Color.black);
+		g2.fillRect(0, 0, screenX, screenY);
+
+		g2.setFont(font.deriveFont(60F));
+		String text = "YOU WIN";
+		float x = (float) (tileSize * 9);
+		float y = (float) tileSize * 7;
+		g2.setColor(Color.white);
+		g2.drawString(text, x, y + 5);
+
+		long currentTime = System.currentTimeMillis();
+		
+			canAlive = true;
+			text = "> Exit";
+			x = (float) (tileSize * 10);
+			y += tileSize * 3;
+			g2.setColor(Color.white);
+			g2.drawString(text, x, y);
+		
 	}
 
 	public static void main(String[] args) {

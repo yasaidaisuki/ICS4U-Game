@@ -343,6 +343,8 @@ public class Wong extends Character {
 		}
 		
 		if (hp <= 0) {
+			gp.stopSound(11);
+			gp.gameState = gp.winState;
 			dead = true;
 		}
 	}

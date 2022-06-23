@@ -65,11 +65,18 @@ public class KeyHandler implements KeyListener {
 				gp.gameState = gp.titleState;
 			}
 		}
+		
+		if (gp.gameState == gp.winState) {
+			if (key== KeyEvent.VK_ENTER) {
+				gp.gameState = gp.titleState;
+			}
+		}
 
-		// Play state
+		// Play state || first map
 		if (gp.gameState == gp.playState || gp.gameState == gp.map2) {
 
 			if (gp.max.dead && gp.canAlive == true && key == KeyEvent.VK_ENTER) {
+				gp.stopSound(0);
 				gp.gameState = gp.playState;
 				gp.max.dead = false;
 				gp.max.hp = gp.max.maxHp;
@@ -100,6 +107,8 @@ public class KeyHandler implements KeyListener {
 					attack = false;
 				}
 			}
+			
+		// if second map
 		} else if (gp.gameState == gp.map2) {
 			if (key == KeyEvent.VK_A) {
 				left = true;

@@ -21,7 +21,6 @@ public class Sound {
         soundURL[6] = getClass().getResource("/sound/shing.wav");
         soundURL[7] = getClass().getResource("/sound/tyler_lol.wav");
         soundURL[8] = getClass().getResource("/sound/you_died.wav");
-        soundURL[9] = getClass().getResource("/sound/map3_boss.wav");
         soundURL[10] = getClass().getResource("/sound/wong_atk.wav");
         soundURL[11] = getClass().getResource("/sound/deathtoboss.wav");
     }
