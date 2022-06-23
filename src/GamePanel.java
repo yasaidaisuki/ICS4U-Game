@@ -305,10 +305,11 @@ public class GamePanel extends JPanel implements Runnable {
 		}
 
 		// win state
-		if (gameState == winState && recordScore) {
+		if (gameState == winState) {
+			drawWin(g2);
 			tylerList.removeAll(tylerList);
 			stopSound(0);
-			drawWin(g2);
+
 			Collections.sort(sortedScores);
 			Record r = new Record(attempt, score);
 			try {
@@ -747,23 +748,20 @@ public class GamePanel extends JPanel implements Runnable {
 	public void drawWin(Graphics2D g2) {
 
 		// draw rectangle
-		g2.setColor(Color.black);
+		g2.setColor(Color.white);
 		g2.fillRect(0, 0, screenX, screenY);
 
 		g2.setFont(font.deriveFont(60F));
 		String text = "YOU WIN";
 		float x = (float) (tileSize * 9);
 		float y = (float) tileSize * 7;
-		g2.setColor(Color.white);
+		g2.setColor(Color.black);
 		g2.drawString(text, x, y + 5);
 
-		long currentTime = System.currentTimeMillis();
-
-		canAlive = true;
 		text = "> Exit";
 		x = (float) (tileSize * 10);
 		y += tileSize * 3;
-		g2.setColor(Color.white);
+		g2.setColor(Color.black);
 		g2.drawString(text, x, y);
 
 	}
