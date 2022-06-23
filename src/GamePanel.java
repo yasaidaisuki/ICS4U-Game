@@ -270,6 +270,7 @@ public class GamePanel extends JPanel implements Runnable {
 		// title Screen & menu
 		if (gameState == titleState) {
 			score = 0;
+			recordScore = true;
 			drawTitle(g2);
 		} else if (gameState == helpState) {
 			drawHelp(g2);
@@ -310,18 +311,20 @@ public class GamePanel extends JPanel implements Runnable {
 			tylerList.removeAll(tylerList);
 			stopSound(0);
 
-			Collections.sort(sortedScores);
-			Record r = new Record(attempt, score);
-			try {
-				PrintWriter output = new PrintWriter(new FileWriter("highscore.txt", true));
-				sortedScores.add(r);
-				output.println("\n" + r.getattempt() + "/" + r.getscore());
-				output.close();
-				System.out.println(r);
-			} catch (IOException e) {
-				System.out.println("someting wong with my code");
+			if (recordScore) {
+				Collections.sort(sortedScores);
+				Record r = new Record(attempt, score);
+				try {
+					PrintWriter output = new PrintWriter(new FileWriter("highscore.txt", true));
+					sortedScores.add(r);
+					output.println("\n" + r.getattempt() + "/" + r.getscore());
+					output.close();
+					System.out.println(r);
+				} catch (IOException e) {
+					System.out.println("someting wong with my code");
+				}
+				recordScore = false;
 			}
-			recordScore = false;
 		}
 
 		// Game Screen
