@@ -45,8 +45,8 @@ public class Max extends Character {
 		airborne = true;
 		xVel = 0;
 		yVel = 0;
-		speed = 10;
-		jumpSpeed = 20;
+		speed = 20;
+		jumpSpeed = 25;
 		gravity = 0.8;
 		player = new Rectangle((int) (gp.tileSize * 0), (int) (gp.tileSize * 15), gp.tileSize * 2, gp.tileSize * 2);
 		maxHp = 4;
@@ -97,7 +97,7 @@ public class Max extends Character {
 	// Param: n/a
 	// Return: void
 	public void move() {
-		// attack 
+		// attack
 		if (keyH.attack && xVel == 0) {
 			isAtk = true;
 			if (direction.equals("idle_l")) {
@@ -121,7 +121,7 @@ public class Max extends Character {
 				xVel -= speed;
 			}
 			direction = "left";
-		// move right
+			// move right
 		} else if (keyH.right) {
 			if (xVel <= 3) {
 				xVel += speed;
@@ -296,7 +296,6 @@ public class Max extends Character {
 			y = gp.screenY - (gp.worldHeight - player.y);
 		}
 
-		System.out.println(xVel);
 		// turns invisible when hit
 		if (invincible == true) {
 			g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f));
@@ -307,11 +306,11 @@ public class Max extends Character {
 			g2.drawImage(image, x - gp.tileSize, y, gp.tileSize * 3, gp.tileSize * 2, null);
 		} else if (direction.equals("right_atk")) {
 			g2.drawImage(image, x, y, gp.tileSize * 3, gp.tileSize * 2, null);
-		// not attacks
+			// not attacks
 		} else {
 			g2.drawImage(image, x, y, gp.tileSize * 2, gp.tileSize * 2, null);
 		}
-		
+
 		// reset invisibility for contacting enemies
 		g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
 
@@ -481,7 +480,7 @@ public class Max extends Character {
 			}
 		}
 	}
-	
+
 	// Purpose: checks wong projectile
 	// Param: n/a
 	// Return: void

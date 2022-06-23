@@ -41,6 +41,7 @@ public class GamePanel extends JPanel implements Runnable {
 	int score;
 	HashMap<Integer, Integer> leaderboard = new HashMap<>();
 	ArrayList<Record> sortedScores = new ArrayList<>();
+	boolean recordScore = true;
 
 	// Controls class
 	TileManager tileM = new TileManager(this); // tile manager object
@@ -66,6 +67,7 @@ public class GamePanel extends JPanel implements Runnable {
 	int helpState = 3;
 	int creditState = 4;
 	int winState = 69;
+	int endState = 420;
 	int map2 = 5;
 	int death = 6;
 	public int mapNum = 1;
@@ -90,16 +92,6 @@ public class GamePanel extends JPanel implements Runnable {
 		setVisible(true);
 		this.addKeyListener(keyH);
 		this.setFocusable(true);
-		leaderboard.clear();
-		getScore();
-		Collection<Integer> score = leaderboard.values();
-		Iterator<Integer> attempt = leaderboard.keySet().iterator();
-		for (Integer i : score) {
-			sortedScores.add(new Record(attempt.next(), i));
-
-		}
-		Collections.sort(sortedScores);
-		System.out.println(sortedScores);
 		// this.setDoubleBuffered(true);
 		// start threading game
 		thread = new Thread(this);
@@ -138,11 +130,18 @@ public class GamePanel extends JPanel implements Runnable {
 		// load map 1
 		tileM.loadMap();
 
-<<<<<<< Updated upstream
+		leaderboard.clear();
+		getScore();
+		Collection<Integer> score = leaderboard.values();
+		Iterator<Integer> attempt = leaderboard.keySet().iterator();
+		for (Integer i : score) {
+			sortedScores.add(new Record(attempt.next(), i));
+
+		}
+		Collections.sort(sortedScores);
+
 		// if add 2 tylers to the tyler list
-=======
 		// if map 1
->>>>>>> Stashed changes
 		tylerList.add(new Tyler(this, (int) (tileSize * 8), (int) (tileSize * 15), 15));
 		tylerList.add(new Tyler(this, (int) (tileSize * 96), (int) (tileSize * 7), 8));
 		try {
@@ -276,16 +275,7 @@ public class GamePanel extends JPanel implements Runnable {
 		} else if (gameState == creditState) {
 			drawCredit(g2);
 		} else if (gameState == leaderBState) {
-			Collections.sort(sortedScores);
-			Record r = new Record(attempt, score);
-			try {
-				PrintWriter output = new PrintWriter(new FileWriter("highscore.txt", true));
-				sortedScores.add(r);
-				output.println(r.getattempt() + "/" + r.getscore());
-				output.close();
-			} catch (IOException e) {
-			}
-			System.out.println();
+			drawLeader(g2);
 		} else if (gameState == map2) {
 			g2.drawImage(background, 0, 0, screenX + 200, screenY, null);
 			tileM.draw(g2);
@@ -304,6 +294,7 @@ public class GamePanel extends JPanel implements Runnable {
 			stopSound(0);
 			max.player.x = 0;
 			max.player.y = 15 * tileSize;
+			gameState = endState;
 			drawDeath(g2);
 			mapNum = 1;
 			initialize();
@@ -311,11 +302,22 @@ public class GamePanel extends JPanel implements Runnable {
 		}
 
 		// win state
-		if (gameState == winState) {
-			System.out.println(score);
+		if (gameState == winState && recordScore) {
 			tylerList.removeAll(tylerList);
 			stopSound(0);
 			drawWin(g2);
+			Collections.sort(sortedScores);
+			Record r = new Record(attempt, score);
+			try {
+				PrintWriter output = new PrintWriter(new FileWriter("highscore.txt", true));
+				sortedScores.add(r);
+				output.println("\n" + r.getattempt() + "/" + r.getscore());
+				output.close();
+				System.out.println(r);
+			} catch (IOException e) {
+				System.out.println("someting wong with my code");
+			}
+			recordScore = false;
 		}
 
 		// Game Screen
@@ -333,7 +335,6 @@ public class GamePanel extends JPanel implements Runnable {
 					tylerList.remove(i);
 			}
 		}
-
 	}
 
 	// Name: playMusic
@@ -433,6 +434,80 @@ public class GamePanel extends JPanel implements Runnable {
 		} catch (Exception e) {
 		}
 
+	}
+
+	// Name: drawCredit
+	// Purpose: draw the credit screen
+	// Param: Graphics2D
+	// Return: void
+	public void drawLeader(Graphics2D g2) {
+
+		// background
+		g2.drawImage(titleImg, -440, -200, null);
+
+		// Title Name
+		g2.setFont(font.deriveFont(Font.BOLD, 60F));
+		String text = "CREDITS";
+		float x = (float) (tileSize * 9);
+		float y = (float) (tileSize * 1.5);
+		g2.setColor(Color.white);
+		g2.drawString(text, x, y + 5);
+
+		g2.setFont(font.deriveFont(50F));
+		text = "Developers:";
+		x = (float) (tileSize * 9.25);
+		y += tileSize * 2;
+		g2.setColor(Color.white);
+		g2.drawString(text, x, y);
+
+		g2.setFont(font.deriveFont(Font.BOLD, 40F));
+		text = "Ming Luo";
+		x = (float) (tileSize * 9.8);
+		y += tileSize * 1.5;
+		g2.setColor(Color.white);
+		g2.drawString(text, x, y);
+
+		g2.setFont(font.deriveFont(Font.BOLD, 40F));
+		text = "Dami Peng";
+		x = (float) (tileSize * 9.6);
+		y += tileSize * 1.5;
+		g2.setColor(Color.white);
+		g2.drawString(text, x, y);
+
+		g2.setFont(font.deriveFont(Font.BOLD, 40F));
+		text = "Sami Peng";
+		x = (float) (tileSize * 9.7);
+		y += tileSize * 1.5;
+		g2.setColor(Color.white);
+		g2.drawString(text, x, y);
+
+		g2.setFont(font.deriveFont(50F));
+		text = "VOICE ACTORS:";
+		x = (float) (tileSize * 7.8);
+		y += tileSize * 1.5;
+		g2.setColor(Color.white);
+		g2.drawString(text, x, y);
+
+		g2.setFont(font.deriveFont(Font.BOLD, 40F));
+		text = "Tyler Zeng";
+		x = (float) (tileSize * 9.6);
+		y += tileSize * 1.5;
+		g2.setColor(Color.white);
+		g2.drawString(text, x, y);
+
+		g2.setFont(font.deriveFont(Font.BOLD, 40F));
+		text = "Yunji Zhang";
+		x = (float) (tileSize * 9.3);
+		y += tileSize * 1.5;
+		g2.setColor(Color.white);
+		g2.drawString(text, x, y);
+
+		g2.setFont(font.deriveFont(Font.BOLD, 50F));
+		text = "| PRESS ESCAPE TO EXIT |";
+		x = (float) (tileSize * 6.2);
+		y += tileSize * 1.5;
+		g2.setColor(Color.white);
+		g2.drawString(text, x, y);
 	}
 
 	// Name: drawCredit
@@ -654,7 +729,9 @@ public class GamePanel extends JPanel implements Runnable {
 			}
 			attempt = highestAttempt + 1;
 		} catch (FileNotFoundException e) {
+			System.out.println("file gone");
 		} catch (IOException e) {
+			System.out.println("bad exeption");
 		}
 	}
 

@@ -14,6 +14,10 @@ public class Record implements Comparable<Record> {
         return o.score - this.score;
     }
 
+    public String toString() {
+        return attempt + " " + score;
+    }
+
     // GETTERS
     public int getattempt() {
         return this.attempt;

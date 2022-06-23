@@ -47,6 +47,9 @@ public class KeyHandler implements KeyListener {
 					gp.playMusic(1);
 					gp.gameState = gp.playState;
 				}
+				if (gp.commandNum == 1) {
+					gp.gameState = gp.leaderBState;
+				}
 				if (gp.commandNum == 2) {
 					gp.gameState = gp.helpState;
 				}
@@ -65,10 +68,10 @@ public class KeyHandler implements KeyListener {
 				gp.gameState = gp.titleState;
 			}
 		}
-		
+
 		// escape from win screen
 		if (gp.gameState == gp.winState) {
-			if (key== KeyEvent.VK_ENTER) {
+			if (key == KeyEvent.VK_ENTER) {
 				gp.gameState = gp.titleState;
 			}
 		}
@@ -76,7 +79,7 @@ public class KeyHandler implements KeyListener {
 		// Play state || first map
 		if (gp.gameState == gp.playState || gp.gameState == gp.map2) {
 
-			// if max is dead and dead screen 
+			// if max is dead and dead screen
 			// enter to exit death screen
 			if (gp.max.dead && gp.canAlive == true && key == KeyEvent.VK_ENTER) {
 				gp.stopSound(0);
@@ -113,10 +116,10 @@ public class KeyHandler implements KeyListener {
 					attack = false;
 				}
 			}
-			
-		// if second map
+
+			// if second map
 		} else if (gp.gameState == gp.map2) {
-			
+
 			// player inputs
 			if (key == KeyEvent.VK_A) {
 				left = true;
@@ -163,7 +166,7 @@ public class KeyHandler implements KeyListener {
 				attack = false;
 				flag = false;
 			}
-		// Play state map2
+			// Play state map2
 		} else if (gp.gameState == gp.map2) {
 			if (key == KeyEvent.VK_A) {
 				left = false;
