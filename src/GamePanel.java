@@ -269,12 +269,15 @@ public class GamePanel extends JPanel implements Runnable {
 
 		// title Screen & menu
 		if (gameState == titleState) {
+			score = 0;
 			drawTitle(g2);
 		} else if (gameState == helpState) {
 			drawHelp(g2);
 		} else if (gameState == creditState) {
 			drawCredit(g2);
 		} else if (gameState == leaderBState) {
+			getScore();
+			Collections.sort(sortedScores);
 			drawLeader(g2);
 		} else if (gameState == map2) {
 			g2.drawImage(background, 0, 0, screenX + 200, screenY, null);
@@ -445,19 +448,15 @@ public class GamePanel extends JPanel implements Runnable {
 		g2.drawImage(titleImg, -440, -200, null);
 
 		// Title Name
-		g2.setFont(font.deriveFont(Font.BOLD, 60F));
-		String text = "LEADERBOARDS";
-		float x = (float) (tileSize * 9);
+		g2.setFont(font.deriveFont(Font.BOLD, 62F));
+		String text = "LEADERBOARD";
+		float x = (float) (tileSize * 7);
 		float y = (float) (tileSize * 1.5);
-		g2.setColor(Color.white);
-		g2.drawString(text, x, y + 5);
-
-		// main title color
 		g2.setColor(Color.white);
 		g2.drawString(text, x, y);
 
 		// seperating lines
-		g2.setColor(Color.black);
+		g2.setColor(Color.white);
 		g2.setStroke(new BasicStroke(10));
 		x = (int) (tileSize * 4.5);
 		y = (int) (tileSize * 3.5);
@@ -514,7 +513,7 @@ public class GamePanel extends JPanel implements Runnable {
 		// Labels
 		g2.setFont(g2.getFont().deriveFont(Font.BOLD, 50F));
 		text = "ATTEMPT";
-		x = tileSize * 9;
+		x = tileSize * 5;
 		y = tileSize * 5;
 
 		g2.setColor(Color.black);
@@ -533,7 +532,7 @@ public class GamePanel extends JPanel implements Runnable {
 		g2.setColor(Color.white);
 		g2.drawString(text, x, y);
 
-		// Load Leaderboard - Dates
+		// Load Leaderboard - attempts
 		x = tileSize * 7;
 		y = (int) (tileSize * 4.5);
 		for (int i = 0; i < 5; i++) {
@@ -550,7 +549,7 @@ public class GamePanel extends JPanel implements Runnable {
 			}
 		}
 
-		// Load Leaderboard - Dates
+		// Load Leaderboard - score
 		x = tileSize * 16;
 		y = (int) (tileSize * 4.5);
 		for (int i = 0; i < 5; i++) {
