@@ -59,7 +59,7 @@ public class TileManager {
 			// dirt wall
 			tile[5] = new Tile();
 			tile[5].image = ImageIO.read(getClass().getResourceAsStream("/background/wall.png"));
-			// diurt
+			// dirt
 			tile[6] = new Tile();
 			tile[6].image = ImageIO.read(getClass().getResourceAsStream("/background/dirt_f.png"));
 			// brick

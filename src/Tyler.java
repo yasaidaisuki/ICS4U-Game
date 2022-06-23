@@ -287,7 +287,7 @@ public class Tyler extends Character {
 			if (k.attack && max.direction.equals("left_atk")) {
 				if (invincible == false) {
 					gp.soundEffect(2);
-					hp-=max.dmg;
+					hp -= max.dmg;
 					invincible = true;
 				}
 
@@ -299,7 +299,7 @@ public class Tyler extends Character {
 			if (k.attack && max.direction.equals("right_atk")) {
 				if (invincible == false) {
 					gp.soundEffect(2);
-					hp-=max.dmg;
+					hp -= max.dmg;
 					invincible = true;
 				}
 
@@ -308,6 +308,7 @@ public class Tyler extends Character {
 		if (hp <= 0) {
 			gp.soundEffect(7);
 			dead = true;
+			gp.score += 100;
 		}
 	}
 

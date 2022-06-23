@@ -1,26 +1,26 @@
 public class Record implements Comparable<Record> {
 
     // declare variables
-    private String date;
-    private int time;
+    private int attempt;
+    private int score;
 
-    public Record(String date, int time) {
-        this.date = date;
-        this.time = time;
+    public Record(int attempt, int score) {
+        this.attempt = attempt;
+        this.score = score;
     }
 
     @Override
     public int compareTo(Record o) {
-        return o.time - this.time;
+        return o.score - this.score;
     }
 
     // GETTERS
-    public String getDate() {
-        return this.date;
+    public int getattempt() {
+        return this.attempt;
     }
 
-    public int getTime() {
-        return this.time;
+    public int getscore() {
+        return this.score;
     }
 
 }

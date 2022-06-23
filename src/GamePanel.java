@@ -1,10 +1,15 @@
 import javax.swing.*;
+
 import java.awt.*;
 import javax.imageio.ImageIO;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.StringTokenizer;
+import java.util.Iterator;
 
 @SuppressWarnings("serial")
 public class GamePanel extends JPanel implements Runnable {
@@ -32,7 +37,9 @@ public class GamePanel extends JPanel implements Runnable {
 	ArrayList<Tyler> tylerList = new ArrayList<>();
 
 	// leaderboard
-	HashMap<String, Integer> leaderboard = new HashMap<>();
+	int attempt;
+	int score;
+	HashMap<Integer, Integer> leaderboard = new HashMap<>();
 	ArrayList<Record> sortedScores = new ArrayList<>();
 
 	// Controls class
@@ -58,7 +65,7 @@ public class GamePanel extends JPanel implements Runnable {
 	int leaderBState = 2;
 	int helpState = 3;
 	int creditState = 4;
-	int winState =69;
+	int winState = 69;
 	int map2 = 5;
 	int death = 6;
 	public int mapNum = 1;
@@ -83,6 +90,16 @@ public class GamePanel extends JPanel implements Runnable {
 		setVisible(true);
 		this.addKeyListener(keyH);
 		this.setFocusable(true);
+		leaderboard.clear();
+		getScore();
+		Collection<Integer> score = leaderboard.values();
+		Iterator<Integer> attempt = leaderboard.keySet().iterator();
+		for (Integer i : score) {
+			sortedScores.add(new Record(attempt.next(), i));
+
+		}
+		Collections.sort(sortedScores);
+		System.out.println(sortedScores);
 		// this.setDoubleBuffered(true);
 		// start threading game
 		thread = new Thread(this);
@@ -109,7 +126,7 @@ public class GamePanel extends JPanel implements Runnable {
 	}
 
 	// Name: initialize
-	// Purpose: start any variables and actions before the thread 
+	// Purpose: start any variables and actions before the thread
 	// Param: n/a
 	// Return:void
 	public void initialize() {
@@ -120,7 +137,7 @@ public class GamePanel extends JPanel implements Runnable {
 		playMusic(0);
 		// load map 1
 		tileM.loadMap();
-		
+
 		// if add 2 tylers to the tyler list
 		tylerList.add(new Tyler(this, (int) (tileSize * 8), (int) (tileSize * 15), 15));
 		tylerList.add(new Tyler(this, (int) (tileSize * 96), (int) (tileSize * 7), 8));
@@ -142,7 +159,7 @@ public class GamePanel extends JPanel implements Runnable {
 			maxAction();
 			tylerAction();
 			checkCollision();
-		// if game state is map 2 then load max and wong
+			// if game state is map 2 then load max and wong
 		} else if (gameState == map2) {
 			maxAction();
 			wongAction();
@@ -254,6 +271,17 @@ public class GamePanel extends JPanel implements Runnable {
 			drawHelp(g2);
 		} else if (gameState == creditState) {
 			drawCredit(g2);
+		} else if (gameState == leaderBState) {
+			Collections.sort(sortedScores);
+			Record r = new Record(attempt, score);
+			try {
+				PrintWriter output = new PrintWriter(new FileWriter("highscore.txt", true));
+				sortedScores.add(r);
+				output.println(r.getattempt() + "/" + r.getscore());
+				output.close();
+			} catch (IOException e) {
+			}
+			System.out.println();
 		} else if (gameState == map2) {
 			g2.drawImage(background, 0, 0, screenX + 200, screenY, null);
 			tileM.draw(g2);
@@ -262,7 +290,7 @@ public class GamePanel extends JPanel implements Runnable {
 				wong.draw(g2);
 			}
 		}
-		
+
 		// Death state
 		if (max.dead) {
 			keyH.left = false;
@@ -271,27 +299,29 @@ public class GamePanel extends JPanel implements Runnable {
 			tylerList.removeAll(tylerList);
 			stopSound(0);
 			max.player.x = 0;
-			max.player.y = 15*tileSize;
+			max.player.y = 15 * tileSize;
 			drawDeath(g2);
 			mapNum = 1;
 			initialize();
-			
+
 		}
-		
+
 		// win state
 		if (gameState == winState) {
+			System.out.println(score);
 			tylerList.removeAll(tylerList);
 			stopSound(0);
 			drawWin(g2);
 		}
-		
+
 		// Game Screen
 		else if (gameState == playState) {
 			g2.drawImage(background, 0, 0, screenX + 200, screenY, null);
 			tileM.draw(g2);
 			max.draw(g2);
-			
-			// draws tyler if alive	
+
+			// draws tyler if alive
+
 			for (int i = 0; i < tylerList.size(); i++) {
 				if (!tylerList.get(i).dead)
 					tylerList.get(i).draw(g2);
@@ -573,7 +603,7 @@ public class GamePanel extends JPanel implements Runnable {
 			g2.drawString(text, x, y);
 		}
 	}
-	
+
 	// Name: drawWin
 	// Purpose: draw the win screen
 	// Param: Graphics2D
@@ -592,14 +622,36 @@ public class GamePanel extends JPanel implements Runnable {
 		g2.drawString(text, x, y + 5);
 
 		long currentTime = System.currentTimeMillis();
-		
-			canAlive = true;
-			text = "> Exit";
-			x = (float) (tileSize * 10);
-			y += tileSize * 3;
-			g2.setColor(Color.white);
-			g2.drawString(text, x, y);
-		
+
+		canAlive = true;
+		text = "> Exit";
+		x = (float) (tileSize * 10);
+		y += tileSize * 3;
+		g2.setColor(Color.white);
+		g2.drawString(text, x, y);
+
+	}
+
+	public void getScore() {
+		try {
+			BufferedReader br = new BufferedReader(new FileReader("highscore.txt"));
+			String line = "";
+			int highestAttempt = 0;
+			while ((line = br.readLine()) != null) {
+				StringTokenizer st = new StringTokenizer(line, "/", false);
+				while (st.hasMoreTokens()) {
+					attempt = Integer.parseInt(st.nextToken());
+					score = Integer.parseInt(st.nextToken());
+				}
+				if (attempt > highestAttempt) {
+					highestAttempt = attempt;
+				}
+				leaderboard.put(attempt, score);
+			}
+			attempt = highestAttempt + 1;
+		} catch (FileNotFoundException e) {
+		} catch (IOException e) {
+		}
 	}
 
 	public static void main(String[] args) {

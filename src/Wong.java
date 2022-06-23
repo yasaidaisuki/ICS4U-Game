@@ -187,7 +187,7 @@ public class Wong extends Character {
 	// Param: n/a
 	// Return: void
 	public void move() {
-		
+
 		// projectile
 
 		for (int i = 0; i < projList.size(); i++) {
@@ -357,7 +357,7 @@ public class Wong extends Character {
 				if (invincible == false) {
 					gp.soundEffect(2);
 					gp.soundEffect(11);
-					hp-=max.dmg;
+					hp -= max.dmg;
 					invincible = true;
 				}
 			}
@@ -369,16 +369,17 @@ public class Wong extends Character {
 				if (invincible == false) {
 					gp.soundEffect(2);
 					gp.soundEffect(11);
-					hp-=max.dmg;
+					hp -= max.dmg;
 					invincible = true;
 				}
 			}
 		}
-		
+
 		if (hp <= 0) {
 			gp.stopSound(11);
 			gp.gameState = gp.winState;
 			dead = true;
+			gp.score += 500;
 		}
 	}
 
