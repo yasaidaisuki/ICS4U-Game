@@ -42,7 +42,7 @@ public class GamePanel extends JPanel implements Runnable {
 	ArrayList<Tyler> tylerList = new ArrayList<>();
 
 	// leaderboard
-	int attempt;
+	int attempt = 1;
 	int score;
 	HashMap<Integer, Integer> leaderboard = new HashMap<>();
 	ArrayList<Record> sortedScores = new ArrayList<>();

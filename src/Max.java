@@ -49,13 +49,13 @@ public class Max extends Character {
 		airborne = true;
 		xVel = 0;
 		yVel = 0;
-		speed = 20;
-		jumpSpeed = 25;
+		speed = 6;
+		jumpSpeed = 20;
 		gravity = 0.8;
 		player = new Rectangle((int) (gp.tileSize * 0), (int) (gp.tileSize * 15), gp.tileSize * 2, gp.tileSize * 2);
 		maxHp = 4;
 		hp = maxHp;
-		dmg = 1000;
+		dmg = 1;
 		// default sprite
 		direction = "right";
 		screenX = gp.screenX / 2 - (gp.tileSize / 2);

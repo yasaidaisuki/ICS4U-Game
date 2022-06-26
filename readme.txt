@@ -52,6 +52,8 @@ ADDITIONAL FUNCTIONALITY
 
 KNOWN BUGS
   - None. This game is perfect
+  - SOooo. When you beat the game it closes the window b/c we ran out of time and brain.
+  - it is 11:42 as we are writing so we gonna hand it in.
   - There are some audio bugs > Sound effects 
   - Wong particle collision is a bit wonky
   	- Very inconsistent || mostly playable tho 
